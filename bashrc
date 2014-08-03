@@ -36,3 +36,6 @@ export CLICOLOR=1
 # Set "ls" colors
 export LSCOLORS=Gxfxcxdxbxegedabagacad
 source .bash_profile
+PATH=~/tools/eclipse:$PATH
+PATH=~/.emacs.d/emacs-ipython-notebook/lisp:$PATH
+export UBUNTU_MENUPROXY=0

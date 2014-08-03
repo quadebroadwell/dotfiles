@@ -1,0 +1,10 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-refile-last-stored"
+ (filename . "~/proj/docs/scintera.org")
+ (front-context-string . "** DONE Disable ")
+ (rear-context-string . "emperatures    \n")
+ (position . 39626))
+)
