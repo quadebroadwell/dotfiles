@@ -39,3 +39,5 @@ source .bash_profile
 PATH=~/tools/eclipse:$PATH
 PATH=~/.emacs.d/emacs-ipython-notebook/lisp:$PATH
 export UBUNTU_MENUPROXY=0
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'

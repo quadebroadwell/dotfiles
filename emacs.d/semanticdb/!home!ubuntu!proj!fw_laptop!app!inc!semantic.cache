@@ -1,0 +1,1170 @@
+;; Object inc/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "inc/"
+  :tables
+  (list
+    (semanticdb-table "app_monitor.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_MONITOR_H" variable (:constant-flag t) nil [474 487])
+            ("hal_globalDef.h" include (:system-flag t) nil [489 515])
+            ("hw_BBM.h" include (:system-flag t) nil [516 535])
+            ("hw_specsPLLRINGREGS_gen.h" include (:system-flag t) nil [536 572])
+            ("hw.h" include (:system-flag t) nil [573 588])
+            ("monitorConfig" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("adcDivRatio" variable
+                             (:suffix ":3"
+                              :type ("UINT8" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [709 729])
+                          ("savePsd" variable
+                             (:suffix ":1"
+                              :type ("UINT8" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [776 792])
+                          ("psdConnectMode" variable
+                             (:suffix ":4"
+                              :type ("UINT8" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [841 864])
+                          ("adcConnectMode" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1058 1079])
+                          ("loFreq" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1456 1470])
+                          ("rffbAgc" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1499 1513])
+                          ("rfinAgc" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1515 1529])
+                          ("rfauxAgc" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1531 1546])
+                          ("rangeSumSetup" variable (:type ("rangeSumSetup" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1548 1576])
+                          ("ccdfSetup" variable (:type ("ccdfSetup" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1578 1598])
+                          ("psdSetup" variable (:type ("psdSetup" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1600 1618])
+                          ("asmSetup" variable (:type ("asmSetup" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1620 1638])
+                          ("adcClockInvert" variable
+                             (:dereference 1
+                              :type ("UINT8" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [1640 1664])
+                          ("adcClockDelay" variable
+                             (:dereference 1
+                              :type ("UINT16" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [1772 1796])
+                          ("pTapDelaySetup" variable
+                             (:pointer 1
+                              :type ("xdata" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [1860 1882]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [688 1899])
+            ("multipleRunData" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("dataAvg" variable (:type ("avgPowerData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2009 2030])
+                          ("dataMax" variable (:type ("avgPowerData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2096 2117])
+                          ("dataMin" variable (:type ("avgPowerData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2184 2205])
+                          ("longTermAvgPwr" variable (:type ("avgPowerData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2272 2300])
+                          ("dataCcdf" variable (:type ("ccdfData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2398 2416])
+                          ("dataRange" variable (:type ("rangeSumData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2483 2506])
+                          ("noiseEstimate" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2573 2594])
+                          ("asmProbability" variable
+                             (:dereference 1
+                              :type ("UINT32" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [2596 2621])
+                          ("dataAsm" variable (:type ("asmData" type (:type "class") nil nil)) (reparse-symbol classsubparts) [2699 2715]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [1991 2794])
+            ("IC_TEMP_DSADC_INTTIME" variable (:constant-flag t) nil [2804 2825])
+            ("IC_TEMP_BG_SWITCH" variable (:constant-flag t) nil [2881 2898])
+            ("IC_TEMP_BG_NOTEST" variable (:constant-flag t) nil [2940 2957])
+            ("PMU_DATAREADY_GSTCONSTANT" variable (:constant-flag t) nil [2994 3019])
+            ("PMU_DATAREADY_CNT" variable (:constant-flag t) nil [3049 3066])
+            ("DEBUG_TEMP_TABLE_LENGTH" variable (:constant-flag t) nil [3101 3124])
+            ("max" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("A" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3139 3148])
+                    ("B" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3149 3158]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [3128 3159])
+            ("app_monitorSetup" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable
+                       (:typemodifiers ("volatile")
+                        :type ("monitorConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3185 3215])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3216 3229])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3230 3244])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3245 3260]))                  
+                :type "void")
+                nil [3161 3261])
+            ("app_monitorClearMultipleRunData" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("result" variable
+                       (:pointer 1
+                        :type ("multipleRunData" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3299 3323]))                  
+                :type "void")
+                nil [3262 3324])
+            ("app_monitorRunMultiple" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("numberOfRuns" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3355 3381])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3382 3405])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("result" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3406 3420]))                  
+                :type "void")
+                nil [3325 3421])
+            ("app_monitorResetAndStartEmpCycle" function
+               (:prototype-flag t
+                :type "void")
+                nil [3422 3462])
+            ("app_monitorWaitForEmpToFinish" function
+               (:prototype-flag t
+                :type "void")
+                nil [3463 3500])
+            ("app_monitorRunMultipleIfSignalPresent" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("numberOfRuns" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3544 3564])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3564 3587])
+                    ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3588 3595]))                  
+                :type "void")
+                nil [3501 3596])
+            ("app_monitorGetAsmProbabilityFromCount" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("numberOfFrames" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3644 3672])
+                    ("asmCount" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3673 3690]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [3597 3691])
+            ("app_monitorGetBbmCycleCount" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [3730 3736]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [3693 3737])
+            ("app_monitorGetBbmTimeoutCount" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [3777 3783]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [3738 3784])
+            ("app_monitorGetDefaultSetup" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3818 3838])
+                    ("" variable (:type ("config" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3839 3846]))                  
+                :type "void")
+                nil [3786 3847])
+            ("app_monitorGetDefaultSetupForAdcInterleaved" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3900 3921])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3922 3935])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3936 3957])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pTapDelaySetup" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3958 3980]))                  
+                :type "void")
+                nil [3849 3981])
+            ("app_monitorRunAdcGainCorrectionForAdcInterleaved" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4038 4059])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4060 4073])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4074 4088])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4089 4105]))                  
+                :type "void")
+                nil [3982 4106])
+            ("app_monitorRunAdcTimingCorrectionForAdcInterleaved" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4165 4186])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4187 4200])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4201 4215])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4216 4232]))                  
+                :type "void")
+                nil [4107 4233]))          
+      :file "app_monitor.h"
+      :pointmax 4262
+      :fsize 4359
+      :lastmodtime '(21427 16190 294384 0)
+      :unmatched-syntax '((punctuation 4214 . 4215) (punctuation 4185 . 4186) (punctuation 4087 . 4088) (punctuation 4058 . 4059) (punctuation 3956 . 3957) (punctuation 3920 . 3921) (punctuation 3837 . 3838) (punctuation 3586 . 3587) (punctuation 3404 . 3405) (punctuation 3243 . 3244) (punctuation 3214 . 3215) (symbol 1846 . 1859))
+      :lexical-table 
+        '(("IC_TEMP_BG_NOTEST" . ((symbol "BG_1_ANALOGTESTBUS_NOTEST" 2960 . 2985)))
+          ("PMU_DATAREADY_GSTCONSTANT" . ((semantic-list "(256 - 3)" 3023 . 3032)))
+          ("IC_TEMP_BG_SWITCH" . ((symbol "BG_1_ANALOGTESTBUS_VBE1XXVBE15" 2901 . 2931)))
+          ("IC_TEMP_DSADC_INTTIME" . ((symbol "DSADC_CTRL_SETINTEGTIME_NS8960" 2826 . 2856)))
+          ("DEBUG_TEMP_TABLE_LENGTH" . ((number "30" 3125 . 3127)))
+          ("PMU_DATAREADY_CNT" . ((semantic-list "(50)" 3078 . 3082)))
+          ("APP_MONITOR_H")
+          )
+)
+    (semanticdb-table "app_debugIO.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_DEBUG_IO_H" variable (:constant-flag t) nil [110 124])
+            ("hal_globalDef.h" include (:system-flag t) nil [125 151])
+            ("app_debugIOInit" variable (:constant-flag t) nil [652 667])
+            ("app_debugIOClear" variable (:constant-flag t) nil [679 695])
+            ("printf" variable (:constant-flag t) nil [707 713]))          
+      :file "app_debugIO.h"
+      :pointmax 730
+      :fsize 765
+      :lastmodtime '(21427 16190 283630 400000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("APP_DEBUG_IO_H")
+          ("app_debugIOClear" (spp-arg-list nil 695 . 697))
+          ("printf")
+          ("app_debugIOInit" (spp-arg-list nil 667 . 669))
+          )
+)
+    (semanticdb-table "app_util.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("hal_globalDef.h" include (:system-flag t) nil [606 632])
+            ("APP_UTIL_H" variable (:constant-flag t) nil [874 884])
+            ("app_utilSimpleFind" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("searchArray" variable
+                       (:dereference 1
+                        :type ("INT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1347 1367])
+                    ("value" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1368 1380])
+                    ("arrayLength" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1381 1399]))                  
+                :type ("UINT8" type (:type "class") nil nil))
+                nil [1322 1400])
+            ("app_utilFirstLargest" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("searchArray" variable
+                       (:dereference 1
+                        :type ("INT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1428 1448])
+                    ("value" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1449 1461])
+                    ("arrayLength" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1462 1480]))                  
+                :type ("UINT8" type (:type "class") nil nil))
+                nil [1401 1481])
+            ("app_utilHwDelay" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("delay" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1503 1516]))                  
+                :type "void")
+                nil [1482 1517])
+            ("app_utilApplyConversion" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("valA" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1548 1559])
+                    ("valB" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1560 1571])
+                    ("offset" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1572 1585])
+                    ("scale" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1586 1598]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [1518 1599])
+            ("app_utilChkBoundaryLimit" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("value" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1631 1643])
+                    ("max" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1644 1654])
+                    ("min" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1655 1665]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [1600 1666])
+            ("app_utilFindNearestTempBin" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("temperature" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1700 1718])
+                    ("ignoreUsed" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1719 1736]))                  
+                :type ("UINT8" type (:type "class") nil nil))
+                nil [1667 1737])
+            ("app_utilCheckBreakPoint" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("breakPointAddress" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1767 1792]))                  
+                :type "void")
+                nil [1738 1793])
+            ("app_UtilXdataMemcpy" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable
+                       (:constant-flag t
+                        :type "void")
+                        (reparse-symbol arg-sub-list) [1821 1839])
+                    ("" variable (:type ("pSrc" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1840 1845])
+                    ("xdata" variable (:type "void") (reparse-symbol arg-sub-list) [1846 1858])
+                    ("" variable (:type ("pDst" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1859 1864])
+                    ("numberOfBytes" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1865 1886]))                  
+                :type "void")
+                nil [1794 1887]))          
+      :file "app_util.h"
+      :pointmax 1896
+      :fsize 1941
+      :lastmodtime '(21427 16190 300249 500000)
+      :unmatched-syntax '((punctuation 1857 . 1858) (punctuation 1838 . 1839))
+      :lexical-table 
+        '(("APP_UTIL_H")
+          )
+)
+    (semanticdb-table "app_linearSearch.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_LINEARSEARCH_H_" variable (:constant-flag t) nil [126 145])
+            ("hw_typedefs.h" include (:system-flag t) nil [147 171])
+            ("linearSearchDataType1" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("stepSize" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [492 509])
+                          ("closeEnough" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [643 663])
+                          ("minCoef" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [748 764])
+                          ("maxCoef" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [849 865])
+                          ("maxIter" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [931 947])
+                          ("currentValueDelta" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1015 1041])
+                          ("INT16" function
+                             (:arguments 
+                                ( ("getResultFunc" variable
+                                     (:pointer 1
+                                      :type ("code" type (:type "class") nil nil))
+                                      (reparse-symbol arg-sub-list) [1254 1274]))                                
+                              :type "int")
+                              (reparse-symbol classsubparts) [1245 1280])
+                          ("targetValue" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1346 1366])
+                          ("coef" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1443 1456])
+                          ("coefIndex" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1615 1633])
+                          ("baseAddr" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1680 1696])
+                          ("allCoefs" variable
+                             (:pointer 1
+                              :type ("xdata" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [1743 1759]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [408 1783])
+            ("app_linearSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1807 1835])
+                    ("" variable (:type ("config" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1836 1843]))                  
+                :type "void")
+                nil [1785 1844]))          
+      :file "app_linearSearch.h"
+      :pointmax 1879
+      :fsize 1928
+      :lastmodtime '(21152 58000 0 0)
+      :unmatched-syntax '((punctuation 1834 . 1835) (symbol 1735 . 1739) (punctuation 1280 . 1281) (punctuation 1180 . 1181) (semantic-list 1135 . 1180) (semantic-list 1115 . 1135) (VOID 1107 . 1111))
+      :lexical-table 
+        '(("APP_LINEARSEARCH_H_")
+          )
+)
+    (semanticdb-table "app_DelayMatch.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_DELAYMATCH_H" variable (:constant-flag t) nil [155 171])
+            ("hw.h" include (:system-flag t) nil [173 188])
+            ("hw_BBM.h" include (:system-flag t) nil [189 208])
+            ("hal_globalDef.h" include (:system-flag t) nil [209 235])
+            ("hw_specsPLLRINGREGS_gen.h" include (:system-flag t) nil [236 272])
+            ("app_monitor.h" include (:system-flag t) nil [273 297])
+            ("app_linearMaxSearch.h" include (:system-flag t) nil [298 330])
+            ("hw_BBM_BBMRegs_gen.h" include (:system-flag t) nil [331 362])
+            ("app_util.h" include (:system-flag t) nil [363 384])
+            ("hw_M8051_ACC.h" include (:system-flag t) nil [385 410])
+            ("hw_SPM.h" include (:system-flag t) nil [411 430])
+            ("app_delayMatch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [453 484])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [485 491]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [432 492])
+            ("app_delayMatchSetRffbAgcAndRangeSumLimit" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [539 570])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [571 577])
+                    ("xdata" variable (:type ("psdScanData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [578 596])
+                    ("" variable (:type ("resultPSD" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [597 607]))                  
+                :type "void")
+                nil [493 608])
+            ("app_delayMatchGetDefaultSetUp" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [644 675])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [676 682])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [683 703])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [704 709]))                  
+                :type "void")
+                nil [609 710])
+            ("app_delayMatchGetDefaultFirSetUp" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [749 780])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [781 787])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [788 808])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [809 814]))                  
+                :type "void")
+                nil [711 815])
+            ("app_delayMatchSetAvgFilterFracDelay" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [857 877])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [878 883])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [884 896]))                  
+                :type "void")
+                nil [816 897])
+            ("app_delayMatchSetIntegerDelay" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [933 964])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [965 971])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [972 984]))                  
+                :type "void")
+                nil [898 985])
+            ("app_delayMatchSetFirDelay" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1017 1048])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1049 1055])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1056 1068]))                  
+                :type "void")
+                nil [986 1069])
+            ("app_delayMatchGetResult" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1100 1131])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1132 1138]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [1070 1139]))          
+      :file "app_DelayMatch.h"
+      :pointmax 1171
+      :fsize 1201
+      :lastmodtime '(21152 58000 0 0)
+      :unmatched-syntax '((punctuation 1130 . 1131) (punctuation 1047 . 1048) (punctuation 963 . 964) (punctuation 876 . 877) (punctuation 807 . 808) (punctuation 779 . 780) (punctuation 702 . 703) (punctuation 674 . 675) (punctuation 595 . 596) (punctuation 569 . 570) (punctuation 483 . 484))
+      :lexical-table 
+        '(("APP_DELAYMATCH_H")
+          )
+)
+    (semanticdb-table "app_controlPdet.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_CONTROLPDET_H" variable (:constant-flag t) nil [147 164])
+            ("hw.h" include (:system-flag t) nil [166 181])
+            ("hal_globalDef.h" include (:system-flag t) nil [182 208])
+            ("app_monitor.h" include (:system-flag t) nil [209 233])
+            ("app_util.h" include (:system-flag t) nil [234 255])
+            ("hw_typedefs.h" include (:system-flag t) nil [256 280])
+            ("pdetAgcSetup" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("monitorSetup" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol classsubparts) [300 327])
+                          ("medianTiaGain" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [329 349])
+                          ("targetPeakProbability" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol classsubparts) [351 380])
+                          ("numberOfBbmCycles" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [382 406]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [282 422])
+            ("app_controlPdetGetDefaultAgcSetup" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("pdetAgcSetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [465 485])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pdetAgc" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [486 501]))                  
+                :type "void")
+                nil [424 502])
+            ("app_controlPdetRunAgc" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("pdetAgcSetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [531 551])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pdetAgc" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [552 566])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [568 589])
+                    ("" variable (:type ("baseAddr" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [581 590]))                  
+                :type "void")
+                nil [503 591])
+            ("app_controlPdetGetDcOffsetLinearSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [638 667])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("dcOffsetSearch" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [668 690]))                  
+                :type "void")
+                nil [592 691])
+            ("app_controlPdetRunDcOffset" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [726 755])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("dcOffsetSearch" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [756 778]))                  
+                :type "void")
+                nil [692 779])
+            ("app_controlPdetSetDcOffsetCtrlDacVal" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("value" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [824 835])
+                    ("index" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [836 848])
+                    ("baseAddr" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [849 866]))                  
+                :type "void")
+                nil [780 867])
+            ("cPdetRfinGainTable" variable
+               (:dereference 1
+                :type ("code" type (:type "class") nil nil))
+                nil [882 911]))          
+      :file "app_controlPdet.h"
+      :pointmax 920
+      :fsize 952
+      :lastmodtime '(21427 16190 277765 0)
+      :unmatched-syntax '((symbol 876 . 881) (EXTERN 869 . 875) (punctuation 754 . 755) (punctuation 666 . 667) (punctuation 550 . 551) (punctuation 484 . 485))
+      :lexical-table 
+        '(("APP_CONTROLPDET_H")
+          )
+)
+    (semanticdb-table "app_adaptSpsa3.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_ADAPTSPSA3_H_" variable (:constant-flag t) nil [119 136])
+            ("hw_typedefs.h" include (:system-flag t) nil [137 161])
+            ("app_monitor.h" include (:system-flag t) nil [162 186])
+            ("adaptSpsaConfig" type
+               (:members 
+                  ( ("iterationCount" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [224 246])
+                    ("coefBaseAddr" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [251 271])
+                    ("mu" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [276 285])
+                    ("stepSize" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [290 305])
+                    ("numOfCoefs" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [310 327])
+                    ("coefs" variable
+                       (:pointer 1
+                        :type ("xdata" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [339 352])
+                    ("pertVector" variable
+                       (:pointer 1
+                        :type ("xdata" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [364 382])
+                    ("coefsBest" variable
+                       (:pointer 1
+                        :type ("xdata" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [394 411])
+                    ("dacAddress" variable
+                       (:pointer 1
+                        :type ("code" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [423 440])
+                    ("cost" variable
+                       (:dereference 1
+                        :type ("UINT32" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [445 460])
+                    ("costBest" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol classsubparts) [465 481])
+                    ("scaleFactor" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [486 503])
+                    ("leakageLevel" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [508 526])
+                    ("coefIndex" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [531 547])
+                    ("applyPertFunc" function
+                       (:prototype-flag t
+                        :function-pointer t
+                        :arguments 
+                          ( ("self" variable
+                               (:pointer 1
+                                :type ("adaptSpsaConfig" type
+                                     (:prototype t
+                                      :type "struct")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [576 605])
+                            ("pertIdx" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [605 618]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [552 619])
+                    ("getCostFuncToMinimize" function
+                       (:prototype-flag t
+                        :function-pointer t
+                        :arguments 
+                          ( ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [656 678])
+                            ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [679 686]))                          
+                        :type ("UINT32" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [624 687]))                  
+                :type "struct")
+                nil [187 706])
+            ("adaptSpsaConfig" type
+               (:typedef ("adaptSpsaConfig" type (:type "struct") nil nil)
+                :type "typedef")
+                nil [187 706])
+            ("app_adaptGeneratePertVector" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("pertVector" variable
+                       (:dereference 1
+                        :type ("INT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [742 760])
+                    ("length" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [760 773]))                  
+                :type "void")
+                nil [709 774])
+            ("app_adaptSpsaRunSingle" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("adaptSpsaConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [803 825])
+                    ("" variable (:type ("config" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [826 833])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [834 856])
+                    ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [857 864]))                  
+                :type "void")
+                nil [775 865])
+            ("app_adaptGetCost" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [890 912])
+                    ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [913 920]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [866 921])
+            ("app_adaptSpsaApplyPertFunc" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("config" variable
+                       (:pointer 1
+                        :type ("adaptSpsaConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [954 978])
+                    ("scale" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [979 990]))                  
+                :type "void")
+                nil [922 991])
+            ("app_adaptSpsaGetDefaultSetup" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("adaptSpsaConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1026 1048])
+                    ("" variable (:type ("config" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1049 1056])
+                    ("xdata" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1056 1068])
+                    ("" variable (:type ("coefs" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1068 1074])
+                    ("xdata" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1074 1086])
+                    ("" variable (:type ("pertVector" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1086 1097]))                  
+                :type "void")
+                nil [992 1098])
+            ("app_adaptSpsaSelectCoefs" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("adaptSpsaConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1129 1152])
+                    ("" variable (:type ("config" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1152 1159])
+                    ("coefIndex" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1159 1175]))                  
+                :type "void")
+                nil [1099 1176]))          
+      :file "app_adaptSpsa3.h"
+      :pointmax 1208
+      :fsize 1245
+      :lastmodtime '(21152 58000 0 0)
+      :unmatched-syntax '((punctuation 1151 . 1152) (punctuation 1085 . 1086) (punctuation 1067 . 1068) (punctuation 1047 . 1048) (punctuation 911 . 912) (punctuation 855 . 856) (punctuation 824 . 825) (punctuation 677 . 678) (symbol 416 . 422) (symbol 387 . 391) (symbol 357 . 361) (symbol 332 . 336))
+      :lexical-table 
+        '(("APP_ADAPTSPSA3_H_")
+          )
+)
+    (semanticdb-table "app_main.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_MAIN_H" variable (:constant-flag t) nil [557 567])
+            ("hal_globalDef.h" include (:system-flag t) nil [776 802])
+            ("hw.h" include (:system-flag t) nil [833 848])
+            ("hw_BBM.h" include (:system-flag t) nil [849 868])
+            ("app_monitor.h" include (:system-flag t) nil [869 893])
+            ("hal_GLOBAL_SCRATCH.h" include (:system-flag t) nil [894 925])
+            ("app_linearMaxSearch.h" include (:system-flag t) nil [926 958])
+            ("app_lmsSearch.h" include (:system-flag t) nil [959 985])
+            ("app_controlPdet.h" include (:system-flag t) nil [986 1014])
+            ("app_controlAio.h" include (:system-flag t) nil [1015 1042])
+            ("RUN_ADAPT_PATH_A_MS" variable (:constant-flag t) nil [1359 1378])
+            ("RUN_ADAPT_PATH_B_MS" variable (:constant-flag t) nil [1391 1410])
+            ("gCalVcoArray" variable
+               (:dereference 2
+                :type ("xdata" type (:type "class") nil nil))
+                nil [1496 1544])
+            ("dcOffsetMultSearchA" variable (:type ("xdata" type (:type "class") nil nil)) nil [1577 1603])
+            ("dcOffsetPdetSearchA" variable (:type ("xdata" type (:type "class") nil nil)) nil [1636 1662])
+            ("pdetAgcSetupA" variable (:type ("xdata" type (:type "class") nil nil)) nil [1689 1709])
+            ("dcOffsetMultSearchB" variable (:type ("xdata" type (:type "class") nil nil)) nil [1742 1768])
+            ("dcOffsetPdetSearchB" variable (:type ("xdata" type (:type "class") nil nil)) nil [1801 1827])
+            ("pdetAgcSetupB" variable (:type ("xdata" type (:type "class") nil nil)) nil [1854 1874])
+            ("adaptationPsdScanDataA" variable (:type ("xdata" type (:type "class") nil nil)) nil [1907 1936])
+            ("adaptationPsdScanDataB" variable (:type ("xdata" type (:type "class") nil nil)) nil [1969 1998])
+            ("powerMonitorResultA" variable (:type ("xdata" type (:type "class") nil nil)) nil [2031 2057])
+            ("powerMonitorResultB" variable (:type ("xdata" type (:type "class") nil nil)) nil [2090 2116])
+            ("freqScanMaxSearch" variable (:type ("xdata" type (:type "class") nil nil)) nil [2149 2173])
+            ("freqScanLmsSearch" variable (:type ("xdata" type (:type "class") nil nil)) nil [2201 2225])
+            ("freqScanSetup" variable (:type ("xdata" type (:type "class") nil nil)) nil [2258 2278])
+            ("powerMonitorSetupA" variable (:type ("xdata" type (:type "class") nil nil)) nil [2311 2336])
+            ("powerMonitorSetupB" variable (:type ("xdata" type (:type "class") nil nil)) nil [2369 2394])
+            ("adaptationMonitorResultA" variable (:type ("xdata" type (:type "class") nil nil)) nil [2427 2458])
+            ("balanceIqSetup" variable (:type ("xdata" type (:type "class") nil nil)) nil [2491 2512])
+            ("balanceIqResult" variable (:type ("xdata" type (:type "class") nil nil)) nil [2545 2567])
+            ("balanceGainILmsSearch" variable (:type ("xdata" type (:type "class") nil nil)) nil [2595 2623])
+            ("balanceGainQLmsSearch" variable (:type ("xdata" type (:type "class") nil nil)) nil [2651 2679])
+            ("delayMatchSetup" variable (:type ("xdata" type (:type "class") nil nil)) nil [2712 2734])
+            ("delayMatchResult" variable (:type ("xdata" type (:type "class") nil nil)) nil [2768 2791])
+            ("delayMatchMaxSearch" variable (:type ("xdata" type (:type "class") nil nil)) nil [2825 2851])
+            ("app_mainUpdateMcuBasic" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [3317 3322]))                  
+                :type "void")
+                nil [3289 3323])
+            ("app_mainComputeAppChecksum" function
+               (:prototype-flag t
+                :type ("UINT8" type (:type "class") nil nil))
+                nil [3324 3359])
+            ("app_findMin" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("searchArray" variable
+                       (:dereference 1
+                        :type ("INT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3404 3424])
+                    ("arrayLength" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [3425 3443]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [3386 3444]))          
+      :file "app_main.h"
+      :pointmax 3471
+      :fsize 3470
+      :lastmodtime '(21427 16190 288518 0)
+      :unmatched-syntax '((symbol 2800 . 2824) (EXTERN 2793 . 2799) (symbol 2743 . 2758) (EXTERN 2736 . 2742) (symbol 2687 . 2700) (EXTERN 2680 . 2686) (symbol 2631 . 2649) (EXTERN 2624 . 2630) (symbol 2575 . 2593) (EXTERN 2568 . 2574) (symbol 2520 . 2535) (EXTERN 2513 . 2519) (symbol 2466 . 2479) (EXTERN 2459 . 2465) (symbol 2402 . 2417) (EXTERN 2395 . 2401) (symbol 2344 . 2357) (EXTERN 2337 . 2343) (symbol 2286 . 2299) (EXTERN 2279 . 2285) (symbol 2233 . 2246) (EXTERN 2226 . 2232) (symbol 2181 . 2199) (EXTERN 2174 . 2180) (symbol 2124 . 2148) (EXTERN 2117 . 2123) (symbol 2065 . 2080) (EXTERN 2058 . 2064) (symbol 2006 . 2021) (EXTERN 1999 . 2005) (symbol 1944 . 1955) (EXTERN 1937 . 1943) (symbol 1882 . 1893) (EXTERN 1875 . 1881) (symbol 1835 . 1847) (EXTERN 1828 . 1834) (symbol 1776 . 1797) (EXTERN 1769 . 1775) (symbol 1717 . 1738) (EXTERN 1710 . 1716) (symbol 1670 . 1682) (EXTERN 1663 . 1669) (symbol 1611 . 1632) (EXTERN 1604 . 1610) (symbol 1552 . 1573) (EXTERN 1545 . 1551) (symbol 1471 . 1477) (EXTERN 1464 . 1470))
+      :lexical-table 
+        '(("APP_MAIN_H")
+          ("RUN_ADAPT_PATH_A_MS" . ((number "300" 1379 . 1382)))
+          ("RUN_ADAPT_PATH_B_MS" . ((number "300" 1411 . 1414)))
+          )
+)
+    (semanticdb-table "app_freqScan.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_FREQSCAN_H" variable (:constant-flag t) nil [151 165])
+            ("hw_BBM.h" include (:system-flag t) nil [167 186])
+            ("hal_globalDef.h" include (:system-flag t) nil [187 213])
+            ("hw_specsPLLRINGREGS_gen.h" include (:system-flag t) nil [214 250])
+            ("hw.h" include (:system-flag t) nil [251 266])
+            ("app_monitor.h" include (:system-flag t) nil [267 291])
+            ("app_linearMaxSearch.h" include (:system-flag t) nil [292 324])
+            ("app_lmsSearch.h" include (:system-flag t) nil [325 351])
+            ("app_freqScan" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [372 403])
+                    ("" variable (:type ("maxData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [404 412])
+                    ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [413 438])
+                    ("" variable (:type ("lmsData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [439 447]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [353 448])
+            ("app_freqScanGetDefaultSetUpLmsSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [491 516])
+                    ("" variable (:type ("lmsSearchData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [517 531]))                  
+                :type "void")
+                nil [449 532])
+            ("app_freqScanGetDefaultSetUpMaxSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [575 606])
+                    ("" variable (:type ("linSearchData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [607 621]))                  
+                :type "void")
+                nil [533 622])
+            ("app_freqScanSetUpPsdBwLimit" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [656 681])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [682 688])
+                    ("coeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [689 701]))                  
+                :type "void")
+                nil [623 702])
+            ("app_freqScanSetLmsSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [734 759])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [760 766])
+                    ("coeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [767 779]))                  
+                :type "void")
+                nil [704 780])
+            ("app_freqScanGetResultLmsSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [818 843])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [844 850]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [781 851])
+            ("app_freqScanSetMaxSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [883 914])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [915 921])
+                    ("LoFreq" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [922 936]))                  
+                :type "void")
+                nil [853 937])
+            ("app_freqScanGetResultMaxSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [975 1006])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1007 1013]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [938 1014]))          
+      :file "app_freqScan.h"
+      :pointmax 1044
+      :fsize 1073
+      :lastmodtime '(21226 50758 423037 900000)
+      :unmatched-syntax '((punctuation 1005 . 1006) (punctuation 913 . 914) (punctuation 842 . 843) (punctuation 758 . 759) (punctuation 680 . 681) (punctuation 605 . 606) (punctuation 515 . 516) (punctuation 437 . 438) (punctuation 402 . 403))
+      :lexical-table 
+        '(("APP_FREQSCAN_H")
+          )
+)
+    (semanticdb-table "app_balanceIQ.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_BALANCEIQ_H" variable (:constant-flag t) nil [154 169])
+            ("hw.h" include (:system-flag t) nil [171 186])
+            ("hw_BBM.h" include (:system-flag t) nil [187 206])
+            ("hal_globalDef.h" include (:system-flag t) nil [207 233])
+            ("hw_specsPLLRINGREGS_gen.h" include (:system-flag t) nil [234 270])
+            ("app_monitor.h" include (:system-flag t) nil [271 295])
+            ("app_lmsSearch.h" include (:system-flag t) nil [296 322])
+            ("hw_BBM_BBMRegs_gen.h" include (:system-flag t) nil [323 354])
+            ("app_util.h" include (:system-flag t) nil [355 376])
+            ("app_balanceIq" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [398 423])
+                    ("" variable (:type ("iData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [424 430])
+                    ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [431 456])
+                    ("" variable (:type ("qData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [457 463]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [378 464])
+            ("app_balanceIqGetResultGainI" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [500 525])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [526 532]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [466 533])
+            ("app_balanceIqGetResultGainQ" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [568 593])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [594 600]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [534 601])
+            ("app_balanceIqSetGainQ" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [630 655])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [656 662])
+                    ("coeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [663 675]))                  
+                :type "void")
+                nil [603 676])
+            ("app_balanceIqSetGainI" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [704 729])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [730 736])
+                    ("coeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [737 749]))                  
+                :type "void")
+                nil [677 750])
+            ("app_balanceIqGetDefaultSetUpGainI" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [791 816])
+                    ("" variable (:type ("lmsSearchData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [817 831]))                  
+                :type "void")
+                nil [752 832])
+            ("app_balanceIqGetDefaultSetUpGainQ" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [872 897])
+                    ("" variable (:type ("lmsSearchData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [898 912]))                  
+                :type "void")
+                nil [833 913])
+            ("app_balanceIqGetDefaultSetup" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [948 968])
+                    ("" variable (:type ("configEmp" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [969 979]))                  
+                :type "void")
+                nil [914 980]))          
+      :file "app_balanceIQ.h"
+      :pointmax 1011
+      :fsize 1042
+      :lastmodtime '(21427 16190 271900 100000)
+      :unmatched-syntax '((punctuation 967 . 968) (punctuation 896 . 897) (punctuation 815 . 816) (punctuation 728 . 729) (punctuation 654 . 655) (punctuation 592 . 593) (punctuation 524 . 525) (punctuation 455 . 456) (punctuation 422 . 423))
+      :lexical-table 
+        '(("APP_BALANCEIQ_H")
+          )
+)
+    (semanticdb-table "app_linearMaxSearch.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_LINEARMAXSEARCH_H" variable (:constant-flag t) nil [165 186])
+            ("app_monitor.h" include (:system-flag t) nil [188 212])
+            ("_linearMaxSearchDataType1" type
+               (:members 
+                  ( ("start" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [454 467])
+                    ("stop" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [555 567])
+                    ("stepSize" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [603 619])
+                    ("maxCost" variable (:type ("INT32" type (:type "class") nil nil)) (reparse-symbol classsubparts) [672 686])
+                    ("finalCoeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [737 755])
+                    ("maxCoeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [845 862])
+                    ("minCoeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [950 967])
+                    ("warning" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1045 1061])
+                    ("vcoArray" variable
+                       (:pointer 1
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1099 1116])
+                    ("configEmp" variable
+                       (:pointer 1
+                        :type ("monitorConfig" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1154 1179])
+                    ("resultEmp" variable
+                       (:pointer 1
+                        :type ("multipleRunData" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1228 1255])
+                    ("INT32" function
+                       (:arguments 
+                          ( ("getResultFunc" variable
+                               (:pointer 1
+                                :type ("code" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1479 1499]))                          
+                        :type "int")
+                        (reparse-symbol classsubparts) [1471 1545]))                  
+                :type "struct")
+                nil [320 1573])
+            ("linearMaxSearchDataType1" type
+               (:typedef ("_linearMaxSearchDataType1" type (:type "struct") nil nil)
+                :type "typedef")
+                nil [320 1573])
+            ("app_linearMaxSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1600 1631])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1632 1638]))                  
+                :type "void")
+                nil [1575 1639]))          
+      :file "app_linearMaxSearch.h"
+      :pointmax 1678
+      :fsize 1724
+      :lastmodtime '(21226 50758 432812 500000)
+      :unmatched-syntax '((punctuation 1630 . 1631) (punctuation 1545 . 1546) (punctuation 1406 . 1407) (semantic-list 1345 . 1406) (semantic-list 1324 . 1345) (VOID 1316 . 1320))
+      :lexical-table 
+        '(("APP_LINEARMAXSEARCH_H")
+          )
+)
+    (semanticdb-table "app_lmsSearch.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_LMSSEARCH_H" variable (:constant-flag t) nil [154 169])
+            ("app_monitor.h" include (:system-flag t) nil [171 195])
+            ("_LmsSearchDataType1" type
+               (:members 
+                  ( ("coeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [361 374])
+                    ("maxCoeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [464 481])
+                    ("minCoeff" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [569 586])
+                    ("maxStep" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [671 687])
+                    ("minStep" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [770 786])
+                    ("costOffset" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol classsubparts) [838 857])
+                    ("mu" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [936 947])
+                    ("cost" variable (:type ("INT32" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1031 1044])
+                    ("numOfRuns" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1095 1113])
+                    ("stopAdapt" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol classsubparts) [1182 1198])
+                    ("vcoArray" variable
+                       (:pointer 1
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1236 1253])
+                    ("configEmp" variable
+                       (:pointer 1
+                        :type ("monitorConfig" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1291 1318])
+                    ("resultEmp" variable
+                       (:pointer 1
+                        :type ("multipleRunData" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1367 1394])
+                    ("resultPSD" variable
+                       (:pointer 1
+                        :type ("psdScanData" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [1454 1479])
+                    ("INT32" function
+                       (:arguments 
+                          ( ("getResultFunc" variable
+                               (:pointer 1
+                                :type ("code" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [1690 1710]))                          
+                        :type "int")
+                        (reparse-symbol classsubparts) [1683 1750]))                  
+                :type "struct")
+                nil [277 1773])
+            ("LmsSearchDataType1" type
+               (:typedef ("_LmsSearchDataType1" type (:type "struct") nil nil)
+                :type "typedef")
+                nil [277 1773])
+            ("app_lmsSearch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("xdata" variable (:type ("LmsSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1794 1819])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1820 1826]))                  
+                :type "void")
+                nil [1775 1827]))          
+      :file "app_lmsSearch.h"
+      :pointmax 1860
+      :fsize 1914
+      :lastmodtime '(21226 50758 444544 500000)
+      :unmatched-syntax '((punctuation 1818 . 1819) (punctuation 1750 . 1751) (punctuation 1618 . 1619) (semantic-list 1564 . 1618) (semantic-list 1543 . 1564) (VOID 1537 . 1541))
+      :lexical-table 
+        '(("APP_LMSSEARCH_H")
+          )
+)
+    (semanticdb-table "app_controlAio.h"
+      :major-mode 'c-mode
+      :tags 
+        '( ("APP_CONTROLAIO_H" variable (:constant-flag t) nil [145 161])
+            ("hw.h" include (:system-flag t) nil [163 178])
+            ("hw_typedefs.h" include (:system-flag t) nil [179 203])
+            ("app_monitor.h" include (:system-flag t) nil [205 229])
+            ("app_util.h" include (:system-flag t) nil [230 251])
+            ("hal_globalDef.h" include (:system-flag t) nil [253 279])
+            ("hal_APP_PRAM.h" include (:system-flag t) nil [280 305])
+            ("hal_GLOBAL_SCRATCH.h" include (:system-flag t) nil [306 337])
+            ("app_controlAioConfigureMultiple" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("baseAioIdx" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [378 401])
+                    ("count" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [402 420])
+                    ("code" variable (:type ("_AioConfig" type
+                         (:prototype t
+                          :type "struct")
+                          nil nil)) (reparse-symbol arg-sub-list) [421 445])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("baseAioConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [446 467]))                  
+                :type "void")
+                nil [339 468])
+            ("app_controlAioConfigure" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("aioIdx" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [500 519])
+                    ("code" variable (:type ("_AioConfig" type
+                         (:prototype t
+                          :type "struct")
+                          nil nil)) (reparse-symbol arg-sub-list) [520 544])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("aioConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [545 562]))                  
+                :type "void")
+                nil [469 563])
+            ("app_controlAioUpdateMultiple" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("baseAioIdx" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [600 623])
+                    ("count" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [624 642])
+                    ("code" variable (:type ("_AioConfig" type
+                         (:prototype t
+                          :type "struct")
+                          nil nil)) (reparse-symbol arg-sub-list) [643 667])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("baseAioConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [668 688])
+                    ("xdata" variable
+                       (:typemodifiers ("volatile")
+                        :type ("_AioResult" type
+                             (:prototype t
+                              :type "struct")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [689 723])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("baseAioResult" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [724 745]))                  
+                :type "void")
+                nil [564 746])
+            ("app_controlAioUpdate" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("aioIdx" variable
+                       (:constant-flag t
+                        :type ("UINT8" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [775 794])
+                    ("code" variable (:type ("_AioConfig" type
+                         (:prototype t
+                          :type "struct")
+                          nil nil)) (reparse-symbol arg-sub-list) [795 819])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("aioConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [820 836])
+                    ("xdata" variable
+                       (:typemodifiers ("volatile")
+                        :type ("_AioResult" type
+                             (:prototype t
+                              :type "struct")
+                              nil nil))
+                        (reparse-symbol arg-sub-list) [837 871])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("aioResult" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [872 889]))                  
+                :type "void")
+                nil [747 890])
+            ("AIO_MODE_DISABLE" variable (:constant-flag t) nil [924 940])
+            ("AIO_MODE_DIGITAL_OUTPUT" variable (:constant-flag t) nil [956 979])
+            ("AIO_MODE_DAC_OUTPUT" variable (:constant-flag t) nil [993 1012])
+            ("AIO_MODE_CURRENT_SOURCE" variable (:constant-flag t) nil [1027 1050]))          
+      :file "app_controlAio.h"
+      :pointmax 1063
+      :fsize 1094
+      :lastmodtime '(21178 4028 0 0)
+      :unmatched-syntax '((punctuation 870 . 871) (punctuation 818 . 819) (punctuation 722 . 723) (punctuation 666 . 667) (punctuation 543 . 544) (punctuation 444 . 445))
+      :lexical-table 
+        '(("AIO_MODE_DISABLE" . ((semantic-list "(0)" 944 . 947)))
+          ("AIO_MODE_DIGITAL_OUTPUT" . ((semantic-list "(1)" 981 . 984)))
+          ("AIO_MODE_CURRENT_SOURCE" . ((semantic-list "(3)" 1052 . 1055)))
+          ("APP_CONTROLAIO_H")
+          ("AIO_MODE_DAC_OUTPUT" . ((semantic-list "(2)" 1015 . 1018)))
+          )
+))
+  :file "!home!ubuntu!proj!fw_laptop!app!inc!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

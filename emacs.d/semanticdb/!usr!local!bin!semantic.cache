@@ -1,0 +1,20 @@
+;; Object bin/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "bin/"
+  :tables
+  (list
+    (semanticdb-table "kit"
+      :major-mode 'python-mode
+      :tags 
+        '( ("__requires__" variable nil nil [83 108])
+            ("sys" include nil nil [109 119])
+            ("pkg_resources" include nil nil [120 162])
+            ("if" code nil nil [164 276]))          
+      :file "kit"
+      :pointmax 276
+      :fsize 275
+      :lastmodtime '(21484 19423 8929 30000)
+      :unmatched-syntax nil))
+  :file "!usr!local!bin!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
