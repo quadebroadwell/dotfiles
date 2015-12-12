@@ -1,0 +1,199 @@
+;; Object src/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "src/"
+  :tables
+  (list
+    (semanticdb-table "hw.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("hal_reg.h" include (:system-flag t) nil [678 698])
+            ("rtx_main.h" include (:system-flag t) nil [699 720])
+            ("reg51.h" include (:system-flag t) nil [721 739])
+            ("ABSACC.h" include (:system-flag t) nil [740 759])
+            ("hw.h" include (:system-flag t) nil [761 776])
+            ("hw_PADRV_enableAndSetup" function
+               (:arguments 
+                  ( ("txBaseAddress" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1232 1253]))                  
+                :type "void")
+                nil [1203 1677])
+            ("hw_enableCorrectionPathA" function
+               (:arguments 
+                  ( ("linearizerGain" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1773 1794])
+                    ("paDriverGain" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1795 1814])
+                    ("paDriverBiasCurrent" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1815 1841]))                  
+                :type "void")
+                nil [1743 5776])
+            ("hw_enableCorrectionPathB" function
+               (:arguments 
+                  ( ("linearizerGain" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5871 5892])
+                    ("paDriverGain" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5893 5912])
+                    ("paDriverBiasCurrent" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5913 5939]))                  
+                :type "void")
+                nil [5841 9641])
+            ("hw_enableAnalogMonitoringPath" function
+               (:arguments 
+                  ( ("txBaseAddress" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [9875 9903]))                  
+                :type "void")
+                nil [9838 10979])
+            ("hw_enablePlllcLo" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [11462 11468]))                  
+                :type "void")
+                nil [11438 12221])
+            ("hw_calVco" function
+               (:arguments 
+                  ( ("vcoArray" variable
+                       (:dereference 2
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [13238 13284]))                  
+                :type "void")
+                nil [13221 14585])
+            ("ULOWBANDMAX" variable (:constant-flag t) nil [14595 14606])
+            ("LOWBANDMAX" variable (:constant-flag t) nil [14622 14632])
+            ("MIDBAND1MAX" variable (:constant-flag t) nil [14650 14661])
+            ("MIDBAND2MAX" variable (:constant-flag t) nil [14678 14689])
+            ("HIGHBANDMAX" variable (:constant-flag t) nil [14706 14717])
+            ("VHIGHBANDMAX" variable (:constant-flag t) nil [14734 14746])
+            ("UHIGHBANDMAX" variable (:constant-flag t) nil [14763 14775])
+            ("hw_setLo" function
+               (:arguments 
+                  ( ("desiredFreq" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [15019 15038])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [15039 15053])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15054 15070]))                  
+                :type "void")
+                nil [15003 21333])
+            ("hw_setupSysclk" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [21416 21422]))                  
+                :type "void")
+                nil [21394 22354])
+            ("hw_connectPllringAsAdcClock" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [22494 22499]))                  
+                :type "void")
+                nil [22461 22611])
+            ("hw_DSADC_getSampleDefaultIntTimeWhenSignalPresent" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [22669 22674]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [22613 23291])
+            ("hw_log2PowerPerBinFromRangeSum" function
+               (:arguments 
+                  ( ("start" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [23892 23904])
+                    ("end" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [23904 23914])
+                    ("val" variable (:type ("UINT32" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [23914 23925]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [23855 24137])
+            ("hw_getTemp" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [24519 24525]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [24500 25216])
+            ("hw_setTwoTone" function
+               (:arguments 
+                  ( ("txBaseAddress" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [25397 25424])
+                    ("tone1Freq100khz" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [25425 25454])
+                    ("tone2Freq100khz" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [25455 25485]))                  
+                :type "void")
+                nil [25376 26130])
+            ("hw_setDcoFrequency" function
+               (:arguments 
+                  ( ("toneBaseAddress" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [26262 26291])
+                    ("dcoFreq100khz" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [26292 26320]))                  
+                :type ("UINT16" type (:type "class") nil nil))
+                nil [26234 29020])
+            ("hw_reduceAnalogCurrent" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [29050 29055]))                  
+                :type "void")
+                nil [29022 29452])
+            ("hw_restoreAnalogCurrent" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [29482 29487]))                  
+                :type "void")
+                nil [29453 29876]))          
+      :file "hw.c"
+      :pointmax 29877
+      :fsize 30732
+      :lastmodtime '(21427 16190 612372 900000)
+      :unmatched-syntax '((punctuation 15052 . 15053))
+      :lexical-table 
+        '(("LOWBANDMAX" . ((semantic-list "(1040)" 14635 . 14641)))
+          ("UHIGHBANDMAX" . ((semantic-list "(8400)" 14777 . 14783)))
+          ("VHIGHBANDMAX" . ((semantic-list "(7000)" 14748 . 14754)))
+          ("MIDBAND1MAX" . ((semantic-list "(2048)" 14663 . 14669)))
+          ("HIGHBANDMAX" . ((semantic-list "(5400)" 14719 . 14725)))
+          ("MIDBAND2MAX" . ((semantic-list "(3600)" 14691 . 14697)))
+          ("ULOWBANDMAX" . ((semantic-list "(520)" 14608 . 14613)))
+          )
+)
+    (semanticdb-table "hw_ADCSW.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("hw_TX_ADCSWRegs_gen.h" include (:system-flag t) nil [82 114])
+            ("hw_specsADCSWREGS_gen.h" include (:system-flag t) nil [115 149])
+            ("hal_reg.h" include (:system-flag t) nil [150 170])
+            ("hw_ADCSW.h" include (:system-flag t) nil [171 192])
+            ("hw_ADCSW_resetAll" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [376 382]))                  
+                :type "void")
+                nil [351 658])
+            ("hw_ADCSW_connectRfinRffbToAdc" function
+               (:arguments 
+                  ( ("adcswBaseAddressToConnect" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1058 1098]))                  
+                :type "void")
+                nil [1021 1628])
+            ("hw_ADCSW_connectRffbBothChannelsToAdc" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [1673 1678]))                  
+                :type "void")
+                nil [1630 1998])
+            ("hw_ADCSW_connectRffbInterleavedToAdc" function
+               (:arguments 
+                  ( ("adcswBaseAddressToConnect" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2418 2458]))                  
+                :type "void")
+                nil [2374 2857])
+            ("hw_ADCSW_connectCorr2Adc" function
+               (:arguments 
+                  ( ("adcswBaseAddressToConnect" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3244 3284]))                  
+                :type "void")
+                nil [3212 3469]))          
+      :file "hw_ADCSW.c"
+      :pointmax 3470
+      :fsize 3580
+      :lastmodtime '(21226 50758 855125 900000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!proj!fw_laptop!hw!antares!src!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

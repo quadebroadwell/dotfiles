@@ -1,0 +1,16 @@
+;; Object pymacs-0.25/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "pymacs-0.25/"
+  :tables
+  (list
+    (semanticdb-table "pymacs-autoloads.el"
+      :major-mode 'emacs-lisp-mode
+      :tags nil
+      :file "pymacs-autoloads.el"
+      :pointmax 260
+      :fsize 2574
+      :lastmodtime '(21523 26190 223874 996000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!dotfiles!emacs.d!elpa!pymacs-0.25!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

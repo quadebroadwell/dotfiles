@@ -1,0 +1,256 @@
+;; Object srecode/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "srecode/"
+  :tables
+  (list
+    (semanticdb-table "cogre-default.srt"
+      :major-mode 'srecode-template-mode
+      :tags 
+        '( ("mode" variable (:default-value ("default")) nil [883 902])
+            ("escape_start" variable (:default-value ("{{")) nil [902 924])
+            ("escape_end" variable (:default-value ("}}")) nil [924 944])
+            ("file" context nil nil [945 958])
+            ("cogre-graph-comment" function
+               (:code "{{comment_start}} {{GRAPHNAME}} -- {{^}}
+{{comment_prefix}}
+{{GRAPH:srecode-comment-prefix}}
+{{comment_prefix}}
+{{comment_end}}
+"
+                :arguments (":cogre"))
+                nil [990 1164]))          
+      :file "cogre-default.srt"
+      :pointmax 1174
+      :fsize 1173
+      :lastmodtime '(21470 50820 360937 326000)
+      :unmatched-syntax nil)
+    (semanticdb-table "default.srt"
+      :major-mode 'srecode-template-mode
+      :tags 
+        '( ("mode" variable (:default-value ("default")) nil [846 865])
+            ("comment_start" variable (:default-value ("#")) nil [866 889])
+            ("COPYRIGHT" variable (:default-value ("This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.")) nil [890 1516])
+            ("DOLLAR" variable (:default-value ("$")) nil [1517 1532])
+            ("file" context nil nil [1533 1546])
+            ("copyright" function (:code "{{COPYRIGHT:srecode-comment-prefix}}
+") nil [1547 1613])
+            ("filecomment" function
+               (:code "{{comment_start}} {{FILENAME}} --- {{^}}
+{{comment_prefix}}
+{{comment_prefix}} Copyright (C) {{YEAR}} {{?AUTHOR}}
+{{comment_prefix}}
+{{comment_prefix}} Author: {{AUTHOR}} <{{EMAIL}}>{{#RCS}}
+{{comment_prefix}} X-RCS: {{DOLLAR}}Id{{DOLLAR}}{{/RCS}}
+{{comment_prefix}}
+{{>:copyright}}
+{{comment_end}}
+"
+                :arguments (":file" ":user" ":time"))
+                nil [1614 1962]))          
+      :file "default.srt"
+      :pointmax 1970
+      :fsize 1969
+      :lastmodtime '(21470 50820 360937 326000)
+      :unmatched-syntax nil)
+    (semanticdb-table "c.srt"
+      :major-mode 'srecode-template-mode
+      :tags 
+        '( ("mode" variable (:default-value ("c-mode")) nil [850 868])
+            ("comment_start" variable (:default-value ("/**")) nil [869 894])
+            ("comment_end" variable (:default-value (" */")) nil [894 919])
+            ("comment_prefix" variable (:default-value (" *")) nil [919 943])
+            ("HEADEREXT" variable (:default-value (".h")) nil [1040 1059])
+            ("file" context nil nil [1060 1073])
+            ("empty" function
+               (:code "{{>:filecomment}}
+
+{{#NOTHEADER}}
+
+{{^}}
+{{/NOTHEADER}}
+{{#HEADER}}
+{{>:header_guard}}
+{{/HEADER}}
+"
+                :arguments (":time" ":user" ":file" ":c"))
+                nil [1074 1219])
+            ("header_guard" function
+               (:code "#ifndef {{FILENAME_SYMBOL:upcase}}
+#define {{FILENAME_SYMBOL:upcase}} 1
+
+{{^}}
+
+#endif // {{FILENAME_SYMBOL:upcase}}
+"
+                :arguments (":file" ":blank" ":c"))
+                nil [1220 1385])
+            ("misc" context nil nil [1386 1399])
+            ("arglist" function
+               (:code "({{#ARGS}}{{TYPE}} {{NAME}}{{#NOTLAST}},{{/NOTLAST}}{{/ARGS}})
+"
+                :documentation "Insert an argument list for a function.
+@todo - Support smart CR in a buffer for not too long lines.")
+                nil [1400 1593])
+            ("declaration" context nil nil [1594 1614])
+            ("TYPE" prompt (:text "Return Type: ") nil [1615 1643])
+            ("function" function
+               (:binding "f"
+                :code "{{?TYPE}} {{?NAME}}{{>:misc:arglist}}
+{{#INITIALIZERS}}{{>B:initializers}}{{/INITIALIZERS}}
+{
+{{^}}
+}
+"
+                :documentation "Insert a function declaration."
+                :arguments (":indent" ":blank"))
+                nil [1644 1831])
+            ("function-prototype" function
+               (:code "{{?TYPE}} {{?NAME}}{{>:misc:arglist}};
+"
+                :documentation "Insert a function declaration."
+                :arguments (":indent" ":blank"))
+                nil [1832 1957])
+            ("TYPE" prompt (:text "Data Type: ") nil [1959 1985])
+            ("variable" function
+               (:binding "v"
+                :code "{{?TYPE}} {{?NAME}}{{#HAVEDEFAULT}} = {{DEFAULT}}{{/HAVEDEFAULT}};
+"
+                :documentation "Insert a variable declaration."
+                :arguments (":indent" ":blank"))
+                nil [1986 2138])
+            ("variable-prototype" function
+               (:binding "v"
+                :code "{{?TYPE}} {{?NAME}};
+"
+                :documentation "Insert a variable declaration."
+                :arguments (":indent" ":blank"))
+                nil [2139 2255])
+            ("include" function
+               (:binding "i"
+                :code "#include \"{{?NAME}}\"
+"
+                :documentation "An include statement."
+                :arguments (":blank"))
+                nil [2257 2345])
+            ("system-include" function
+               (:binding "i"
+                :code "#include <{{?NAME}}>
+"
+                :documentation "An include statement."
+                :arguments (":blank"))
+                nil [2346 2441])
+            ("label" function
+               (:code "  {{?NAME}}:
+"
+                :arguments (":blank" ":indent"))
+                nil [2442 2495])
+            ("declaration" context nil nil [2496 2516])
+            ("comment-function" function
+               (:code "{{>A:declaration:doxygen-function}}
+"
+                :documentation "Used to put a nice comment in front of a function.
+Override this with your own preference to avoid using doxygen"
+                :arguments (":indent" ":blank"))
+                nil [2517 2719])
+            ("declaration" context nil nil [2748 2768])
+            ("doxygen-function" function
+               (:code "/**
+ * @name {{NAME}} - {{DOC}}{{^}}{{#ARGS}}
+ * @param {{NAME}} - {{DOC}}{{/ARGS}}
+ * @return {{TYPE}}
+ */
+"
+                :arguments (":indent" ":blank"))
+                nil [2769 2928])
+            ("doxygen-variable-same-line" function (:code "/**< {{DOC}}{{^}} */
+") nil [2929 2996])
+            ("doxygen-section-comment" function
+               (:code "
+/** {{?TITLE}}
+ *
+ * {{^}}
+ */
+
+"
+                :documentation "Insert a comment that separates sections of an Emacs Lisp file."
+                :arguments (":blank" ":indent"))
+                nil [2997 3155]))          
+      :file "c.srt"
+      :pointmax 3164
+      :fsize 3163
+      :lastmodtime '(21470 50820 360937 326000)
+      :unmatched-syntax nil)
+    (semanticdb-table "doc-default.srt"
+      :major-mode 'srecode-template-mode
+      :tags 
+        '( ("mode" variable (:default-value ("default")) nil [851 870])
+            ("application" variable (:default-value ("document")) nil [871 898])
+            ("declaration" context nil nil [899 919])
+            ("section-comment" function
+               (:code "{{comment_start}} {{?TITLE}}
+{{comment_prefix}}
+{{comment_prefix}} {{^}}
+{{comment_end}}
+"
+                :documentation "A comment occurring in front of a group of declarations."
+                :arguments (":blank" ":indent"))
+                nil [920 1118])
+            ("function-comment" function
+               (:code "{{comment_start}} {{?NAME}} --
+{{DOC:srecode-comment-prefix}}
+{{comment_end}}
+"
+                :documentation "A comment occurring in front of a function."
+                :arguments (":tag" ":indent" ":blank"))
+                nil [1119 1299])
+            ("variable-same-line-comment" function
+               (:code "{{comment_start}} {{?DOC}} {{comment_end}}
+"
+                :documentation "A comment occurring after a variable declaration."
+                :arguments (":tag"))
+                nil [1300 1446])
+            ("group-comment-start" function
+               (:code "{{comment_start}} {{?GROUPNAME}} --
+{{comment_end}}
+"
+                :documentation "A comment occurring in front of a group of declarations."
+                :arguments (":blank" ":indent"))
+                nil [1497 1662])
+            ("group-comment-end" function
+               (:code "{{comment_start}} End {{?GROUPNAME}} {{comment_end}}
+"
+                :documentation "A comment occurring at the end of a group of declarations."
+                :arguments (":indent"))
+                nil [1663 1822])
+            ("classdecl" context nil nil [1869 1887])
+            ("group-comment-start" function
+               (:code "{{>:declaration:group-comment-start}}
+"
+                :documentation "A comment occurring in front of a group of declarations."
+                :arguments (":blank" ":indent"))
+                nil [1888 2039])
+            ("group-comment-end" function
+               (:code "{{>:declaration:group-comment-end}}
+"
+                :documentation "A comment occurring at the end of a group of declarations."
+                :arguments (":indent"))
+                nil [2040 2182]))          
+      :file "doc-default.srt"
+      :pointmax 2190
+      :fsize 2189
+      :lastmodtime '(21470 50820 360937 326000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!dotfiles!emacs.d!cedet!etc!srecode!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

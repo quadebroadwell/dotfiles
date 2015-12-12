@@ -1,0 +1,532 @@
+;; Object src/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "src/"
+  :tables
+  (list
+    (semanticdb-table "app_monitor.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("ABSACC.h" include (:system-flag t) nil [730 749])
+            ("reg51.h" include (:system-flag t) nil [750 768])
+            ("app_monitor.h" include (:system-flag t) nil [769 793])
+            ("app_debugIO.h" include (:system-flag t) nil [794 818])
+            ("hal_globalDef.h" include (:system-flag t) nil [819 845])
+            ("hal_debug.h" include (:system-flag t) nil [944 966])
+            ("hal_globalError.h" include (:system-flag t) nil [967 995])
+            ("hal_globalWarning.h" include (:system-flag t) nil [1021 1051])
+            ("hal_reg.h" include (:system-flag t) nil [1106 1126])
+            ("app_util.h" include (:system-flag t) nil [1128 1149])
+            ("hw_BBM.h" include (:system-flag t) nil [1219 1238])
+            ("hw_specsAddr_gen.h" include (:system-flag t) nil [1239 1268])
+            ("hw_SPM.h" include (:system-flag t) nil [1269 1288])
+            ("hw_BBM_BBMRegs_gen.h" include (:system-flag t) nil [1289 1320])
+            ("hw_specsBBMRegs_gen.h" include (:system-flag t) nil [1321 1353])
+            ("hw_TX_SPMRegs_gen.h" include (:system-flag t) nil [1354 1384])
+            ("hw_TX_SPMATTRegs_gen.h" include (:system-flag t) nil [1385 1418])
+            ("hw_TX_ADCRegs_gen.h" include (:system-flag t) nil [1419 1449])
+            ("hw_TX_ADCSWRegs_gen.h" include (:system-flag t) nil [1450 1482])
+            ("hw_TX_BGRegs_gen.h" include (:system-flag t) nil [1483 1512])
+            ("hw_M8051_ACC.h" include (:system-flag t) nil [1513 1538])
+            ("hw_SYSCLK_PLLRINGRegs_gen.h" include (:system-flag t) nil [1539 1577])
+            ("hw_specsAddr_gen.h" include (:system-flag t) nil [1578 1607])
+            ("hw_specsPLLRINGREGS_gen.h" include (:system-flag t) nil [1608 1644])
+            ("hw_specsSPMATTREGS_gen.h" include (:system-flag t) nil [1645 1680])
+            ("hw_PLLRING_gen.h" include (:system-flag t) nil [1681 1708])
+            ("hw_8051.h" include (:system-flag t) nil [1709 1729])
+            ("hw_ADCSW.h" include (:system-flag t) nil [1731 1752])
+            ("hw_MONITOR_gen.h" include (:system-flag t) nil [1753 1780])
+            ("hw_CORR_MONITORRegs_gen.h" include (:system-flag t) nil [1781 1817])
+            ("hw_specsMONITORRegs_gen.h" include (:system-flag t) nil [1818 1854])
+            ("hw_IOC.h" include (:system-flag t) nil [1855 1874])
+            ("oldLoFreq" variable (:type ("xdata" type (:type "class") nil nil)) nil [1890 1906])
+            ("bbmDebugData" variable (:type ("xdata" type (:type "class") nil nil)) nil [2151 2170])
+            ("app_monitorSetup" function
+               (:arguments 
+                  ( ("xdata" variable
+                       (:typemodifiers ("volatile")
+                        :type ("monitorConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2258 2288])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2289 2302])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2303 2317])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2318 2334]))                  
+                :type "void")
+                nil [2234 12156])
+            ("app_monitorResetAndStartEmpCycle" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [12298 12304]))                  
+                :type "void")
+                nil [12258 13010])
+            ("app_monitorWaitForEmpToFinish" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [13115 13121]))                  
+                :type "void")
+                nil [13078 14406])
+            ("MAX" variable (:constant-flag t) nil [14524 14527])
+            ("MIN" variable (:constant-flag t) nil [14670 14673])
+            ("app_monitorClearMultipleRunData" function
+               (:arguments 
+                  ( ("result" variable
+                       (:pointer 1
+                        :type ("multipleRunData" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14850 14874]))                  
+                :type "void")
+                nil [14813 15349])
+            ("app_monitorRunMultiple" function
+               (:arguments 
+                  ( ("numberOfRuns" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15639 15665])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [15666 15689])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("result" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15690 15704]))                  
+                :type "void")
+                nil [15609 18950])
+            ("app_monitorRunMultipleIfSignalPresent" function
+               (:arguments 
+                  ( ("numberOfRuns" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [18995 19015])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [19015 19038])
+                    ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [19039 19046]))                  
+                :type "void")
+                nil [18952 19517])
+            ("app_monitorGetBbmCycleCount" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [19721 19727]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [19684 19770])
+            ("app_monitorGetBbmTimeoutCount" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [19978 19984]))                  
+                :type ("UINT32" type (:type "class") nil nil))
+                nil [19939 20029])
+            ("app_monitorGetDefaultSetup" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [20170 20191])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [20192 20206]))                  
+                :type "void")
+                nil [20136 21276])
+            ("app_monitorGetDefaultSetupForAdcInterleaved" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [21329 21350])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [21351 21364])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [21365 21386])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pTapDelaySetup" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [21387 21409]))                  
+                :type "void")
+                nil [21278 24813])
+            ("app_monitorGetAdcGainCorrectionForAdcInterleaved" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("startFirGainValue" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [24873 24905]))                  
+                :type ("UINT16" type (:type "class") nil nil))
+                nil [24815 24906])
+            ("app_monitorGetAdcGainMismatch" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [24946 24952]))                  
+                :type ("UINT16" type (:type "class") nil nil))
+                nil [24907 24953])
+            ("app_monitorRunAdcGainCorrectionForAdcInterleaved" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("monitorConfig" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [25011 25032])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("config" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [25033 25046])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [25047 25061])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("vcoArray" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [25062 25078]))                  
+                :type "void")
+                nil [24955 29680])
+            ("app_monitorGetAdcGainMismatchForAdcInterleaved" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [29737 29743]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [29682 30358])
+            ("app_monitorGetAdcGainCorrectionForAdcInterleaved" function
+               (:arguments 
+                  ( ("startFirGainValue" variable
+                       (:constant-flag t
+                        :type ("UINT16" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [30418 30450]))                  
+                :type ("UINT16" type (:type "class") nil nil))
+                nil [30360 32263]))          
+      :file "app_monitor.c"
+      :pointmax 32264
+      :fsize 33091
+      :lastmodtime '(21471 2180 889377 800000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("MAX" (spp-arg-list ("a" "b") 14517 . 14522) . ((semantic-list "(((a)>(b))?(a):(b))" 14523 . 14542)))
+          ("MIN" (spp-arg-list ("a" "b") 14663 . 14668) . ((semantic-list "(((a)<(b))?(a):(b))" 14669 . 14688)))
+          )
+)
+    (semanticdb-table "app_DelayMatch.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("ABSACC.h" include (:system-flag t) nil [85 104])
+            ("app_DelayMatch.h" include (:system-flag t) nil [105 132])
+            ("hal_reg.h" include (:system-flag t) nil [133 153])
+            ("hw_specsAddr_gen.h" include (:system-flag t) nil [154 183])
+            ("DEL_MATCH_EMP_RUNS" variable (:constant-flag t) nil [193 211])
+            ("DEL_MATCH_PSDLENGTH" variable (:constant-flag t) nil [226 245])
+            ("DEL_MATCH_PSDSETUP_SCALE" variable (:constant-flag t) nil [309 333])
+            ("DEL_MATCH_RANGESUM_DCOS" variable (:constant-flag t) nil [395 418])
+            ("DEL_MATCH_RANGESUM_BWOS" variable (:constant-flag t) nil [465 488])
+            ("DEL_MATCH_MAX_COST" variable (:constant-flag t) nil [531 549])
+            ("DEL_MATCH_MAX_FIR_COEFF" variable (:constant-flag t) nil [573 596])
+            ("DEL_MATCH_MIN_FIR_COEFF" variable (:constant-flag t) nil [625 648])
+            ("DEL_MATCH_MAX_INT_COEFF" variable (:constant-flag t) nil [677 700])
+            ("DEL_MATCH_MIN_INT_COEFF" variable (:constant-flag t) nil [713 736])
+            ("DEL_MATCH_DELAY_OFFSET" variable (:constant-flag t) nil [749 771])
+            ("DEL_MATCH_FIR_COURSE_STEP" variable (:constant-flag t) nil [784 809])
+            ("DEL_MATCH_FIR_FINE_STEP" variable (:constant-flag t) nil [824 847])
+            ("DEL_MATCH_WARN_BWLO" variable (:constant-flag t) nil [861 880])
+            ("DEL_MATCH_WARN_BWHI" variable (:constant-flag t) nil [896 915])
+            ("app_delayMatch" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1285 1316])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1317 1323]))                  
+                :type ("INT16" type (:type "class") nil nil))
+                nil [1264 2709])
+            ("app_delayMatchGetDefaultSetUp" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2931 2962])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2963 2969])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2970 2990])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2991 2996]))                  
+                :type "void")
+                nil [2896 4775])
+            ("app_delayMatchSetRffbAgcAndRangeSumLimit" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5046 5077])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5078 5084])
+                    ("xdata" variable (:type ("psdScanData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5085 5103])
+                    ("" variable (:type ("resultPSD" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [5104 5114]))                  
+                :type "void")
+                nil [5000 6681])
+            ("app_delayMatchGetDefaultFirSetUp" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [6919 6950])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [6951 6957])
+                    ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [6958 6978])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [6979 6984]))                  
+                :type "void")
+                nil [6881 7440])
+            ("app_delayMatchSetIntegerDelay" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7683 7714])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7715 7721])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7722 7734]))                  
+                :type "void")
+                nil [7648 7983])
+            ("app_delayMatchSetAvgFilterFracDelay" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("tapDelaySetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8138 8158])
+                    ("" variable (:type ("taps" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8159 8164])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8165 8177]))                  
+                :type "void")
+                nil [8097 8951])
+            ("app_delayMatchSetFirDelay" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [9181 9212])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [9213 9219])
+                    ("delay" variable (:type ("INT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [9220 9232]))                  
+                :type "void")
+                nil [9150 9713])
+            ("app_delayMatchGetResult" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearMaxSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [9999 10030])
+                    ("" variable (:type ("sData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [10031 10037]))                  
+                :type ("INT32" type (:type "class") nil nil))
+                nil [9969 10583]))          
+      :file "app_DelayMatch.c"
+      :pointmax 10584
+      :fsize 10911
+      :lastmodtime '(21427 16190 305137 100000)
+      :unmatched-syntax '((punctuation 10029 . 10030) (punctuation 9211 . 9212) (punctuation 8157 . 8158) (punctuation 7713 . 7714) (punctuation 6977 . 6978) (punctuation 6949 . 6950) (punctuation 5102 . 5103) (punctuation 5076 . 5077) (punctuation 2989 . 2990) (punctuation 2961 . 2962) (punctuation 1315 . 1316))
+      :lexical-table 
+        '(("DEL_MATCH_PSDSETUP_SCALE" . ((number "12" 336 . 338)))
+          ("DEL_MATCH_RANGESUM_DCOS" . ((number "2" 421 . 422)))
+          ("DEL_MATCH_EMP_RUNS" . ((number "1" 216 . 217)))
+          ("DEL_MATCH_MIN_INT_COEFF" . ((number "0" 739 . 740)))
+          ("DEL_MATCH_MIN_FIR_COEFF" . ((punctuation "-" 651 . 652) (number "2048" 652 . 656)))
+          ("DEL_MATCH_WARN_BWHI" . ((number "101" 919 . 922)))
+          ("DEL_MATCH_PSDLENGTH" . ((number "3910" 249 . 253)))
+          ("DEL_MATCH_DELAY_OFFSET" . ((number "0" 774 . 775)))
+          ("DEL_MATCH_MAX_INT_COEFF" . ((number "5" 703 . 704)))
+          ("DEL_MATCH_MAX_FIR_COEFF" . ((number "2047" 599 . 603)))
+          ("DEL_MATCH_RANGESUM_BWOS" . ((number "0" 491 . 492)))
+          ("DEL_MATCH_FIR_COURSE_STEP" . ((number "128" 812 . 815)))
+          ("DEL_MATCH_WARN_BWLO" . ((number "100" 884 . 887)))
+          ("DEL_MATCH_MAX_COST" . ((semantic-list "(2^31 - 1)" 554 . 564)))
+          ("DEL_MATCH_FIR_FINE_STEP" . ((number "16" 850 . 852)))
+          )
+)
+    (semanticdb-table "app_controlPdet.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("reg51.h" include (:system-flag t) nil [113 131])
+            ("ABSACC.h" include (:system-flag t) nil [132 151])
+            ("hal_reg.h" include (:system-flag t) nil [153 173])
+            ("hal_globalDef.h" include (:system-flag t) nil [174 200])
+            ("app_controlPdet.h" include (:system-flag t) nil [202 230])
+            ("app_monitor.h" include (:system-flag t) nil [231 255])
+            ("app_util.h" include (:system-flag t) nil [256 277])
+            ("hw.h" include (:system-flag t) nil [279 294])
+            ("hw_DLY_gen.h" include (:system-flag t) nil [295 318])
+            ("hw_PDET_gen.h" include (:system-flag t) nil [319 343])
+            ("hw_specsPDETRegs_gen.h" include (:system-flag t) nil [344 377])
+            ("hw_TX_PDETRegs_gen.h" include (:system-flag t) nil [378 409])
+            ("hw_specsBBMRegs_gen.h" include (:system-flag t) nil [410 442])
+            ("hw_DSADC.h" include (:system-flag t) nil [443 464])
+            ("hw_SHARED_DSADCRegs_gen.h" include (:system-flag t) nil [465 501])
+            ("hw_CORR_DLYRegs_gen.h" include (:system-flag t) nil [502 534])
+            ("hw_M8051_ACC_M8051_ACCRegs_gen.h" include (:system-flag t) nil [535 578])
+            ("cPdetRfinGainTable" variable
+               (:dereference 1
+                :default-value "{ 	0, 0, 10, 10, 19, 19, 29, 38, 38, 47, 47, 56, 65, 65, 74, 83,
+												83, 91, 100, 100, 108, 117, 117, 125, 133, 133, 141, 149, 157, 157, 165, 173,
+												180, 180, 188, 195, 203, 203, 217, 217, 225, 232, 239, 246, 253, 260, 266, 266,
+												280, 286, 293, 293, 306, 312, 319, 325, 331, 337, 344, 350, 356, 362, 373, 379,
+												385, 391, 397, 402, 413, 419, 424, 430, 441, 446, 451, 462, 472, 477, 487, 487,
+												497, 507, 512, 522, 531, 536, 545, 550, 559, 568, 577, 582, 590, 599, 608, 616,
+												625, 629, 637, 645, 653, 661, 673, 677, 688, 696, 707, 715, 722, 729, 740, 747,
+												761, 768, 775, 782, 795, 802, 812, 818, 831, 840, 849, 859, 868, 877, 888, 897,
+												903, 911, 923, 931, 942, 950, 963, 971, 982, 992, 1002, 1012, 1024, 1034, 1048, 1057,
+												1069, 1080, 1091, 1102, 1115, 1124, 1139, 1147, 1161, 1171, 1183, 1193, 1208, 1219, 1232, 1243,
+												1258, 1268, 1282, 1294, 1309, 1319, 1333, 1343, 1360, 1371, 1386, 1399, 1416, 1426, 1442, 1455,
+												1474, 1485, 1501, 1513, 1530, 1543, 1560, 1573, 1591, 1605, 1622, 1636, 1655, 1669, 1689, 1704,
+												1725, 1738, 1756, 1771, 1792, 1808, 1828, 1845, 1869, 1885, 1907, 1924, 1946, 1963, 1987, 2004,
+												2030, 2048, 2072, 2091, 2118, 2137, 2162, 2182, 2210, 2230, 2258, 2279, 2310, 2331, 2362, 2385,
+												2417, 2440, 2471, 2496, 2531, 2557, 2592, 2618, 2655, 2684, 2720, 2749, 2792, 2822, 2865, 2897,
+												2946, 2979, 3024, 3060, 3110, 3147, 3201, 3241, 3301, 3343, 3401, 3448, 3514, 3564, 3633, 3687 	}"
+                :type ("code" type (:type "class") nil nil))
+                nil [750 2344])
+            ("dcOffsetPdetCtrlDacAddrs" variable
+               (:dereference 1
+                :default-value "{ 
+                                            TXA_BASEADDR,
+                                            TXA_BASEADDR,
+                                            }"
+                :type ("code" type (:type "class") nil nil))
+                nil [2690 2890])
+            ("dcOffsetPdetSenseAtbAddrs" variable
+               (:dereference 1
+                :default-value "{ 
+                                            TXACORR_BASEADDR,
+                                            TXACORR_BASEADDR,
+                                            }"
+                :type ("code" type (:type "class") nil nil))
+                nil [3480 3689])
+            ("dcOffsetPdetConncectSenseAtbValues" variable
+               (:dereference 1
+                :default-value "{ 
+													0x59,  	// (PDET) F2PXXF2N
+													0x59,  	// (EDET) F2PXXF2N
+													}"
+                :type ("code" type (:type "class") nil nil))
+                nil [4151 4294])
+            ("dcOffsetDisConncectSenseAtbValues" variable
+               (:default-value "0x55"
+                :type ("code" type (:type "class") nil nil))
+                nil [4434 4480])
+            ("dcOffsetPdetTarget" variable
+               (:dereference 1
+                :default-value "{ -60 }"
+                :type ("code" type (:type "class") nil nil))
+                nil [4551 4588])
+            ("app_controlPdetGetDefaultAgcSetup" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("pdetAgcSetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [4860 4880])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pdetAgc" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4881 4896]))                  
+                :type "void")
+                nil [4819 7189])
+            ("app_controlPdetRunAgc" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("pdetAgcSetup" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7727 7747])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("pdetAgc" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [7748 7762])
+                    ("xdata" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7764 7785])
+                    ("" variable (:type ("baseAddr" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [7777 7786]))                  
+                :type "void")
+                nil [7699 9782])
+            ("app_controlPdetGetDcOffsetLinearSearch" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [10116 10145])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("dcOffsetSearch" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [10146 10168]))                  
+                :type "void")
+                nil [10070 10654])
+            ("app_controlPdetRunDcOffset" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("linearSearchDataType1" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [10951 10980])
+                    ("" variable
+                       (:constant-flag t
+                        :type ("dcOffsetSearch" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [10981 11003]))                  
+                :type "void")
+                nil [10917 11825])
+            ("app_controlPdetSetDcOffsetCtrlDacVal" function
+               (:arguments 
+                  ( ("value" variable (:type ("INT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [11871 11882])
+                    ("index" variable (:type ("UINT8" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [11883 11895])
+                    ("baseAddr" variable (:type ("UINT16" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [11896 11913]))                  
+                :type "void")
+                nil [11827 12027]))          
+      :file "app_controlPdet.c"
+      :pointmax 12028
+      :fsize 12318
+      :lastmodtime '(21427 16190 333645 0)
+      :unmatched-syntax '((punctuation 10979 . 10980) (punctuation 10144 . 10145) (punctuation 7746 . 7747) (punctuation 4879 . 4880) (symbol 4546 . 4550) (symbol 4428 . 4433) (symbol 4145 . 4150) (symbol 3473 . 3479) (symbol 2683 . 2689) (symbol 744 . 749)))
+    (semanticdb-table "app_mainProfiler.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("hal_globalDef.h" include (:system-flag t) nil [964 990])
+            ("rtx_semaphore.h" include (:system-flag t) nil [992 1018])
+            ("hal_intr.h" include (:system-flag t) nil [1021 1042])
+            ("hal_GLOBAL_SCRATCH.h" include (:system-flag t) nil [1043 1074])
+            ("hal_APP.h" include (:system-flag t) nil [1078 1098])
+            ("hal_APP_ADDR.h" include (:system-flag t) nil [1100 1125])
+            ("hal_reg.h" include (:system-flag t) nil [1127 1147])
+            ("hal_globalError.h" include (:system-flag t) nil [1151 1179])
+            ("hal_globalWarning.h" include (:system-flag t) nil [1181 1211])
+            ("hal_globalSys.h" include (:system-flag t) nil [1213 1239])
+            ("app_monitor.h" include (:system-flag t) nil [1240 1264])
+            ("rtx_main.h" include (:system-flag t) nil [1266 1287])
+            ("limits.h" include (:system-flag t) nil [1289 1308])
+            ("math.h" include (:system-flag t) nil [1310 1327])
+            ("hw_BBM_BBMRegs_gen.h" include (:system-flag t) nil [1329 1360])
+            ("hw_DLYDAC_gen.h" include (:system-flag t) nil [1361 1387])
+            ("hw_M8051_ACC.h" include (:system-flag t) nil [1388 1413])
+            ("hw_BBM.h" include (:system-flag t) nil [1414 1433])
+            ("reg51.h" include (:system-flag t) nil [1434 1452])
+            ("ABSACC.h" include (:system-flag t) nil [1453 1472])
+            ("hw.h" include (:system-flag t) nil [1474 1489])
+            ("compiler.h" include (:system-flag t) nil [1491 1512])
+            ("hal_regA.h" include (:system-flag t) nil [1514 1535])
+            ("stdlib.h" include (:system-flag t) nil [1536 1555])
+            ("app_adaptSpsa3.h" include (:system-flag t) nil [1556 1583])
+            ("hw_TX_PDETRegs_gen.h" include (:system-flag t) nil [1585 1616])
+            ("hw_SPM.h" include (:system-flag t) nil [1618 1637])
+            ("hal_GLOBAL_SCRATCH.h" include (:system-flag t) nil [1639 1670])
+            ("hw_SYSCLK_PLLRINGRegs_gen.h" include (:system-flag t) nil [1672 1710])
+            ("hw_SLOPI_SLOPIRegs_gen.h" include (:system-flag t) nil [1712 1747])
+            ("hw_M8051_ACC_M8051_ACCRegs_gen.h" include (:system-flag t) nil [1749 1792])
+            ("hw_SHARED_CHIPRegs_gen.h" include (:system-flag t) nil [1794 1829])
+            ("hw_TEMP.h" include (:system-flag t) nil [1833 1853])
+            ("hw_DSADC.h" include (:system-flag t) nil [1855 1876])
+            ("msg_cmd.h" include (:system-flag t) nil [1880 1900])
+            ("stdlib.h" include (:system-flag t) nil [1902 1921])
+            ("tools_profiler.h" include (:system-flag t) nil [1925 1952])
+            ("intrins.h" include (:system-flag t) nil [1954 1974])
+            ("g_uiTestNop0__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3005 3035])
+            ("g_uiTestNop1__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3044 3074])
+            ("g_uiTestNop2__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3083 3113])
+            ("g_uiTestNop3__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3122 3152])
+            ("g_uiTestNop4__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3161 3191])
+            ("g_uiTestWait100__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3200 3233])
+            ("g_uiDcOffsetPdetSearchAllFirst__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3242 3290])
+            ("g_uiDcOffsetPdetSearchAllSecond__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3299 3348])
+            ("g_uiPdetAgcSearchAllFirst__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3357 3400])
+            ("g_uiPdetAgcSearchAllSecond__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3409 3453])
+            ("g_uiMalloc100__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3462 3493])
+            ("g_uiFree__Profiler_" variable (:type ("xdata" type (:type "class") nil nil)) nil [3502 3528])
+            ("g_pTestPointer" variable
+               (:pointer 1
+                :type ("xdata" type (:type "class") nil nil))
+                nil [3537 3559])
+            ("i" variable (:type ("UINT8" type (:type "class") nil nil)) nil [3561 3569])
+            ("app_mainSetup8051" function (:type "void") nil [4223 4954])
+            ("app_mainSetupAnalog" function (:type "void") nil [4956 5613])
+            ("app_mainSetupDigital" function (:type "void") nil [5614 5780])
+            ("app_mainGetDevInfo" function (:type "void") nil [5782 6213])
+            ("app_mainGetAppZoneInfo" function (:type "void") nil [6257 6740])
+            ("app_mainDummyAppVarsUsage" function (:type "void") nil [6907 7574])
+            ("app_mainAdaptChangeHandler" function
+               (:arguments 
+                  ( ("config" variable
+                       (:pointer 1
+                        :type ("adaptSpsaConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [7610 7634]))                  
+                :type "void")
+                nil [7578 7650])
+            ("app_mainPowerChangeHandler" function
+               (:arguments 
+                  ( ("config" variable
+                       (:pointer 1
+                        :type ("monitorConfig" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [7686 7708]))                  
+                :type "void")
+                nil [7654 7771])
+            ("app_mainUpdateMcuBasic" function
+               (:arguments 
+                  ( ("xdata" variable (:type ("_McuBasicPathA" type
+                         (:prototype t
+                          :type "struct")
+                          nil nil)) (reparse-symbol arg-sub-list) [7999 8027])
+                    ("" variable (:type ("gMcuBasic" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8028 8038])
+                    ("xdata" variable (:type ("multipleRunData" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8039 8061])
+                    ("" variable (:type ("result" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [8062 8069]))                  
+                :type "void")
+                nil [7971 8672])
+            ("NUM_ADAPT_COEFS" variable (:constant-flag t) nil [8915 8930])
+            ("NUM_MULT_COEFS" variable (:constant-flag t) nil [8942 8956])
+            ("NUM_PDET_DC_COEFS" variable (:constant-flag t) nil [8967 8984])
+            ("NUM_PDET_AGC_COEFS" variable (:constant-flag t) nil [8995 9013])
+            ("TEMPCHANGEVCOLIMIT" variable (:constant-flag t) nil [9024 9042])
+            ("TEMPCHANGEPDETLIMIT" variable (:constant-flag t) nil [9054 9073])
+            ("NUMBER_OF_EMP_RUNS_FOR_10ms" variable (:constant-flag t) nil [9085 9112])
+            ("AGCTARGET" variable (:constant-flag t) nil [9125 9134])
+            ("TASK_" function
+               (:arguments 
+                  ( ("" variable (:type ("MAIN_TASK" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [9201 9211]))                  
+                :type "int")
+                nil [9195 23415]))          
+      :file "app_mainProfiler.c"
+      :pointmax 23417
+      :fsize 23416
+      :lastmodtime '(21152 58001 0 0)
+      :unmatched-syntax '((semantic-list 9192 . 9194) (symbol 9181 . 9192) (VOID 9176 . 9180) (punctuation 8060 . 8061) (punctuation 8026 . 8027) (VOID 3532 . 3536) (symbol 3495 . 3501) (symbol 3455 . 3461) (symbol 3402 . 3408) (symbol 3350 . 3356) (symbol 3292 . 3298) (symbol 3235 . 3241) (symbol 3193 . 3199) (symbol 3154 . 3160) (symbol 3115 . 3121) (symbol 3076 . 3082) (symbol 3037 . 3043) (symbol 2998 . 3004))
+      :lexical-table 
+        '(("NUM_ADAPT_COEFS" . ((number "20" 8931 . 8933)))
+          ("TEMPCHANGEPDETLIMIT" . ((number "10" 9074 . 9076)))
+          ("AGCTARGET" . ((number "13363" 9135 . 9140)))
+          ("NUM_MULT_COEFS" . ((number "9" 8957 . 8958)))
+          ("NUMBER_OF_EMP_RUNS_FOR_10ms" . ((number "244" 9113 . 9116)))
+          ("TEMPCHANGEVCOLIMIT" . ((number "10" 9043 . 9045)))
+          ("NUM_PDET_AGC_COEFS" . ((number "1" 9014 . 9015)))
+          ("NUM_PDET_DC_COEFS" . ((number "1" 8985 . 8986)))
+          )
+))
+  :file "!home!ubuntu!proj!fw_laptop!app!src!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
