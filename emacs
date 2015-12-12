@@ -47,7 +47,6 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq org-confirm-babel-evaluate nil)
 
-(require 'ein)
 (setq org-todo-keywords
        '((sequence "TODO" "STARTED" "VERIFY" "LATER" "|" "DONE" "DELEGATED")))
 (setq org-todo-keyword-faces
