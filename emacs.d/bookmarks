@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-refile-last-stored"
+(("org-capture-last-stored"
+ (filename . "~/proj/docs/doc.org")
+ (front-context-string . "* TODO test123\n ")
+ (rear-context-string . "o autogenerate.\n")
+ (position . 715591))
+("org-refile-last-stored"
  (filename . "~/proj/docs/scintera.org")
  (front-context-string . "** DONE Disable ")
  (rear-context-string . "emperatures    \n")
