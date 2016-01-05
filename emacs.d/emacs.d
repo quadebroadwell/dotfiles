@@ -1,1 +1,0 @@
-/home/osboxes/dotfiles/emacs.d
