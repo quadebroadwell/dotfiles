@@ -2,7 +2,7 @@
 ;Dont forget to install ob-ipython!!
 ; Dont forget to start ipython notebook session
 
-(require 'ob-ipython)
+;(require 'ob-ipython)
 (global-visual-line-mode)
 
 ;;("hidelinks" "hyperref" f)

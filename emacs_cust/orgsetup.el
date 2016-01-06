@@ -10,6 +10,7 @@
 (setq org-mobile-directory "~/proj/docs")
 (setq org-agenda-files '("~/proj/docs/doc.org"))
 (setq org-mobile-inbox-for-pull "~/proj/docs/from-mobile.org")
+(require 'ob-ipython)
 ;(require 'org-install)
 
 ;(global-set-key "\C-cl" 'org-store-link)
