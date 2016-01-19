@@ -1,7 +1,6 @@
 ;;; packages.el --- Javascript Layer packages File for Spacemacs
 ;;
-;; Copyright (c) 2012-2014 Sylvain Benner
-;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -191,6 +190,8 @@
     :init (add-hook 'js2-mode-hook 'tern-mode)
     :config
     (progn
+      (when javascript-disable-tern-port-files
+        (add-to-list 'tern-command "--no-port-file" 'append))
       (spacemacs/set-leader-keys-for-major-mode 'js2-mode "rrV" 'tern-rename-variable)
       (spacemacs/set-leader-keys-for-major-mode 'js2-mode "hd" 'tern-get-docs)
       (spacemacs/set-leader-keys-for-major-mode 'js2-mode "gg" 'tern-find-definition)

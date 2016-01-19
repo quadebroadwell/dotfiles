@@ -1,7 +1,6 @@
 ;;; packages.el --- Python Layer packages File for Spacemacs
 ;;
-;; Copyright (c) 2012-2014 Sylvain Benner
-;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -90,15 +89,17 @@
        (`on-project-switch
         (add-hook 'projectile-after-switch-project-hook 'pyenv-mode-set-local-version)))
       (spacemacs/set-leader-keys-for-major-mode 'python-mode
-        "vs" 'pyenv-mode-set
-        "vu" 'pyenv-mode-unset))))
+        "vu" 'pyenv-mode-unset
+        "vs" 'pyenv-mode-set))))
 
 (defun python/init-pyvenv ()
   (use-package pyvenv
     :defer t
     :init
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "V" 'pyvenv-workon)))
+      "Va" 'pyvenv-activate
+      "Vd" 'pyvenv-deactivate
+      "Vw" 'pyvenv-workon)))
 
 (defun python/init-pytest ()
   (use-package pytest
@@ -223,7 +224,8 @@
       (spacemacs/declare-prefix-for-mode 'python-mode "mt" "test")
       (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
       (spacemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
-      (spacemacs/declare-prefix-for-mode 'python-mode "mv" "venv")
+      (spacemacs/declare-prefix-for-mode 'python-mode "mv" "pyenv")
+      (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
       (spacemacs/set-leader-keys-for-major-mode 'python-mode
         "cc" 'spacemacs/python-execute-file
         "cC" 'spacemacs/python-execute-file-focus
@@ -281,11 +283,12 @@
   (use-package hy-mode
     :defer t))
 
-(defun python/init-helm-pydoc ()
-  (use-package helm-pydoc
-    :defer t
-    :init
-    (spacemacs/set-leader-keys-for-major-mode 'python-mode "hd" 'helm-pydoc)))
+(when (configuration-layer/layer-usedp 'spacemacs-helm)
+  (defun python/init-helm-pydoc ()
+    (use-package helm-pydoc
+      :defer t
+      :init
+      (spacemacs/set-leader-keys-for-major-mode 'python-mode "hd" 'helm-pydoc))))
 
 (defun python/post-init-smartparens ()
   (defadvice python-indent-dedent-line-backspace
@@ -331,7 +334,8 @@ fix this issue."
     :post-init
     (spacemacs/set-leader-keys-for-major-mode 'python-mode "gi" 'cscope/run-pycscope)))
 
-(defun python/pre-init-helm-cscope ()
-  (spacemacs|use-package-add-hook xcscope
-    :post-init
-    (spacemacs/setup-helm-cscope 'python-mode)))
+(when (configuration-layer/layer-usedp 'spacemacs-helm)
+  (defun python/pre-init-helm-cscope ()
+    (spacemacs|use-package-add-hook xcscope
+      :post-init
+      (spacemacs/setup-helm-cscope 'python-mode))))

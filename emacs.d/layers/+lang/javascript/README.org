@@ -30,11 +30,9 @@ This layer adds support for the JavaScript language using [[https://github.com/m
 - Get the path to a JSON value with [[https://github.com/Sterlingg/json-snatcher][json-snatcher]]
   
 * Install
-
-To use this contribution add it to your =~/.spacemacs=
-#+BEGIN_SRC emacs-lisp
-  (setq-default dotspacemacs-configuration-layers '(javascript))
-#+END_SRC
+To use this configuration layer, add it to your =~/.spacemacs=. You will need to
+add =javascript= to the existing =dotspacemacs-configuration-layers= list in this
+file.
 
 You will also need to install =tern= to use the auto-completion and
 documentation features:
@@ -54,13 +52,22 @@ To activate error checking using flycheck install =JSHint=:
 
 * Configuration
 
+To make tern re-use the server across multiple different editing sessions (thus
+creating multiple =.tern-port= files for each document you have open [[http://ternjs.net/doc/manual.html][see here
+for more details]]):
+
+#+BEGIN_SRC emacs-lisp
+  (javascript :variables javascript-disable-tern-port-files nil)
+#+END_SRC
+
 To change how js2-mode indents code, set the variable =js2-basic-offset=, as such:
 
 #+BEGIN_SRC emacs-lisp
   (setq-default js2-basic-offset 2)
 #+END_SRC
 
-Similarly, to change how js-mode indents JSON files, set the variable =js-indent-level=, as such:
+Similarly, to change how js-mode indents JSON files, set the variable
+=js-indent-level=, as such:
 
 #+BEGIN_SRC emacs-lisp
   (setq-default js-indent-level 2)

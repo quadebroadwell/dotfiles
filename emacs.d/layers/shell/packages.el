@@ -1,7 +1,6 @@
 ;;; packages.el --- shell packages File for Spacemacs
 ;;
-;; Copyright (c) 2012-2014 Sylvain Benner
-;; Copyright (c) 2014-2015 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -19,8 +18,10 @@
         xterm-color
         shell
         shell-pop
+        smooth-scrolling
         term
         eshell
+        eshell-z
         eshell-prompt-extras
         esh-help
         magit
@@ -154,6 +155,13 @@ is achieved by adding the relevant text properties."
         (kbd "C-k") 'eshell-previous-matching-input-from-input
         (kbd "C-j") 'eshell-next-matching-input-from-input))))
 
+(defun shell/init-eshell-z ()
+  (use-package eshell-z
+    :defer t
+    :init
+    (with-eval-after-load 'eshell
+      (require 'eshell-z))))
+
 (defun shell/init-esh-help ()
   (use-package esh-help
     :defer t
@@ -167,33 +175,34 @@ is achieved by adding the relevant text properties."
     (setq eshell-highlight-prompt nil
           eshell-prompt-function 'epe-theme-lambda)))
 
-(defun shell/pre-init-helm ()
-  (spacemacs|use-package-add-hook helm
-    :post-init
-    (progn
-      ;; eshell
-      (defun spacemacs/helm-eshell-history ()
-        "Correctly revert to insert state after selection."
-        (interactive)
-        (helm-eshell-history)
-        (evil-insert-state))
-      (defun spacemacs/helm-shell-history ()
-        "Correctly revert to insert state after selection."
-        (interactive)
-        (helm-comint-input-ring)
-        (evil-insert-state))
-      (defun spacemacs/init-helm-eshell ()
-        "Initialize helm-eshell."
-        ;; this is buggy for now
-        ;; (define-key eshell-mode-map (kbd "<tab>") 'helm-esh-pcomplete)
-        (spacemacs/set-leader-keys-for-major-mode 'eshell-mode
-          "H" 'spacemacs/helm-eshell-history)
-        (define-key eshell-mode-map
-          (kbd "M-l") 'spacemacs/helm-eshell-history))
-      (add-hook 'eshell-mode-hook 'spacemacs/init-helm-eshell)
-      ;;shell
-      (spacemacs/set-leader-keys-for-major-mode 'shell-mode
-        "H" 'spacemacs/helm-shell-history))))
+(when (configuration-layer/layer-usedp 'spacemacs-helm)
+  (defun shell/pre-init-helm ()
+    (spacemacs|use-package-add-hook helm
+      :post-init
+      (progn
+        ;; eshell
+        (defun spacemacs/helm-eshell-history ()
+          "Correctly revert to insert state after selection."
+          (interactive)
+          (helm-eshell-history)
+          (evil-insert-state))
+        (defun spacemacs/helm-shell-history ()
+          "Correctly revert to insert state after selection."
+          (interactive)
+          (helm-comint-input-ring)
+          (evil-insert-state))
+        (defun spacemacs/init-helm-eshell ()
+          "Initialize helm-eshell."
+          ;; this is buggy for now
+          ;; (define-key eshell-mode-map (kbd "<tab>") 'helm-esh-pcomplete)
+          (spacemacs/set-leader-keys-for-major-mode 'eshell-mode
+            "H" 'spacemacs/helm-eshell-history)
+          (define-key eshell-mode-map
+            (kbd "M-l") 'spacemacs/helm-eshell-history))
+        (add-hook 'eshell-mode-hook 'spacemacs/init-helm-eshell)
+        ;;shell
+        (spacemacs/set-leader-keys-for-major-mode 'shell-mode
+          "H" 'spacemacs/helm-shell-history)))))
 
 (defun shell/init-multi-term ()
   (use-package multi-term
@@ -312,6 +321,12 @@ is achieved by adding the relevant text properties."
         "asm" 'shell-pop-multiterm
         "ast" 'shell-pop-ansi-term
         "asT" 'shell-pop-term))))
+
+(defun shell/post-init-smooth-scrolling ()
+  (spacemacs/add-to-hooks 'spacemacs//unset-scroll-margin
+                          '(eshell-mode-hook
+                            comint-mode-hook
+                            term-mode-hook)))
 
 (defun shell/init-term ()
   (defun term-send-tab ()
