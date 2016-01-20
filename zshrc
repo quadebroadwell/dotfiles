@@ -11,7 +11,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="xiong-chiamiov-plus"
 
 # Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
@@ -27,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx)
+plugins=(git git-hub command-not-found django gnu-utils history-substring-search node npm pip python svn)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -52,6 +52,7 @@ alias gk='gitk --all&'
 alias gx='gitx --all'
 alias got='git '
 alias get='git '
+alias ec='emacsclient -c'
 
 # qfind - used to quickly find files that contain a string in a directory
 qfind () {
@@ -61,6 +62,10 @@ qfind () {
 
 # Custom exports
 ## Set EDITOR to /usr/bin/vim if Vim is installed
-if [ -f /usr/bin/vim ]; then
-    export EDITOR=/usr/bin/vim
-fi
+
+export EDITOR='/usr/bin/emacsclient -c'
+# bind UP and DOWN arrow keys
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
