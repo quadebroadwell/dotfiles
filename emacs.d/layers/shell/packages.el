@@ -18,10 +18,8 @@
         xterm-color
         shell
         shell-pop
-        smooth-scrolling
         term
         eshell
-        eshell-z
         eshell-prompt-extras
         esh-help
         magit
@@ -71,7 +69,9 @@ the user activate the completion manually."
             ;; my prompt is easy enough to see
             eshell-highlight-prompt nil
             ;; treat 'echo' like shell echo
-            eshell-plain-echo-behavior t)
+            eshell-plain-echo-behavior t
+            ;; cache directory
+            eshell-directory-name (concat spacemacs-cache-directory "eshell/"))
 
       (defun spacemacs//eshell-auto-end ()
         "Move point to end of current prompt when switching to insert state."
@@ -128,8 +128,8 @@ is achieved by adding the relevant text properties."
       (require 'esh-opt)
 
       ;; quick commands
-      (defalias 'e 'find-file-other-window)
-      (defalias 'd 'dired)
+      (defalias 'eshell/e 'find-file-other-window)
+      (defalias 'eshell/d 'dired)
       (setenv "PAGER" "cat")
 
       ;; support `em-smart'
@@ -155,13 +155,6 @@ is achieved by adding the relevant text properties."
         (kbd "C-k") 'eshell-previous-matching-input-from-input
         (kbd "C-j") 'eshell-next-matching-input-from-input))))
 
-(defun shell/init-eshell-z ()
-  (use-package eshell-z
-    :defer t
-    :init
-    (with-eval-after-load 'eshell
-      (require 'eshell-z))))
-
 (defun shell/init-esh-help ()
   (use-package esh-help
     :defer t
@@ -175,34 +168,33 @@ is achieved by adding the relevant text properties."
     (setq eshell-highlight-prompt nil
           eshell-prompt-function 'epe-theme-lambda)))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun shell/pre-init-helm ()
-    (spacemacs|use-package-add-hook helm
-      :post-init
-      (progn
-        ;; eshell
-        (defun spacemacs/helm-eshell-history ()
-          "Correctly revert to insert state after selection."
-          (interactive)
-          (helm-eshell-history)
-          (evil-insert-state))
-        (defun spacemacs/helm-shell-history ()
-          "Correctly revert to insert state after selection."
-          (interactive)
-          (helm-comint-input-ring)
-          (evil-insert-state))
-        (defun spacemacs/init-helm-eshell ()
-          "Initialize helm-eshell."
-          ;; this is buggy for now
-          ;; (define-key eshell-mode-map (kbd "<tab>") 'helm-esh-pcomplete)
-          (spacemacs/set-leader-keys-for-major-mode 'eshell-mode
-            "H" 'spacemacs/helm-eshell-history)
-          (define-key eshell-mode-map
-            (kbd "M-l") 'spacemacs/helm-eshell-history))
-        (add-hook 'eshell-mode-hook 'spacemacs/init-helm-eshell)
-        ;;shell
-        (spacemacs/set-leader-keys-for-major-mode 'shell-mode
-          "H" 'spacemacs/helm-shell-history)))))
+(defun shell/pre-init-helm ()
+  (spacemacs|use-package-add-hook helm
+    :post-init
+    (progn
+      ;; eshell
+      (defun spacemacs/helm-eshell-history ()
+        "Correctly revert to insert state after selection."
+        (interactive)
+        (helm-eshell-history)
+        (evil-insert-state))
+      (defun spacemacs/helm-shell-history ()
+        "Correctly revert to insert state after selection."
+        (interactive)
+        (helm-comint-input-ring)
+        (evil-insert-state))
+      (defun spacemacs/init-helm-eshell ()
+        "Initialize helm-eshell."
+        ;; this is buggy for now
+        ;; (define-key eshell-mode-map (kbd "<tab>") 'helm-esh-pcomplete)
+        (spacemacs/set-leader-keys-for-major-mode 'eshell-mode
+          "H" 'spacemacs/helm-eshell-history)
+        (define-key eshell-mode-map
+          (kbd "M-l") 'spacemacs/helm-eshell-history))
+      (add-hook 'eshell-mode-hook 'spacemacs/init-helm-eshell)
+      ;;shell
+      (spacemacs/set-leader-keys-for-major-mode 'shell-mode
+        "H" 'spacemacs/helm-shell-history))))
 
 (defun shell/init-multi-term ()
   (use-package multi-term
@@ -276,7 +268,7 @@ is achieved by adding the relevant text properties."
     :init
     (progn
       (setq shell-pop-window-position shell-default-position
-            shell-pop-window-height   shell-default-height
+            shell-pop-window-size     shell-default-height
             shell-pop-term-shell      shell-default-term-shell
             shell-pop-full-span t)
       (defmacro make-shell-pop-command (type &optional shell)
@@ -303,7 +295,8 @@ is achieved by adding the relevant text properties."
                                 (lambda (proc change)
                                   (when (string-match "\\(finished\\|exited\\)" change)
                                     (kill-buffer (process-buffer proc))
-                                    (delete-window))))))
+                                    (when (> (count-windows) 1)
+                                      (delete-window)))))))
       (add-hook 'term-mode-hook 'ansi-term-handle-close)
       (add-hook 'term-mode-hook (lambda () (linum-mode -1)))
 
@@ -321,12 +314,6 @@ is achieved by adding the relevant text properties."
         "asm" 'shell-pop-multiterm
         "ast" 'shell-pop-ansi-term
         "asT" 'shell-pop-term))))
-
-(defun shell/post-init-smooth-scrolling ()
-  (spacemacs/add-to-hooks 'spacemacs//unset-scroll-margin
-                          '(eshell-mode-hook
-                            comint-mode-hook
-                            term-mode-hook)))
 
 (defun shell/init-term ()
   (defun term-send-tab ()

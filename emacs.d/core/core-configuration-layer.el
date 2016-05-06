@@ -216,15 +216,24 @@ refreshed during the current session."
                    (car archive) i count) t))
         (spacemacs//redisplay)
         (setq i (1+ i))
-        (unless (eq 'error (with-timeout
-                               (dotspacemacs-elpa-timeout
-                                (progn
-                                  (spacemacs-buffer/append
-                                   (format
-                                    "\nError while contacting %s repository!"
-                                    (car archive)))
-                                  'error))
-                             (url-retrieve-synchronously (cdr archive))))
+        (unless (eq 'error
+                    (with-timeout
+                        (dotspacemacs-elpa-timeout
+                         (progn
+                           (display-warning
+                            'spacemacs
+                            (format
+                             "\nError connection time out for %s repository!"
+                             (car archive)) :warning)
+                           'error))
+                      (condition-case err
+                          (url-retrieve-synchronously (cdr archive))
+                        ('error
+                         (display-warning 'spacemacs
+                          (format
+                           "\nError while contacting %s repository!"
+                           (car archive)) :warning)
+                         'error))))
           (let ((package-archives (list archive)))
             (package-refresh-contents))))
       (package-read-all-archive-contents)
@@ -263,12 +272,8 @@ layer directory."
             (candidates . ,(append current-layer-paths
                                    (list other-choice)))
             (action . (lambda (c) c))))
-         (layer-path-sel (if (configuration-layer/layer-usedp 'spacemacs-ivy)
-                             (ivy-read "Configuration layer path: "
-                                       (append current-layer-paths
-                                               (list other-choice)))
-                           (helm :sources helm-lp-source
-                                 :prompt "Configuration layer path: ")))
+         (layer-path-sel (helm :sources helm-lp-source
+                               :prompt "Configuration layer path: "))
          (layer-path (cond
                       ((string-equal layer-path-sel other-choice)
                        (read-directory-name (concat "Other configuration "
@@ -349,7 +354,7 @@ Properties that can be copied are `:location', `:step' and `:excluded'."
         ;; packages
         (when (file-exists-p packages-file)
           ;; required for lazy-loading of unused layers
-          ;; for instance for helm-spacemacs-help
+          ;; for instance for helm-spacemacs
           (eval `(defvar ,(intern (format "%S-packages" name)) nil))
           (unless (configuration-layer/layer-usedp name)
             (load packages-file))
@@ -393,7 +398,7 @@ Properties that can be copied are `:location', `:step' and `:excluded'."
         ;; TODO remove extensions in 0.106.0
         (when (file-exists-p extensions-file)
           ;; required for lazy-loading of unused layers
-          ;; for instance for helm-spacemacs-help
+          ;; for instance for helm-spacemacs
           (unless (configuration-layer/layer-usedp name)
             (load extensions-file))
           (dolist (step '(pre post))
@@ -610,7 +615,7 @@ path."
         configuration-layer--layers))
 
 (defun configuration-layer/declare-layers (layer-names)
-  "Add layers with LAYER-NAMES to used layers."
+  "Add layer with LAYER-NAMES to used layers."
   (mapc 'configuration-layer/declare-layer layer-names))
 
 (defun configuration-layer/declare-layer (layer-name)
@@ -619,16 +624,6 @@ path."
     (let ((new-layer (configuration-layer/make-layer layer-name)))
       (push new-layer configuration-layer--layers)
       (configuration-layer//configure-layer new-layer))))
-
-(defun configuration-layer/remove-layers (layer-names)
-  "Remove layers with LAYER-NAMES from used layers."
-  (mapc 'configuration-layer/remove-layer layer-names))
-
-(defun configuration-layer/remove-layer (layer-name)
-  "Remove an used layer with name LAYER-NAME."
-  (setq configuration-layer--layers
-        (delete (object-assoc layer-name :name configuration-layer--layers)
-                configuration-layer--layers)))
 
 (defun configuration-layer//set-layers-variables (layers)
   "Set the configuration variables for the passed LAYERS."
@@ -640,7 +635,7 @@ path."
     (while variables
       (let ((var (pop variables)))
         (if (consp variables)
-            (condition-case err
+            (condition-case-unless-debug err
                 (set-default var (eval (pop variables)))
               ('error
                (configuration-layer//increment-error-count)
@@ -764,7 +759,9 @@ path."
     (dolist
         (dep (configuration-layer//get-package-deps-from-archive
               pkg-name))
-      (configuration-layer//activate-package (car dep)))
+      (if (package-installed-p (car dep))
+          (configuration-layer//activate-package (car dep))
+        (package-install (car dep))))
     (package-install pkg-name)))
 
 (defun configuration-layer//install-from-recipe (pkg)
@@ -882,19 +879,20 @@ path."
                            (symbol-name (oref pkg :name))))
                   load-path))
            ((eq 'local location)
-            (let* ((owner (object-assoc (oref pkg :owner) :name configuration-layer--layers))
+            (let* ((owner (object-assoc (oref pkg :owner)
+                                        :name configuration-layer--layers))
                    (dir (when owner (oref owner :dir))))
               (push (format "%slocal/%S/" dir pkg-name) load-path)
               ;; TODO remove extensions in 0.106.0
               (push (format "%sextensions/%S/" dir pkg-name) load-path)))))
         ;; configuration
+        (unless (memq (oref pkg :location) '(local site built-in))
+          (configuration-layer//activate-package pkg-name))
         (cond
          ((eq 'dotfile (oref pkg :owner))
-          (configuration-layer//activate-package pkg-name)
           (spacemacs-buffer/message
            (format "%S is configured in the dotfile." pkg-name)))
          (t
-          (configuration-layer//activate-package pkg-name)
           (configuration-layer//configure-package pkg))))))))
 
 (defun configuration-layer//configure-package (pkg)
@@ -911,7 +909,7 @@ path."
                  (format "  -> ignored pre-init (%S)..." layer))
               (spacemacs-buffer/message
                (format "  -> pre-init (%S)..." layer))
-              (condition-case err
+              (condition-case-unless-debug err
                   (funcall (intern (format "%S/pre-init-%S" layer pkg-name)))
                 ('error
                  (configuration-layer//increment-error-count)
@@ -931,7 +929,7 @@ path."
                  (format "  -> ignored post-init (%S)..." layer))
               (spacemacs-buffer/message
                (format "  -> post-init (%S)..." layer))
-              (condition-case err
+              (condition-case-unless-debug err
                   (funcall (intern (format "%S/post-init-%S" layer pkg-name)))
                 ('error
                  (configuration-layer//increment-error-count)
@@ -997,7 +995,7 @@ If called with a prefix argument ALWAYS-UPDATE, assume yes to update."
                upgrade-count) t)
       (mapc (lambda (x)
               (spacemacs-buffer/append (format "%s\n" x) t))
-            (sort (mapcar 'symbol-name update-packages) 'string<))
+            update-packages)
       (if (and (not always-update)
                (not (yes-or-no-p
                      (format "Do you want to update %s package(s) ? "
@@ -1045,7 +1043,8 @@ If called with a prefix argument ALWAYS-UPDATE, assume yes to update."
       (reverse
        (delq nil (mapcar
                   (lambda (x)
-                    (when (not (or (string= "." x) (string= ".." x)))
+                    (when (and (file-directory-p (concat rolldir x))
+                               (not (or (string= "." x) (string= ".." x))))
                       (let ((p (length (directory-files (file-name-as-directory
                                                          (concat rolldir x))))))
                         ;; -3 for . .. and rollback-info
@@ -1116,7 +1115,8 @@ to select one."
   (if (version< emacs-version "24.3.50")
       ;; fake version list to always activate the package
       (package-activate pkg '(0 0 0 0))
-    (package-activate pkg)))
+    (unless (memq pkg package-activated-list)
+      (package-activate pkg))))
 
 (defun configuration-layer/get-layers-list ()
   "Return a list of all discovered layer symbols."

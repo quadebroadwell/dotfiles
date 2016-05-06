@@ -74,11 +74,37 @@
   "bw"  'read-only-mode)
 ;; Cycling settings -----------------------------------------------------------
 (spacemacs/set-leader-keys "Tn" 'spacemacs/cycle-spacemacs-theme)
+;; describe functions ---------------------------------------------------------
+(defmacro spacemacs||set-helm-key (keys func)
+  "Define a key bindings for FUNC using KEYS.
+Ensure that helm is required before calling FUNC."
+  (let ((func-name (intern (format "spacemacs/%s" (symbol-name func)))))
+    `(progn
+       (defun ,func-name ()
+         ,(format "Wrapper to ensure that `helm' is loaded before calling %s."
+                  (symbol-name func))
+         (interactive)
+         (require 'helm)
+         (call-interactively ',func))
+       (spacemacs/set-leader-keys ,keys ',func-name))))
+(spacemacs||set-helm-key "hdb" describe-bindings)
+(spacemacs||set-helm-key "hdc" describe-char)
+(spacemacs||set-helm-key "hdf" describe-function)
+(spacemacs||set-helm-key "hdk" describe-key)
+(spacemacs||set-helm-key "hdm" describe-mode)
+(spacemacs||set-helm-key "hdp" describe-package)
+(spacemacs||set-helm-key "hdt" describe-theme)
+(spacemacs||set-helm-key "hdv" describe-variable)
+(spacemacs||set-helm-key "hn"  view-emacs-news)
+(spacemacs||set-helm-key "hL"  helm-locate-library)
+;; search functions -----------------------------------------------------------
+(spacemacs||set-helm-key "sww" helm-wikipedia-suggest)
+(spacemacs||set-helm-key "swg" helm-google-suggest)
 ;; errors ---------------------------------------------------------------------
 (spacemacs/set-leader-keys
   "en" 'spacemacs/next-error
-  "ep" 'spacemacs/previous-error
-  "eN" 'spacemacs/previous-error)
+  "eN" 'spacemacs/previous-error
+  "ep" 'spacemacs/previous-error)
 ;; file -----------------------------------------------------------------------
 (spacemacs/set-leader-keys
   "fc" 'spacemacs/copy-file
@@ -106,7 +132,6 @@
 (spacemacs/set-leader-keys
   "hdb" 'describe-bindings
   "hdc" 'describe-char
-  "hdd" 'helm-apropos
   "hdf" 'describe-function
   "hdk" 'describe-key
   "hdl" 'spacemacs/describe-last-keys
@@ -114,6 +139,7 @@
   "hds" 'spacemacs/describe-system-info
   "hdt" 'describe-theme
   "hdv" 'describe-variable
+  "hI"  'spacemacs/report-issue
   "hn"  'view-emacs-news)
 ;; insert stuff ---------------------------------------------------------------
 (spacemacs/set-leader-keys
@@ -127,19 +153,13 @@
 (spacemacs/set-leader-keys
   "jo" 'open-line
   "j=" 'spacemacs/indent-region-or-buffer
-  "jS" 'spacemacs/split-and-new-line
+  "jJ" 'spacemacs/split-and-new-line
   "jk" 'spacemacs/evil-goto-next-line-and-indent)
 
-;; navigation/jumping ---------------------------------------------------------
+;; navigation -----------------------------------------------------------------
 (spacemacs/set-leader-keys
-  "j0" 'spacemacs/push-mark-and-goto-beginning-of-line
-  "j$" 'spacemacs/push-mark-and-goto-end-of-line
-  "jb" 'bookmark-jump
-  "jd" 'dired-jump
-  "jD" 'dired-jump-other-window
-  "jf" 'find-function-at-point
-  "ji" 'spacemacs/jump-in-buffer
-  "jv" 'find-variable-at-point)
+  "jh" 'spacemacs/push-mark-and-goto-beginning-of-line
+  "jl" 'spacemacs/push-mark-and-goto-end-of-line)
 
 ;; Compilation ----------------------------------------------------------------
 (spacemacs/set-leader-keys
@@ -216,14 +236,16 @@
   :documentation "Display the fringe in GUI mode."
   :evil-leader "Tf")
 (spacemacs|add-toggle fullscreen-frame
-  :status nil
+  :status (memq (frame-parameter nil 'fullscreen) '(fullscreen fullboth))
   :on (spacemacs/toggle-frame-fullscreen)
+  :off (spacemacs/toggle-frame-fullscreen)
   :documentation "Display the current frame in full screen."
   :evil-leader "TF")
 (spacemacs|add-toggle maximize-frame
   :if (version< "24.3.50" emacs-version)
-  :status nil
+  :status (eq (frame-parameter nil 'fullscreen) 'maximized)
   :on (toggle-frame-maximized)
+  :off (toggle-frame-maximized)
   :documentation "Maximize the current frame."
   :evil-leader "TM")
 (spacemacs|add-toggle mode-line
@@ -311,7 +333,7 @@
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
   "wm"  'spacemacs/toggle-maximize-buffer
-  "wM"  'spacemacs/toggle-maximize-centered-buffer
+  "wM"  'spacemacs-centered-buffer-mode
   "wo"  'other-frame
   "wR"  'spacemacs/rotate-windows
   "ws"  'split-window-below
@@ -555,7 +577,7 @@ otherwise it is scaled down."
          dotfile-setting
        '(100 . 100))))
   ;; Immediately enter the micro-state, but also keep toggle
-  ;; accessible from helm-spacemacs-help
+  ;; accessible from helm-spacemacs
   (spacemacs/scale-transparency-micro-state))
 
 (defun spacemacs/increase-transparency ()

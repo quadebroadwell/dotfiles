@@ -19,7 +19,6 @@
     flyspell
     gnuplot
     htmlize
-    mu4e
     ;; org and org-agenda are installed by `org-plus-contrib'
     (org :location built-in)
     (org-agenda :location built-in)
@@ -74,18 +73,13 @@
     :init (spacemacs/set-leader-keys-for-major-mode 'org-mode
             "tp" 'org-plot/gnuplot)))
 
-(defun org/pre-init-mu4e ()
-  ;; Load org-mu4e when mu4e is actually loaded
-  (spacemacs|use-package-add-hook mu4e
-    :post-config (require 'org-mu4e nil 'noerror)))
-
 ;; dummy init function to force installation of `org-plus-contrib'
 (defun org/init-org-plus-contrib ())
 
 (defun org/init-org ()
   (use-package org
     :mode ("\\.org$" . org-mode)
-    :commands (org-clock-out org-occur-in-agenda-files)
+    :commands (org-clock-out org-occur-in-agenda-files org-agenda-files)
     :defer t
     :init
     (progn
@@ -104,10 +98,7 @@
             (concat spacemacs-cache-directory ".org-id-locations")
             org-log-done t
             org-startup-with-inline-images t
-            org-src-fontify-natively t
-            ;; this is consistent with the value of
-            ;; `helm-org-headings-max-depth'.
-            org-imenu-depth 8)
+            org-src-fontify-natively t)
 
       (with-eval-after-load 'org-indent
         (spacemacs|hide-lighter org-indent-mode))
@@ -231,15 +222,6 @@ Will work on both org-mode and any mode that accepts plain html."
         "xs" (spacemacs|org-emphasize spacemacs/org-strike-through ?+)
         "xu" (spacemacs|org-emphasize spacemacs/org-underline ?_)
         "xv" (spacemacs|org-emphasize spacemacs/org-verbose ?=))
-
-      (with-eval-after-load 'org-agenda
-        (define-key org-agenda-mode-map "j" 'org-agenda-next-line)
-        (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
-        ;; Since we override SPC, let's make RET do that functionality
-        (define-key org-agenda-mode-map
-          (kbd "RET") 'org-agenda-show-and-scroll-up)
-        (define-key org-agenda-mode-map
-          (kbd "SPC") spacemacs-default-map))
 
       ;; Add global evil-leader mappings. Used to access org-agenda
       ;; functionalities – and a few others commands – from any other mode.
@@ -388,7 +370,7 @@ Will work on both org-mode and any mode that accepts plain html."
   (spacemacs|define-custom-layout "@Org"
     :binding "o"
     :body
-    (find-file (first org-agenda-files))))
+    (find-file (first (org-agenda-files)))))
 
 (defun org/init-toc-org ()
   (use-package toc-org

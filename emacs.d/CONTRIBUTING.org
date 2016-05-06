@@ -81,6 +81,8 @@ Submit your contribution against the =develop= branch. You should not use
 your =master= branch to modify Spacemacs, this branch is considered to be
 read-only.
 
+You may want to [[https://github.com/syl20bnr/spacemacs/wiki/Beginner%27s-Guide-to-Contributing-a-Pull-Request-to-Spacemacs][read our beginner’s guide for Pull Requests]].
+
 /PR = Pull-Request/
 
 **** Ideally for /simple/ PRs (most of them):
@@ -151,6 +153,10 @@ also create the file headers correctly.
 Contributed configuration layers are stored in the =layers/= folder. The
 =layers/= folder also contains categories prefixed with =+= to put your layers
 in. For example a layer for a language would go in the =layers/+lang/= folder.
+
+Layer with no associated configuration will be rejected. For instance a layer
+with just a package and a hook can be easily replaced by the usage of the
+variable =dotspacemacs-additional-packages=.
 
 *** File header
 The file header for =elisp= files should look like the following template:

@@ -76,21 +76,21 @@
             company-minimum-prefix-length 2
             company-require-match nil
             company-dabbrev-ignore-case nil
-            company-dabbrev-downcase nil
-            company-frontends '(company-pseudo-tooltip-frontend)))
-            (defvar-local company-fci-mode-on-p nil)
+            company-dabbrev-downcase nil)
 
-        (defun company-turn-off-fci (&rest ignore)
-          (when (boundp 'fci-mode)
-            (setq company-fci-mode-on-p fci-mode)
-            (when fci-mode (fci-mode -1))))
+      (defvar-local company-fci-mode-on-p nil)
 
-        (defun company-maybe-turn-on-fci (&rest ignore)
-          (when company-fci-mode-on-p (fci-mode 1)))
+      (defun company-turn-off-fci (&rest ignore)
+        (when (boundp 'fci-mode)
+          (setq company-fci-mode-on-p fci-mode)
+          (when fci-mode (fci-mode -1))))
 
-        (add-hook 'company-completion-started-hook 'company-turn-off-fci)
-        (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
-        (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci)
+      (defun company-maybe-turn-on-fci (&rest ignore)
+        (when company-fci-mode-on-p (fci-mode 1)))
+
+      (add-hook 'company-completion-started-hook 'company-turn-off-fci)
+      (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
+      (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci))
     :config
     (progn
       (spacemacs|diminish company-mode " ⓐ" " a")
@@ -139,31 +139,33 @@
   (use-package company-quickhelp
     :if (and auto-completion-enable-help-tooltip (display-graphic-p))
     :defer t
-    :init (add-hook 'company-mode-hook 'company-quickhelp-mode)))
-
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun auto-completion/init-helm-c-yasnippet ()
-    (use-package helm-c-yasnippet
-      :defer t
-      :init
-      (progn
-        (defun spacemacs/helm-yas ()
-          "Properly lazy load helm-c-yasnipper."
-          (interactive)
-          (spacemacs/load-yasnippet)
-          (require 'helm-c-yasnippet)
-          (call-interactively 'helm-yas-complete))
-        (spacemacs/set-leader-keys "is" 'spacemacs/helm-yas)
-        (setq helm-c-yas-space-match-any-greedy t)))))
-
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun auto-completion/init-helm-company ()
-    (use-package helm-company
-      :if (configuration-layer/package-usedp 'company)
-      :defer t
-      :init
+    :init
+    (progn
+      (add-hook 'company-mode-hook 'company-quickhelp-mode)
       (with-eval-after-load 'company
-        (define-key company-active-map (kbd "C-/") 'helm-company)))))
+        (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))))
+
+(defun auto-completion/init-helm-c-yasnippet ()
+  (use-package helm-c-yasnippet
+    :defer t
+    :init
+    (progn
+      (defun spacemacs/helm-yas ()
+        "Properly lazy load helm-c-yasnipper."
+        (interactive)
+        (spacemacs/load-yasnippet)
+        (require 'helm-c-yasnippet)
+        (call-interactively 'helm-yas-complete))
+      (spacemacs/set-leader-keys "is" 'spacemacs/helm-yas)
+      (setq helm-c-yas-space-match-any-greedy t))))
+
+(defun auto-completion/init-helm-company ()
+  (use-package helm-company
+    :if (configuration-layer/package-usedp 'company)
+    :defer t
+    :init
+    (with-eval-after-load 'company
+      (define-key company-active-map (kbd "C-/") 'helm-company))))
 
 (defun auto-completion/init-hippie-exp ()
   ;; replace dabbrev-expand

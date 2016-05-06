@@ -58,10 +58,6 @@ layer variables:
    as been entered quickly enough. If its value is =nil= then the feature is
    disabled.
 
-4. =auto-completion-complete-with-key-sequence-delay= is the number of seconds
-   to wait for the auto-completion key sequence to be entered. The default value
-   is 0.1 seconds.
-
 The default configuration of the layer is:
 
 #+BEGIN_SRC emacs-lisp
@@ -97,7 +93,7 @@ the popup, set the variable =auto-completion-enable-snippets-in-popup= to =t=.
 #+BEGIN_SRC emacs-lisp
   (setq-default dotspacemacs-configuration-layers
                 '((auto-completion :variables
-                                   auto-completion-enable-snippets-in-popup t))
+                                   auto-completion-enable-snippets-in-popup t)))
 #+END_SRC
 
 ** Tooltips
@@ -105,8 +101,8 @@ To enable docstring tooltips set =auto-completion-enable-help-tooltip= to =t=
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layers
-  '(auto-completion :variables
-                    auto-completion-enable-help-tooltip t))
+  '((auto-completion :variables
+                    auto-completion-enable-help-tooltip t)))
 #+END_SRC
 
 ** Sort results by usage
@@ -118,8 +114,8 @@ The variable has no effect when =auto-complete= is used.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layers
-  '(auto-completion :variables
-                    auto-completion-enable-sort-by-usage t))
+  '((auto-completion :variables
+                    auto-completion-enable-sort-by-usage t)))
 #+END_SRC
 
 ** Enable company or auto-complete globally

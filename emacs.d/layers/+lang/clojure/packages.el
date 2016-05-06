@@ -1,25 +1,15 @@
 (setq clojure-packages
   '(
-    align-cljlet
     cider
     cider-eval-sexp-fu
     clj-refactor
     clojure-mode
     company
+    eldoc
     popwin
     rainbow-delimiters
     subword
    ))
-
-(defun clojure/init-align-cljlet ()
-  (use-package align-cljlet
-    :defer t
-    :init
-    (add-hook 'clojure-mode-hook (lambda () (require 'align-cljlet)))
-    :config
-    (dolist (mode '(clojure-mode clojurescript-mode))
-      (spacemacs/set-leader-keys-for-major-mode mode
-        "fl" 'align-cljlet))))
 
 (defun clojure/init-cider ()
   (use-package cider
@@ -32,7 +22,6 @@
             cider-repl-use-clojure-font-lock t)
       (push "\\*cider-repl\.\+\\*" spacemacs-useful-buffers-regexp)
       (add-hook 'clojure-mode-hook 'cider-mode)
-      (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
       (if dotspacemacs-smartparens-strict-mode
           (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)))
     :config
@@ -125,7 +114,7 @@ the focus."
       (defun spacemacs/cider-test-run-all-tests ()
         (interactive)
         (cider-load-buffer)
-        (spacemacs//cider-eval-in-repl-no-focus (cider-test-run-tests nil)))
+        (spacemacs//cider-eval-in-repl-no-focus (cider-test-run-ns-tests nil)))
 
       (defun spacemacs/cider-test-rerun-tests ()
         (interactive)
@@ -202,7 +191,7 @@ If called with a prefix argument, uses the other-window instead."
         (kbd "q")   'cider-popup-buffer-quit
         (kbd "r")   'cider-test-rerun-tests
         (kbd "t")   'cider-test-run-test
-        (kbd "T")   'cider-test-run-tests)
+        (kbd "T")   'cider-test-run-ns-tests)
 
       ;; TODO: having this work for cider-macroexpansion-mode would be nice,
       ;;       but the problem is that it uses clojure-mode as its major-mode
@@ -221,7 +210,7 @@ If called with a prefix argument, uses the other-window instead."
 
           "fb" 'cider-format-buffer
 
-          "gb" 'cider-jump-back
+          "gb" 'cider-pop-back
           "ge" 'cider-jump-to-compilation-error
           "gg" 'cider-find-var
           "gr" 'cider-jump-to-resource
@@ -288,9 +277,8 @@ If called with a prefix argument, uses the other-window instead."
       (when clojure-enable-fancify-symbols
         (clojure/fancify-symbols 'cider-repl-mode)))
 
-    (when (configuration-layer/package-usedp 'evil-jumper)
-      (defadvice cider-jump-to-var (before add-evil-jump activate)
-        (evil-set-jump)))))
+    (defadvice cider-jump-to-var (before add-evil-jump activate)
+      (evil-set-jump))))
 
 (defun clojure/init-cider-eval-sexp-fu ()
   (with-eval-after-load 'eval-sexp-fu
@@ -355,7 +343,8 @@ If called with a prefix argument, uses the other-window instead."
 
       (dolist (m '(clojure-mode clojurec-mode clojurescript-mode clojurex-mode))
         (spacemacs/set-leader-keys-for-major-mode m
-          "Ti" 'spacemacs/clojure-mode-toggle-default-indent-style))
+          "Ti" 'spacemacs/clojure-mode-toggle-default-indent-style
+          "fl" 'clojure-align))
 
       (when clojure-enable-fancify-symbols
         (dolist (m '(clojure-mode clojurescript-mode clojurec-mode clojurex-mode))
@@ -381,6 +370,10 @@ If called with a prefix argument, uses the other-window instead."
         (s/defrecord 2)
         ;; test.check
         (for-all 'defun)))))
+
+(defun clojure/post-init-eldoc ()
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook 'eldoc-mode))
 
 (defun clojure/pre-init-popwin ()
   (spacemacs|use-package-add-hook popwin

@@ -72,8 +72,10 @@ packages then consider to create a layer, you can also put the
 configuration in `dotspacemacs/user-config'.")
 
 (defvar dotspacemacs-editing-style 'vim
-  "Either `vim' or `emacs'. Evil is always enabled but if the variable
-is `emacs' then the `holy-mode' is enabled at startup.")
+  "One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
+variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
+uses emacs key bindings for vim's insert mode, but otherwise leaves evil
+unchanged.")
 
 (defvar dotspacemacs-startup-banner 'official
    "Specify the startup banner. Default value is `official', it displays
@@ -118,11 +120,6 @@ pressing `<leader> m`. Set it to `nil` to disable it.")
 (defvar dotspacemacs-major-mode-emacs-leader-key "C-M-m"
   "Major mode leader key accessible in `emacs state' and `insert state'")
 
-(defvar dotspacemacs-command-key "SPC"
-  "The key used for Emacs commands (M-x) (after pressing on the leader key).")
-(defvaralias 'dotspacemacs-emacs-command-key 'dotspacemacs-command-key
-  "New official name for `dotspacemacs-command-key'")
-
 (defvar dotspacemacs-distinguish-gui-tab nil
   "If non nil, distinguish C-i and tab in the GUI version of
 emacs.")
@@ -139,11 +136,13 @@ emacs.")
   "Default font. `powerline-scale' allows to quickly tweak the mode-line
 size to make separators look not too crappy.")
 
-(defvar dotspacemacs-remap-Y-to-y$ nil
-  "If non nil `Y' is remapped to `y$' in Evil states.")
+(defvar dotspacemacs-command-key ":"
+  "The key used for Evil commands (ex-commands) and Emacs commands (M-x).
+By default the command key is `:' so ex-commands are executed like in Vim
+with `:' and Emacs commands are executed with `<leader> :'.")
 
-(defvar dotspacemacs-ex-substitute-global nil
-  "If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.")
+(defvaralias 'dotspacemacs-remap-Y-to-y$ 'evil-want-Y-yank-to-eol
+  "If non nil `Y' is remapped to `y$'.")
 
 (defvar dotspacemacs-default-layout-name "Default"
   " Name of the default layout.")
@@ -387,7 +386,7 @@ If ARG is non nil then Ask questions to the user before installing the dotfile."
               ,(format
                 "dotspacemacs-editing-style '%S"
                 (dotspacemacs//ido-completing-read
-                 "What is your preferred editing style? "
+                 "What is your preferred style? "
                  '(("Among the stars aboard the Evil flagship (vim)"
                     vim)
                    ("On the planet Emacs in the Holy control tower (emacs)"
@@ -397,24 +396,13 @@ If ARG is non nil then Ask questions to the user before installing the dotfile."
                 "dotspacemacs-distribution '%S"
                 (dotspacemacs//ido-completing-read
                  "What distribution of spacemacs would you like to start with? "
-                 `(("The standard distribution, recommended (spacemacs)"
+                 '(("The standard distribution, recommended. (spacemacs)"
                     spacemacs)
-                   (,(concat "A minimalist distribution that you can build on "
-                             "(spacemacs-base)")
-                    spacemacs-base)))))
-             ("spacemacs-helm"
-              ,(dotspacemacs//ido-completing-read
-                "What type of completion framework do you want? "
-                '(("An heavy one but full-featured (helm)"
-                   "spacemacs-helm")
-                  ("A lighter one but still very powerful (ivy)"
-                   "spacemacs-ivy")
-                  ;; For now, None works only if the user selected
-                  ;; the spacemacs-base distribution
-                  ("None (not recommended)" ""))))))))
+                   ("A minimalist distribution that you can build on. (spacemacs-base)"
+                    spacemacs-base)))))))))
     (with-current-buffer (find-file-noselect
-                          (concat dotspacemacs-template-directory
-                                  ".spacemacs.template"))
+                       (concat dotspacemacs-template-directory
+                               ".spacemacs.template"))
       (dolist (p preferences)
         (goto-char (point-min))
         (re-search-forward (car p))
@@ -549,7 +537,7 @@ error recovery."
    (spacemacs//test-var
     (lambda (x) (or (null x) (stringp x)))
     'dotspacemacs-major-mode-emacs-leader-key "is a string or nil")
-   (spacemacs//test-var 'stringp 'dotspacemacs-emacs-command-key "is a string")
+   (spacemacs//test-var 'stringp 'dotspacemacs-command-key "is a string")
    (insert (format
             (concat "** RESULTS: "
                     "[[file:%s::dotspacemacs/init][dotspacemacs/init]] "
@@ -561,6 +549,7 @@ error recovery."
   "Test settings in dotfile for correctness.
  Return non-nil if all the tests passed."
   (interactive)
+  (setq configuration-layer-paths (configuration-layer//discover-layers))
   (let ((min-version "0.0"))
     ;; dotspacemacs-version not implemented yet
     ;; (if (version< dotspacemacs-version min-version)

@@ -16,7 +16,6 @@
     company-anaconda
     cython-mode
     eldoc
-    evil-jumper
     evil-matchit
     flycheck
     helm-cscope
@@ -27,6 +26,7 @@
     pytest
     python
     pyvenv
+    py-yapf
     semantic
     smartparens
     stickyfunc-enhance
@@ -50,7 +50,10 @@
         "gu" 'anaconda-mode-find-references)
       (evilified-state-evilify anaconda-mode-view-mode anaconda-mode-view-mode-map
         (kbd "q") 'quit-window)
-      (spacemacs|hide-lighter anaconda-mode))))
+      (spacemacs|hide-lighter anaconda-mode)
+
+      (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
+        (evil--jumps-push)))))
 
 (defun python/init-cython-mode ()
   (use-package cython-mode
@@ -63,11 +66,47 @@
         "gu" 'anaconda-mode-usages))))
 
 (defun python/post-init-eldoc ()
-  (add-hook 'python-mode-hook 'eldoc-mode))
+  (defun spacemacs//init-eldoc-python-mode ()
+    (eldoc-mode)
+    (when (configuration-layer/package-usedp 'anaconda-mode)
+      (anaconda-eldoc-mode)))
+  (add-hook 'python-mode-hook 'spacemacs//init-eldoc-python-mode))
 
-(defun python/post-init-evil-jumper ()
-  (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
-    (evil-jumper--push)))
+(defun python/init-live-py-mode ()
+  (use-package live-py-mode
+    :defer t
+    :commands live-py-mode
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'python-mode
+      "l" 'live-py-mode)))
+
+(defun python/init-nose ()
+  (use-package nose
+    :if (eq 'nose python-test-runner)
+    :commands (nosetests-one
+               nosetests-pdb-one
+               nosetests-all
+               nosetests-pdb-all
+               nosetests-module
+               nosetests-pdb-module
+               nosetests-suite
+               nosetests-pdb-suite)
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'python-mode
+      "tA" 'nosetests-pdb-all
+      "ta" 'nosetests-all
+      "tB" 'nosetests-pdb-module
+      "tb" 'nosetests-module
+      "tT" 'nosetests-pdb-one
+      "tt" 'nosetests-one
+      "tM" 'nosetests-pdb-module
+      "tm" 'nosetests-module
+      "tS" 'nosetests-pdb-suite
+      "ts" 'nosetests-suite)
+    :config
+    (progn
+      (add-to-list 'nose-project-root-files "setup.cfg")
+      (setq nose-use-verbose nil))))
 
 (defun python/init-pip-requirements ()
   (use-package pip-requirements
@@ -80,6 +119,7 @@
 
 (defun python/init-pyenv-mode ()
   (use-package pyenv-mode
+    :if (executable-find "pyenv")
     :commands (pyenv-mode-versions)
     :init
     (progn
@@ -89,17 +129,15 @@
        (`on-project-switch
         (add-hook 'projectile-after-switch-project-hook 'pyenv-mode-set-local-version)))
       (spacemacs/set-leader-keys-for-major-mode 'python-mode
-        "vu" 'pyenv-mode-unset
-        "vs" 'pyenv-mode-set))))
+        "vs" 'pyenv-mode-set
+        "vu" 'pyenv-mode-unset))))
 
 (defun python/init-pyvenv ()
   (use-package pyvenv
     :defer t
     :init
     (spacemacs/set-leader-keys-for-major-mode 'python-mode
-      "Va" 'pyvenv-activate
-      "Vd" 'pyvenv-deactivate
-      "Vw" 'pyvenv-workon)))
+      "V" 'pyvenv-workon)))
 
 (defun python/init-pytest ()
   (use-package pytest
@@ -224,8 +262,7 @@
       (spacemacs/declare-prefix-for-mode 'python-mode "mt" "test")
       (spacemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
       (spacemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
-      (spacemacs/declare-prefix-for-mode 'python-mode "mv" "pyenv")
-      (spacemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
+      (spacemacs/declare-prefix-for-mode 'python-mode "mv" "venv")
       (spacemacs/set-leader-keys-for-major-mode 'python-mode
         "cc" 'spacemacs/python-execute-file
         "cC" 'spacemacs/python-execute-file-focus
@@ -258,20 +295,8 @@
         (define-key inferior-python-mode-map (kbd "C-l") 'spacemacs/comint-clear-buffer))
 
       ;; add this optional key binding for Emacs user, since it is unbound
-      (define-key inferior-python-mode-map (kbd "C-c M-l") 'spacemacs/comint-clear-buffer)
-
-      ;; fix for issue #2569 (https://github.com/syl20bnr/spacemacs/issues/2569)
-      ;; use `semantic-create-imenu-index' only when `semantic-mode' is enabled,
-      ;; otherwise use `python-imenu-create-index'
-      (defun spacemacs/python-imenu-create-index-python-or-semantic ()
-        (if (bound-and-true-p semantic-mode)
-            (semantic-create-imenu-index)
-          (python-imenu-create-index)))
-
-      (defadvice wisent-python-default-setup
-          (after spacemacs/python-set-imenu-create-index-function activate)
-        (setq imenu-create-index-function
-              #'spacemacs/python-imenu-create-index-python-or-semantic)))))
+      (define-key inferior-python-mode-map
+        (kbd "C-c M-l") 'spacemacs/comint-clear-buffer))))
 
 (defun python/post-init-evil-matchit ()
     (add-hook `python-mode-hook `turn-on-evil-matchit-mode))
@@ -283,12 +308,11 @@
   (use-package hy-mode
     :defer t))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun python/init-helm-pydoc ()
-    (use-package helm-pydoc
-      :defer t
-      :init
-      (spacemacs/set-leader-keys-for-major-mode 'python-mode "hd" 'helm-pydoc))))
+(defun python/init-helm-pydoc ()
+  (use-package helm-pydoc
+    :defer t
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'python-mode "hd" 'helm-pydoc)))
 
 (defun python/post-init-smartparens ()
   (defadvice python-indent-dedent-line-backspace
@@ -315,14 +339,28 @@
       :init
       (push 'company-anaconda company-backends-python-mode))))
 
+(defun python/init-py-yapf ()
+  (use-package py-yapf
+    :init
+    (spacemacs/set-leader-keys-for-major-mode 'python-mode "=" 'py-yapf-buffer)
+    :config
+    (when python-enable-yapf-format-on-save
+      (add-hook 'python-mode-hook 'py-yapf-enable-on-save))))
+
 (defun python/post-init-semantic ()
-  (semantic/enable-semantic-mode 'python-mode)
-  (defadvice semantic-python-get-system-include-path (around semantic-python-skip-error-advice activate)
+  (when (configuration-layer/package-usedp 'anaconda-mode)
+      (add-hook 'python-mode-hook
+                'spacemacs//disable-semantic-idle-summary-mode t))
+  (add-hook 'python-mode-hook 'semantic-mode)
+  (add-hook 'python-mode-hook 'spacemacs//python-imenu-create-index-use-semantic)
+
+  (defadvice semantic-python-get-system-include-path
+      (around semantic-python-skip-error-advice activate)
     "Don't cause error when Semantic cannot retrieve include
 paths for Python then prevent the buffer to be switched. This
 issue might be fixed in Emacs 25. Until then, we need it here to
 fix this issue."
-    (condition-case nil
+    (condition-case-unless-debug nil
         ad-do-it
       (error nil))))
 
@@ -334,8 +372,7 @@ fix this issue."
     :post-init
     (spacemacs/set-leader-keys-for-major-mode 'python-mode "gi" 'cscope/run-pycscope)))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun python/pre-init-helm-cscope ()
-    (spacemacs|use-package-add-hook xcscope
-      :post-init
-      (spacemacs/setup-helm-cscope 'python-mode))))
+(defun python/pre-init-helm-cscope ()
+  (spacemacs|use-package-add-hook xcscope
+    :post-init
+    (spacemacs/setup-helm-cscope 'python-mode)))

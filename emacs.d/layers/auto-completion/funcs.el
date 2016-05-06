@@ -11,13 +11,9 @@
 
 (spacemacs|add-toggle auto-completion
   :status
-  (if (boundp 'auto-completion-front-end)
-      (if (eq 'company auto-completion-front-end)
-          company-mode
-        auto-complete-mode)
-    ;; default completion hardcoded to be company for now
-    (setq auto-completion-front-end 'company)
-    nil)
+  (if (eq 'company auto-completion-front-end)
+      (bound-and-true-p company-mode)
+    (bound-and-true-p auto-complete-mode))
   :on
   (progn
     (if (eq 'company auto-completion-front-end)
@@ -113,9 +109,7 @@
       second-key
       'spacemacs//auto-completion-key-sequence-end))
   ;; set a timer to restore the old bindings
-  (run-at-time auto-completion-complete-with-key-sequence-delay
-               nil
-               'spacemacs//auto-completion-key-sequence-restore)
+  (run-at-time 0.1 nil 'spacemacs//auto-completion-key-sequence-restore)
   (when spacemacs--auto-completion-complete-last-candidate
     (setq spacemacs--auto-completion-time (current-time))))
 
@@ -123,8 +117,7 @@
   "Check if the auto-completion key sequence has been entered."
   (interactive)
   (if (or (null spacemacs--auto-completion-time)
-          (< auto-completion-complete-with-key-sequence-delay
-             (float-time (time-since spacemacs--auto-completion-time))))
+          (< 0.1 (float-time (time-since spacemacs--auto-completion-time))))
       (self-insert-command 1)
     (cond
      ((bound-and-true-p company-mode)

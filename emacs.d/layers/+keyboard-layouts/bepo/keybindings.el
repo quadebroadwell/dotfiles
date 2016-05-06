@@ -23,7 +23,7 @@
       "wC" 'evil-window-move-far-left
       "wL" 'ace-delete-window
       "wQ" 'ace-delete-window)
-    (setq aw-keys '(?t ?e ?s ?i ?r ?u ?n ?a))))
+    (setq aw-keys '(?t ?e ?s ?i ?r ?u ?n ?a ?c ?,))))
 
 (bepo|config avy
   :description
@@ -75,9 +75,16 @@
   :loader
   (spacemacs|use-package-add-hook elfeed :post-config BODY)
   :config
-  (bepo/evil-correct-keys 'evilified elfeed-show-mode-map
-    "C-j"
-    "C-k"))
+  (progn
+    (bepo/evil-correct-keys 'evilified elfeed-search-mode-map
+      "j"
+      "k")
+    (bepo/evil-correct-keys 'evilified elfeed-show-mode-map
+      "C-j"
+      "C-k")
+    ;; HACK: The auto correction doesn't work... mystery.
+    (evil-define-key 'evilified elfeed-search-mode-map
+      "k" 'elfeed-search-live-filter)))
 
 (bepo|config evil
   :description
@@ -233,20 +240,6 @@
     (bepo/set-in-state helm-generic-files-map "C-s" 'helm-previous-line)
     (bepo/set-in-state helm-generic-files-map "C-k" 'helm-ff-run-grep)))
 
-(bepo|config ivy
-  :description
-  "Remap `ivy' bindings."
-  :loader
-  (spacemacs|use-package-add-hook ivy :post-config BODY)
-  :config
-  (progn
-    (bepo/correct-keys ivy-minibuffer-map
-      "C-h"
-      "C-j"
-      "C-k"
-      "C-l"
-      )))
-
 (bepo|config magit
   :description
   "Remap `magit' bindings."
@@ -259,6 +252,8 @@
       "k"
       "C-j"
       "C-k")
+    (bepo/evil-correct-keys 'normal evil-magit-toggle-text-minor-mode-map
+      "C-j")
     (dolist (map (list magit-branch-section-map
                        magit-commit-section-map
                        magit-file-section-map
@@ -266,7 +261,13 @@
                        magit-remote-section-map
                        magit-staged-section-map
                        magit-unstaged-section-map
-                       ))
+                       magit-module-commit-section-map
+                       magit-stash-section-map
+                       magit-stashes-section-map
+                       magit-tag-section-map
+                       magit-unpulled-section-map
+                       magit-unpushed-section-map
+                       magit-untracked-section-map))
       (bepo/correct-keys map
         "j"
         "k"

@@ -11,6 +11,9 @@
 
 ;; Company -------------------------------------------------------------------
 
+(defvar-local auto-completion-front-end 'company
+  "Which auto-completion front end to use.")
+
 (defvar auto-completion-return-key-behavior 'complete
   "What the RET key should do when auto-completion menu is active.
 Possible values are `complete' or `nil'.")
@@ -22,10 +25,6 @@ Possible values are `complete', `cycle' or `nil'.")
 (defvar auto-completion-complete-with-key-sequence nil
   "Provide a key sequence (string) to complete the current
 selection.")
-
-(defvar auto-completion-complete-with-key-sequence-delay 0.1
-  "Timeout (seconds) when waiting for the second key of
-`auto-completion-complete-with-key-sequence'.")
 
 (defvar auto-completion-enable-snippets-in-popup nil
   "If non nil show snippets in the auto-completion popup.")

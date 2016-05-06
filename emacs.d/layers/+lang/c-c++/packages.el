@@ -23,7 +23,6 @@
     helm-cscope
     helm-gtags
     semantic
-    srefactor
     stickyfunc-enhance
     ycmd
     xcscope
@@ -69,17 +68,18 @@
     :init (push 'company-cmake company-backends-cmake-mode)))
 
 (defun c-c++/post-init-company ()
-    (spacemacs|add-company-hook c-mode-common)
-    (spacemacs|add-company-hook cmake-mode)
+  (spacemacs|add-company-hook c-mode-common)
+  (spacemacs|add-company-hook cmake-mode)
 
-    (when c-c++-enable-clang-support
-      (push 'company-clang company-backends-c-mode-common)
+  (when c-c++-enable-clang-support
+    (push 'company-clang company-backends-c-mode-common)
 
-      (defun company-mode/more-than-prefix-guesser ()
-        (c-c++/load-clang-args)
-        (company-clang-guess-prefix))
+    (defun company-mode/more-than-prefix-guesser ()
+      (c-c++/load-clang-args)
+      (company-clang-guess-prefix))
 
-      (setq company-clang-prefix-guesser 'company-mode/more-than-prefix-guesser)))
+    (setq company-clang-prefix-guesser 'company-mode/more-than-prefix-guesser)
+    (spacemacs/add-to-hooks 'c-c++/load-clang-args '(c-mode-hook c++-mode-hook))))
 
 (when (configuration-layer/layer-usedp 'auto-completion)
   (defun c-c++/init-company-c-headers ()
@@ -104,10 +104,9 @@
      ;; Non-nil means display source file containing the main routine at startup
      gdb-show-main t)))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun c-c++/post-init-helm-gtags ()
-    (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
-    (spacemacs/helm-gtags-define-keys-for-mode 'c++-mode)))
+(defun c-c++/post-init-helm-gtags ()
+  (spacemacs/helm-gtags-define-keys-for-mode 'c-mode)
+  (spacemacs/helm-gtags-define-keys-for-mode 'c++-mode))
 
 (defun c-c++/post-init-semantic ()
   (semantic/enable-semantic-mode 'c-mode)
@@ -136,9 +135,8 @@
     (dolist (mode '(c-mode c++-mode))
       (spacemacs/set-leader-keys-for-major-mode mode "gi" 'cscope-index-files))))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun c-c++/pre-init-helm-cscope ()
-    (spacemacs|use-package-add-hook xcscope
-      :post-init
-      (dolist (mode '(c-mode c++-mode))
-        (spacemacs/setup-helm-cscope mode)))))
+(defun c-c++/pre-init-helm-cscope ()
+  (spacemacs|use-package-add-hook xcscope
+    :post-init
+    (dolist (mode '(c-mode c++-mode))
+      (spacemacs/setup-helm-cscope mode))))

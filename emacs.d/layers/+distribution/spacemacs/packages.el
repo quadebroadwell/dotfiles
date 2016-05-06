@@ -12,6 +12,7 @@
 (setq spacemacs-packages
       '(
         ;; default
+        ace-jump-helm-line
         ace-link
         ace-window
         adaptive-wrap
@@ -31,7 +32,6 @@
         evil-exchange
         evil-iedit-state
         evil-indent-plus
-        evil-jumper
         evil-lisp-state
         ;; for testing purpose, contribute by reporting bugs and sending PRs
         ;; to https://github.com/gabesoft/evil-mc
@@ -50,6 +50,11 @@
         flx-ido
         golden-ratio
         google-translate
+        helm-ag
+        helm-make
+        helm-mode-manager
+        helm-swoop
+        helm-themes
         highlight-indentation
         highlight-numbers
         highlight-parentheses
@@ -85,6 +90,13 @@
   (push 'paradox spacemacs-packages))
 
 ;; Initialization of packages
+
+(defun spacemacs/init-ace-jump-helm-line ()
+  (use-package ace-jump-helm-line
+    :defer t
+    :init
+    (with-eval-after-load 'helm
+      (define-key helm-map (kbd "C-q") 'ace-jump-helm-line))))
 
 (defun spacemacs/init-ace-link ()
   (use-package ace-link
@@ -278,16 +290,14 @@
             (progn
               (spacemacs/integrate-evil-search t)
               (spacemacs/ahs-highlight-now-wrapper)
-              (when (configuration-layer/package-usedp 'evil-jumper)
-                (evil-set-jump))
+              (evil-set-jump)
               (spacemacs/symbol-highlight-micro-state)
               (ahs-forward)
               )
           (progn
             (spacemacs/integrate-evil-search nil)
             (spacemacs/ahs-highlight-now-wrapper)
-            (when (configuration-layer/package-usedp 'evil-jumper)
-              (evil-set-jump))
+            (evil-set-jump)
             (spacemacs/symbol-highlight-micro-state)
             (ahs-backward)
             )))
@@ -378,18 +388,15 @@
 (defun spacemacs/init-avy ()
   (use-package avy
     :defer t
-    :commands (spacemacs/avy-open-url avy-pop-mark)
+    :commands (spacemacs/avy-open-url)
     :init
     (progn
       (setq avy-all-windows 'all-frames)
       (setq avy-background t)
       (spacemacs/set-leader-keys
-        "jj" 'evil-avy-goto-char
-        "jJ" 'evil-avy-goto-char-2
-        "jl" 'evil-avy-goto-line
-        "ju" 'avy-pop-mark
-        "jU" 'spacemacs/avy-goto-url
-        "jw" 'evil-avy-goto-word-or-subword-1))
+        "SPC" 'avy-goto-word-or-subword-1
+        "y" 'avy-goto-line
+        "xo" 'spacemacs/avy-open-url))
     :config
     (progn
       (defun spacemacs/avy-goto-url()
@@ -401,7 +408,9 @@
         (interactive)
         (save-excursion
           (spacemacs/avy-goto-url)
-          (browse-url-at-point))))))
+          (browse-url-at-point)))
+      (spacemacs/set-leader-keys "`" 'avy-pop-mark))
+      ))
 
 (defun spacemacs/init-bracketed-paste ()
   (use-package bracketed-paste
@@ -567,23 +576,6 @@
   (use-package evil-indent-plus
     :init
     (evil-indent-plus-default-bindings)))
-
-(defun spacemacs/init-evil-jumper ()
-  (use-package evil-jumper
-    :init
-    (progn
-      (setq evil-jumper-auto-save-interval 600)
-      ;; Move keybindings into global motion state map
-      (add-hook 'evil-jumper-mode-hook
-                (lambda ()
-                  (if evil-jumper-mode
-                      (progn
-                        (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jumper/forward)
-                        (define-key evil-motion-state-map (kbd "C-o") 'evil-jumper/backward))
-                    (define-key evil-motion-state-map (kbd "<C-i>") 'evil-jump-forward)
-                    (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward))))
-      (evil-jumper-mode t)
-      (setcdr evil-jumper-mode-map nil))))
 
 (defun spacemacs/init-evil-lisp-state ()
   (use-package evil-lisp-state
@@ -912,6 +904,364 @@ For instance pass En as source for English."
       (setq google-translate-default-source-language "en")
       (setq google-translate-default-target-language "fr"))))
 
+(defun spacemacs/init-helm-ag ()
+  (use-package helm-ag
+    :defer t
+    :init
+    (progn
+      (defun spacemacs//helm-do-ag-region-or-symbol (func &optional dir)
+        "Search with `ag' with a default input."
+        (require 'helm-ag)
+        (cl-letf* (((symbol-value 'helm-ag-insert-at-point) 'symbol)
+                   ;; make thing-at-point choosing the active region first
+                   ((symbol-function 'this-fn) (symbol-function 'thing-at-point))
+                   ((symbol-function 'thing-at-point)
+                    (lambda (thing)
+                      (let ((res (if (region-active-p)
+                                     (buffer-substring-no-properties
+                                      (region-beginning) (region-end))
+                                   (this-fn thing))))
+                        (when res (rxt-quote-pcre res))))))
+          (funcall func dir)))
+
+      (defun spacemacs//helm-do-search-find-tool (base tools default-inputp)
+        "Create a cond form given a TOOLS string list and evaluate it."
+        (eval
+         `(cond
+           ,@(mapcar
+              (lambda (x)
+                `((executable-find ,x)
+                  ',(let ((func
+                           (intern
+                            (format (if default-inputp
+                                        "spacemacs/%s-%s-region-or-symbol"
+                                      "spacemacs/%s-%s")
+                                    base x))))
+                      (if (fboundp func)
+                          func
+                        (intern (format "%s-%s"  base x))))))
+              tools)
+           (t 'helm-do-grep))))
+
+      ;; Search in current file ----------------------------------------------
+
+      (defun spacemacs/helm-file-do-ag (&optional _)
+        "Wrapper to execute `helm-ag-this-file.'"
+        (interactive)
+        (helm-ag-this-file))
+
+      (defun spacemacs/helm-file-do-ag-region-or-symbol ()
+        "Search in current file with `ag' using a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-file-do-ag))
+
+      (defun spacemacs/helm-file-smart-do-search (&optional default-inputp)
+        "Search in current file using `dotspacemacs-search-tools'.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'
+If DEFAULT-INPUTP is non nil then the current region or symbol at point
+are used as default input."
+        (interactive)
+        (call-interactively
+         (spacemacs//helm-do-search-find-tool "helm-file-do"
+                                              dotspacemacs-search-tools
+                                              default-inputp)))
+
+      (defun spacemacs/helm-file-smart-do-search-region-or-symbol ()
+        "Search in current file using `dotspacemacs-search-tools' with
+ default input.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'."
+        (interactive)
+        (spacemacs/helm-file-smart-do-search t))
+
+      ;; Search in files -----------------------------------------------------
+
+      (defun spacemacs/helm-files-do-ag (&optional dir)
+        "Search in files with `ag' using a default input."
+        (interactive)
+        (helm-do-ag dir))
+
+      (defun spacemacs/helm-files-do-ag-region-or-symbol ()
+        "Search in files with `ag' using a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-ag))
+
+      (defun spacemacs/helm-files-do-ack (&optional dir)
+        "Search in files with `ack'."
+        (interactive)
+        (let ((helm-ag-base-command "ack --nocolor --nogroup"))
+          (helm-do-ag dir)))
+
+      (defun spacemacs/helm-files-do-ack-region-or-symbol ()
+        "Search in files with `ack' using a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-ack))
+
+      (defun spacemacs/helm-files-do-pt (&optional dir)
+        "Search in files with `pt'."
+        (interactive)
+        (let ((helm-ag-base-command "pt -e --nocolor --nogroup"))
+          (helm-do-ag dir)))
+
+      (defun spacemacs/helm-files-do-pt-region-or-symbol ()
+        "Search in files with `pt' using a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-pt))
+
+      (defun spacemacs/helm-files-smart-do-search (&optional default-inputp)
+        "Search in opened buffers using `dotspacemacs-search-tools'.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'
+If DEFAULT-INPUTP is non nil then the current region or symbol at point
+are used as default input."
+        (interactive)
+        (call-interactively
+         (spacemacs//helm-do-search-find-tool "helm-files-do"
+                                              dotspacemacs-search-tools
+                                              default-inputp)))
+
+      (defun spacemacs/helm-files-smart-do-search-region-or-symbol ()
+        "Search in opened buffers using `dotspacemacs-search-tools'.
+with default input.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'."
+        (interactive)
+        (spacemacs/helm-files-smart-do-search t))
+
+      ;; Search in buffers ---------------------------------------------------
+
+      (defun spacemacs/helm-buffers-do-ag (&optional _)
+        "Wrapper to execute `helm-ag-buffers.'"
+        (interactive)
+        (helm-do-ag-buffers))
+
+      (defun spacemacs/helm-buffers-do-ag-region-or-symbol ()
+        "Search in opened buffers with `ag' with a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-buffers-do-ag))
+
+      (defun spacemacs/helm-buffers-do-ack (&optional _)
+        "Search in opened buffers with `ack'."
+        (interactive)
+        (let ((helm-ag-base-command "ack --nocolor --nogroup"))
+          (helm-do-ag-buffers)))
+
+      (defun spacemacs/helm-buffers-do-ack-region-or-symbol ()
+        "Search in opened buffers with `ack' with a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-buffers-do-ack))
+
+      (defun spacemacs/helm-buffers-do-pt (&optional _)
+        "Search in opened buffers with `pt'."
+        (interactive)
+        (let ((helm-ag-base-command "pt -e --nocolor --nogroup"))
+          (helm-do-ag-buffers)))
+
+      (defun spacemacs/helm-buffers-do-pt-region-or-symbol ()
+        "Search in opened buffers with `pt' using a default input."
+        (interactive)
+        (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-buffers-do-pt))
+
+      (defun spacemacs/helm-buffers-smart-do-search (&optional default-inputp)
+        "Search in opened buffers using `dotspacemacs-search-tools'.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'
+If DEFAULT-INPUTP is non nil then the current region or symbol at point
+are used as default input."
+        (interactive)
+        (call-interactively
+         (spacemacs//helm-do-search-find-tool "helm-buffers-do"
+                                              dotspacemacs-search-tools
+                                              default-inputp)))
+
+      (defun spacemacs/helm-buffers-smart-do-search-region-or-symbol ()
+        "Search in opened buffers using `dotspacemacs-search-tools' with
+default input.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'."
+        (interactive)
+        (spacemacs/helm-buffers-smart-do-search t))
+
+      ;; Search in project ---------------------------------------------------
+
+      (defun spacemacs/helm-project-do-ag ()
+        "Search in current project with `ag'."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (helm-do-ag dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-do-ag-region-or-symbol ()
+        "Search in current project with `ag' using a default input."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (spacemacs//helm-do-ag-region-or-symbol 'helm-do-ag dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-do-ack ()
+        "Search in current project with `ack'."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (spacemacs/helm-files-do-ack dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-do-ack-region-or-symbol ()
+        "Search in current project with `ack' using a default input."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-ack dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-do-pt ()
+        "Search in current project with `pt'."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (spacemacs/helm-files-do-pt dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-do-pt-region-or-symbol ()
+        "Search in current project with `pt' using a default input."
+        (interactive)
+        (let ((dir (projectile-project-root)))
+          (if dir
+              (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-pt dir)
+            (message "error: Not in a project."))))
+
+      (defun spacemacs/helm-project-smart-do-search (&optional default-inputp)
+        "Search in current project using `dotspacemacs-search-tools'.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'
+If DEFAULT-INPUTP is non nil then the current region or symbol at point
+are used as default input."
+        (interactive)
+        (let ((projectile-require-project-root nil))
+          (call-interactively
+           (spacemacs//helm-do-search-find-tool "helm-project-do"
+                                                dotspacemacs-search-tools
+                                                default-inputp))))
+
+      (defun spacemacs/helm-project-smart-do-search-region-or-symbol ()
+        "Search in current project using `dotspacemacs-search-tools' with
+ default input.
+Search for a search tool in the order provided by `dotspacemacs-search-tools'."
+        (interactive)
+        (spacemacs/helm-project-smart-do-search t))
+
+      ;; This overrides the default C-s action in helm-projectile-switch-project
+      ;; to search using ag/pt/whatever instead of just grep
+      (with-eval-after-load 'helm-projectile
+        (defun spacemacs/helm-project-smart-do-search-in-dir (dir)
+          (interactive)
+          (let ((default-directory dir))
+            (spacemacs/helm-project-smart-do-search)))
+        (define-key helm-projectile-projects-map
+          (kbd "C-s")
+          (lambda ()
+            (interactive)
+            (helm-exit-and-execute-action 'spacemacs/helm-project-smart-do-search-in-dir))))
+
+      ;; evilify the helm-grep buffer
+      (evilified-state-evilify helm-grep-mode helm-grep-mode-map
+        (kbd "RET") 'helm-grep-mode-jump-other-window
+        (kbd "q") 'quit-window)
+
+      (spacemacs/set-leader-keys
+        ;; helm-ag marks
+        "s`"  'helm-ag-pop-stack
+        ;; opened buffers scope
+        "sb"  'spacemacs/helm-buffers-smart-do-search
+        "sB"  'spacemacs/helm-buffers-smart-do-search-region-or-symbol
+        "sab" 'helm-do-ag-buffers
+        "saB" 'spacemacs/helm-buffers-do-ag-region-or-symbol
+        "skb" 'spacemacs/helm-buffers-do-ack
+        "skB" 'spacemacs/helm-buffers-do-ack-region-or-symbol
+        "stb" 'spacemacs/helm-buffers-do-pt
+        "stB" 'spacemacs/helm-buffers-do-pt-region-or-symbol
+        ;; current file scope
+        "ss"  'spacemacs/helm-file-smart-do-search
+        "sS"  'spacemacs/helm-file-smart-do-search-region-or-symbol
+        "saa" 'helm-ag-this-file
+        "saA" 'spacemacs/helm-file-do-ag-region-or-symbol
+        ;; files scope
+        "sf"  'spacemacs/helm-files-smart-do-search
+        "sF"  'spacemacs/helm-files-smart-do-search-region-or-symbol
+        "saf" 'helm-do-ag
+        "saF" 'spacemacs/helm-files-do-ag-region-or-symbol
+        "skf" 'spacemacs/helm-files-do-ack
+        "skF" 'spacemacs/helm-files-do-ack-region-or-symbol
+        "stf" 'spacemacs/helm-files-do-pt
+        "stF" 'spacemacs/helm-files-do-pt-region-or-symbol
+        ;; current project scope
+        "/"   'spacemacs/helm-project-smart-do-search
+        "*"   'spacemacs/helm-project-smart-do-search-region-or-symbol
+        "sp"  'spacemacs/helm-project-smart-do-search
+        "sP"  'spacemacs/helm-project-smart-do-search-region-or-symbol
+        "sap" 'spacemacs/helm-project-do-ag
+        "saP" 'spacemacs/helm-project-do-ag-region-or-symbol
+        "skp" 'spacemacs/helm-project-do-ack
+        "skP" 'spacemacs/helm-project-do-ack-region-or-symbol
+        "stp" 'spacemacs/helm-project-do-pt
+        "stP" 'spacemacs/helm-project-do-pt-region-or-symbol))
+    :config
+    (progn
+      (evil-define-key 'normal helm-ag-map "SPC" spacemacs-default-map)
+      (evilified-state-evilify helm-ag-mode helm-ag-mode-map
+        (kbd "RET") 'helm-ag-mode-jump-other-window
+        (kbd "q") 'quit-window))))
+
+(defun spacemacs/init-helm-make ()
+  (use-package helm-make
+    :defer t
+    :init
+    (spacemacs/set-leader-keys
+      "cc" 'helm-make-projectile
+      "cm" 'helm-make)))
+
+(defun spacemacs/init-helm-mode-manager ()
+  (use-package helm-mode-manager
+    :defer t
+    :init
+    (spacemacs/set-leader-keys
+      "hM"    'helm-switch-major-mode
+      ;; "hm"    'helm-disable-minor-mode
+      "h C-m" 'helm-enable-minor-mode)))
+
+(defun spacemacs/init-helm-swoop ()
+  (use-package helm-swoop
+    :defer t
+    :init
+    (progn
+      (setq helm-swoop-split-with-multiple-windows t
+            helm-swoop-split-direction 'split-window-vertically
+            helm-swoop-speed-or-color t
+            helm-swoop-split-window-function 'helm-default-display-buffer
+            helm-swoop-pre-input-function (lambda () ""))
+
+      (defun spacemacs/helm-swoop-region-or-symbol ()
+        "Call `helm-swoop' with default input."
+        (interactive)
+        (let ((helm-swoop-pre-input-function
+               (lambda ()
+                 (if (region-active-p)
+                     (buffer-substring-no-properties (region-beginning)
+                                                     (region-end))
+                   (let ((thing (thing-at-point 'symbol t)))
+                     (if thing thing ""))))))
+          (call-interactively 'helm-swoop)))
+
+      (spacemacs/set-leader-keys
+        "ss"    'helm-swoop
+        "sS"    'spacemacs/helm-swoop-region-or-symbol
+        "s C-s" 'helm-multi-swoop-all)
+      (defadvice helm-swoop (before add-evil-jump activate)
+        (when (configuration-layer/package-usedp 'evil-jumper)
+          (evil-set-jump))))))
+
+(defun spacemacs/init-helm-themes ()
+  (use-package helm-themes
+    :defer t
+    :init
+    (spacemacs/set-leader-keys
+      "Th" 'helm-themes)))
 
 (defun spacemacs/init-highlight-indentation ()
   (use-package highlight-indentation
@@ -1052,29 +1402,19 @@ It will toggle the overlay under point or create an overlay of one character."
     :commands (open-junk-file)
     :init
     (setq open-junk-file-format (concat spacemacs-cache-directory "junk/%Y/%m/%d-%H%M%S."))
-    (defun spacemacs/open-junk-file (&optional arg)
-      "Open junk file Open junk file using helm or ivy depending
-on whether the spacemacs-ivy layer is used or not, with
-`prefix-arg' search in junk files"
+    (defun spacemacs/helm-open-junk-file (&optional arg)
+      "Open junk file
+Open junk file using helm, with `prefix-arg' search in junk files"
       (interactive "P")
+      (require 'helm)
       (let* ((fname (format-time-string open-junk-file-format (current-time)))
-             (rel-fname (file-name-nondirectory fname))
              (junk-dir (file-name-directory fname))
+             (helm-ff-newfile-prompt-p nil)
              (default-directory junk-dir))
-        (cond ((and arg (configuration-layer/layer-usedp 'spacemacs-ivy))
-               (spacemacs/counsel-search dotspacemacs-search-tools nil junk-dir))
-              ((configuration-layer/layer-usedp 'spacemacs-ivy)
-               (require 'counsel)
-               (counsel-find-file rel-fname))
-              (arg
-               (require 'helm)
-               (let (helm-ff-newfile-prompt-p)
-                 (spacemacs/helm-files-smart-do-search)))
-              (t
-               (require 'helm)
-               (let (helm-ff-newfile-prompt-p)
-                 (helm-find-files-1 fname))))))
-    (spacemacs/set-leader-keys "fJ" 'spacemacs/open-junk-file)))
+        (if arg
+             (spacemacs/helm-files-smart-do-search)
+          (helm-find-files-1 fname))))
+    (spacemacs/set-leader-keys "fJ" 'spacemacs/helm-open-junk-file)))
 
 (defun spacemacs/init-info+ ()
   (use-package info+
@@ -1093,6 +1433,7 @@ on whether the spacemacs-ivy layer is used or not, with
 (defun spacemacs/init-linum-relative ()
   (use-package linum-relative
     :commands (linum-relative-toggle linum-relative-on)
+    :diminish ""
     :init
     (progn
       (when (eq dotspacemacs-line-numbers 'relative)
@@ -1121,7 +1462,7 @@ on whether the spacemacs-ivy layer is used or not, with
     :init
     (spacemacs|define-micro-state move-text
       :doc "[J] move down [K] move up"
-      :use-minibuffer t
+        :use-minibuffer t
       :execute-binding-on-enter t
       :evil-leader "xJ" "xK"
       :bindings
@@ -1329,8 +1670,8 @@ on whether the spacemacs-ivy layer is used or not, with
             sp-cancel-autoskip-on-backward-movement nil)
 
       (spacemacs/set-leader-keys
-        "js" 'sp-split-sexp
-        "jn" 'sp-newline))
+        "J"  'sp-split-sexp
+        "jj" 'sp-newline))
     :config
     (progn
       (require 'smartparens-config)
@@ -1356,32 +1697,33 @@ on whether the spacemacs-ivy layer is used or not, with
                '(:add (spacemacs/smartparens-pair-newline-and-indent "RET"))))))
 
 (defun spacemacs/init-smooth-scrolling ()
-  (defun spacemacs//unset-scroll-margin ()
-    "Set scroll-margin to zero."
-    (setq-local scroll-margin 0))
-
   (use-package smooth-scrolling
-    :if dotspacemacs-smooth-scrolling
-    :init (setq smooth-scroll-margin 5
-                scroll-conservatively 101
-                scroll-preserve-screen-position t
-                auto-window-vscroll nil)
-    :config
+    :init
     (progn
-      (setq scroll-margin 5)
+      (setq smooth-scroll-margin 5)
+      (spacemacs|add-toggle smooth-scrolling
+        :status smooth-scrolling-mode
+        :on (progn
+              (smooth-scrolling-mode)
+              (enable-smooth-scroll-for-function previous-line)
+              (enable-smooth-scroll-for-function next-line)
+              (enable-smooth-scroll-for-function isearch-repeat))
+        :off (progn
+               (smooth-scrolling-mode -1)
+               (disable-smooth-scroll-for-function previous-line)
+               (disable-smooth-scroll-for-function next-line)
+               (disable-smooth-scroll-for-function isearch-repeat))
+        :documentation "Smooth scrolling."
+        :evil-leader "tv")
+      (when dotspacemacs-smooth-scrolling
+        (spacemacs/toggle-smooth-scrolling-on))
       ;; add hooks here only for emacs built-in packages that are not owned
       ;; by a layer.
+      (defun spacemacs//unset-scroll-margin ()
+        "Set scroll-margin to zero."
+        (setq-local scroll-margin 0))
       (spacemacs/add-to-hooks 'spacemacs//unset-scroll-margin
-                              '(messages-buffer-mode-hook))))
-
-  (unless dotspacemacs-smooth-scrolling
-    ;; deactivate smooth-scrolling advices
-    (ad-disable-advice 'previous-line 'after 'smooth-scroll-down)
-    (ad-activate 'previous-line)
-    (ad-disable-advice 'next-line 'after 'smooth-scroll-up)
-    (ad-activate 'next-line)
-    (ad-disable-advice 'isearch-repeat 'after 'isearch-smooth-scroll)
-    (ad-activate 'isearch-repeat)))
+                              '(messages-buffer-mode-hook)))))
 
 (defun spacemacs/init-spaceline ()
   (use-package spaceline-config
@@ -1504,7 +1846,7 @@ on whether the spacemacs-ivy layer is used or not, with
         "Globally display a ~ on empty lines in the fringe."
         :evil-leader "T~")
       ;; don't enable it on spacemacs home buffer
-      (with-current-buffer  "*spacemacs*"
+      (with-current-buffer spacemacs-buffer-name
         (vi-tilde-fringe-mode -1))
       ;; after a major mode is loaded, check if the buffer is read only
       ;; if so, disable vi-tilde-fringe-mode
@@ -1535,15 +1877,16 @@ on whether the spacemacs-ivy layer is used or not, with
         "9" 'select-window-9)
       (window-numbering-mode 1))
 
-    (defun spacemacs//window-numbering-assign (windows)
-      "Custom number assignment for special buffers."
-      (mapc (lambda (w)
-              (when (and (boundp 'neo-global--window)
-                         (eq w neo-global--window))
-                (window-numbering-assign w 0)))
-            windows))
-    (add-hook 'window-numbering-before-hook 'spacemacs//window-numbering-assign)
-    (add-hook 'neo-after-create-hook '(lambda (w) (window-numbering-update)))))
+    ;; make sure neotree is always 0
+    (defun spacemacs//window-numbering-assign ()
+      "Custom number assignment for neotree."
+      (when (and (boundp 'neo-buffer-name)
+                 (string= (buffer-name) neo-buffer-name))
+        0))
+    ;; using lambda to work-around a bug in window-numbering, see
+    ;; https://github.com/nschum/window-numbering.el/issues/10
+    (setq window-numbering-assign-func
+          (lambda () (spacemacs//window-numbering-assign)))))
 
 (defun spacemacs/init-volatile-highlights ()
   (use-package volatile-highlights

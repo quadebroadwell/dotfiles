@@ -43,8 +43,7 @@
         "l" 'tetris-move-right
         "q" 'spacemacs/tetris-quit-game))))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun games/init-helm-games ()
-    (use-package helm-games
-      :commands helm-games
-      :init (spacemacs/set-leader-keys "aG" 'helm-games))))
+(defun games/init-helm-games ()
+  (use-package helm-games
+    :commands helm-games
+    :init (spacemacs/set-leader-keys "aG" 'helm-games)))

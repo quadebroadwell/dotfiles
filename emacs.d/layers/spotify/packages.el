@@ -19,8 +19,7 @@
               "amsN" 'spotify-previous
               "amsQ" 'spotify-quit)))
 
-(when (configuration-layer/layer-usedp 'spacemacs-helm)
-  (defun spotify/init-helm-spotify ()
-    (use-package helm-spotify
-      :config (spacemacs/set-leader-keys
-                "amsg" 'helm-spotify))))
+(defun spotify/init-helm-spotify ()
+  (use-package helm-spotify
+    :config (spacemacs/set-leader-keys
+              "amsg" 'helm-spotify)))

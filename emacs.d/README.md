@@ -1,23 +1,29 @@
 <a name="top"></a>
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/syl20bnr/spacemacs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/syl20bnr/spacemacs.svg)](https://travis-ci.org/syl20bnr/spacemacs)   [![Made with Spacemacs](https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg)](http://github.com/syl20bnr/spacemacs)  [![Buy A Drink](https://img.shields.io/badge/Paypal-Buy%20a%20Drink-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ESFVNPKP4Y742) [![Recommend Spacemacs](https://img.shields.io/badge/Slant-Recommend-ff69b4.svg)](http://www.slant.co/topics/12/~what-are-the-best-programming-text-editors)[![Twitter][]](http://www.twitter.com/spacemacs)
+<a href="http://github.com/syl20bnr/spacemacs"><img src="https://cdn.rawgit.com/syl20bnr/spacemacs/442d025779da2f62fc86c2082703697714db6514/assets/spacemacs-badge.svg" alt="Made with Spacemacs"></a><a href="http://www.twitter.com/spacemacs"><img src="http://i.imgur.com/tXSoThF.png" alt="Twitter" align="right"></a><br>
 ***
 <p align="center"><img src="/doc/img/title2.png" alt="Spacemacs"/></p>
 <p align="center">
-<b><a href="doc/DOCUMENTATION.org#core-pillars">philosophy</a></b>
+<b><a href="http://spacemacs.org/doc/DOCUMENTATION#orgheadline5">philosophy</a></b>
 |
-<b><a href="doc/DOCUMENTATION.org#goals">goals</a></b>
+<b><a href="http://spacemacs.org/doc/DOCUMENTATION#orgheadline8">for whom?</a></b>
 |
-<b><a href="doc/DOCUMENTATION.org#user-content-who-can-benefit-from-this">for whom?</a></b>
+<b><a href="http://spacemacs.org/doc/DOCUMENTATION#orgheadline7">screenshots</a></b>
 |
-<b><a href="doc/DOCUMENTATION.org#screenshots">screenshots</a></b>
-|
-<b><a href="doc/DOCUMENTATION.org">documentation</a></b>
+<b><a href="http://spacemacs.org/doc/DOCUMENTATION">documentation</a></b>
 |
 <b><a href="CONTRIBUTING.org">contribute</a></b>
 |
-<b><a href="doc/DOCUMENTATION.org#achievements">achievements</a></b>
+<b><a href="http://spacemacs.org/doc/DOCUMENTATION#orgheadline187">achievements</a></b>
 |
-<b><a href="doc/FAQ.org">FAQ</a></b>
+<b><a href="http://spacemacs.org/doc/FAQ">FAQ</a></b>
+</p>
+***
+<p align="center">
+<a href="https://gitter.im/syl20bnr/spacemacs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/Join Chat.svg" alt="Gitter"></a>
+<a href="https://travis-ci.org/syl20bnr/spacemacs"><img src="https://travis-ci.org/syl20bnr/spacemacs.svg" alt="Build Status"></a>
+<a href="https://waffle.io/syl20bnr/spacemacs"><img src="https://badge.waffle.io/syl20bnr/spacemacs.png?label=Merging...&title=Merging" alt="PR being merged"></a>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ESFVNPKP4Y742"><img src="https://img.shields.io/badge/Paypal-Donate-blue.svg" alt="Donate"></a>
+<a href="http://www.slant.co/topics/12/~what-are-the-best-programming-text-editors"><img src="https://img.shields.io/badge/Slant-Recommend-ff69b4.svg" alt="Recommend it"></a>
 </p>
 ***
 
@@ -38,15 +44,15 @@
         - [OS X](#os-x)
         - [Windows](#windows)
 - [Install](#install)
+    - [Default installation](#default-installation)
+    - [Installation alongside another configuration](#installation-alongside-another-configuration)
     - [Spacemacs logo](#spacemacs-logo)
 - [Update](#update)
-    - [Automatic update (on master branch)](#automatic-update-on-master-branch)
-    - [Manual update (on master branch)](#manual-update-on-master-branch)
+    - [Automatic update](#automatic-update)
     - [On develop branch](#on-develop-branch)
     - [Revert to a specific version](#revert-to-a-specific-version)
 - [Quotes](#quotes)
 - [Contributions](#contributions)
-- [Communities](#communities)
 - [License](#license)
 - [Supporting Spacemacs](#supporting-spacemacs)
 
@@ -123,24 +129,32 @@ You should install the "emacs" package, not the "xemacs" package.
 XEmacs is an old fork of Emacs. The X in its name is unrelated to X11.
 Both Emacs and XEmacs have graphical support.
 
+**Note:** Ubuntu LTS 12.04 and 14.04 repositories have only Emacs 24.3
+available. You are advised to [build from source][build_source] Emacs 24.4 or
+greater, as most packages require this version. The same may be true for other
+distributions as well.
+
 ### OS X
 
 We recommend the homebrew [emacs-mac-port][] formula:
 
 ```sh
-$ brew tap railwaycat/homebrew-emacsmacport
-$ brew install emacs-mac --with-spacemacs-icon  # OR, brew cask install emacs-mac
+$ brew tap d12frosted/emacs-plus
+$ brew install emacs-plus --with-cocoa --with-gnutls --with-librsvg --with-imagemagick --with-spacemacs-icon
 $ brew linkapps
 ```
 
-Please note: these homebrew commands will install Emacs, and link it to your
+*Note:* these homebrew commands will install Emacs, and link it to your
 `/Applications` directory. You still need to run the `git clone` mentioned at
 the start of this file. That will populate your `~/.emacs.d` directory, which
 is what transforms a regular Emacs into Spacemacs.
 
-*After* you have completed the [install process below](#install), it is also
- recommended to add the [osx layer][] to your [dotfile][]. Install instructions
- are available in the [osx layer][] documentation.
+*Note:* the proposed `emacs-plus` tap is indentical to the `emacs` formulae,
+it just defines some additional options like `--with-spacemacs-icon`.
+
+*Note:* after you have completed the [install process below](#install), it is
+also recommended to add the [osx layer][] to your [dotfile][]. Install
+instructions are available in the [osx layer][] documentation.
 
 Note that the `emacs-mac-port` server behaves differently than the regular Emacs
 server which in particular **DOES NOT** allow multi-tty if you start GUI i.e.
@@ -174,6 +188,8 @@ For efficient searches we recommend to install `pt` ([the platinum searcher][]).
 `pt` version 1.7.7 or higher is required.
 
 # Install
+
+## Default installation
 
 1. If you have an existing Emacs configuration, back it up first:
 
@@ -211,8 +227,22 @@ For efficient searches we recommend to install `pt` ([the platinum searcher][]).
 
 4. Restart Emacs to complete the installation.
 
-If the mode-line turns red then be sure to visit the
-[troubleshooting][troubleshoot] guide and consult the [FAQ][FAQ.org].
+If the mode-line turns red then be sure to consult the [FAQ][FAQ.org].
+
+## Installation alongside another configuration
+
+To try out Spacemacs (or any other Emacs configuration you desire) without
+having to go through the trouble of backing up you `~/.emacs.d` directory and
+then cloning the new configuration:
+
+```sh
+mkdir ~/spacemacs
+git clone git@github.com:syl20bnr/spacemacs.git ~/spacemacs/.emacs.d
+HOME=~/spacemacs emacs
+```
+
+Note: If you're on Fish shell, you will need to modify the last command to: `env
+HOME=$HOME/spacemacs emacs`
 
 ## Spacemacs logo
 
@@ -247,7 +277,7 @@ Click on the arrow to update Spacemacs to the last version.
 
 ```sh
 git fetch
-git reset --hard <tag version which you are updating to> 
+git reset --hard <tag version which you are updating to>
 ```
 
 ## On develop branch
@@ -341,15 +371,13 @@ Thank you!
 
 [Twitter]: http://i.imgur.com/tXSoThF.png
 [CONTRIBUTING.org]: CONTRIBUTING.org
-[CONVENTIONS.org]: doc/CONVENTIONS.org
-[DOCUMENTATION.org]: doc/DOCUMENTATION.org
-[QUICK_START.org]: doc/QUICK_START.org
-[FAQ.org]: doc/FAQ.org
-[HOWTOs.org]: doc/HOWTOs.org
-[VIMUSERS.org]: doc/VIMUSERS.org
-[dotfile]: doc/DOCUMENTATION.org#dotfile-configuration
-[troubleshoot]: doc/DOCUMENTATION.org#troubleshoot
-[osx layer]: layers/osx/README.org
+[CONVENTIONS.org]: http://spacemacs.org/doc/CONVENTIONS
+[DOCUMENTATION.org]: http://spacemacs.org/doc/DOCUMENTATION
+[QUICK_START.org]: http://spacemacs.org/doc/QUICK_START
+[FAQ.org]: http://spacemacs.org/doc/FAQ
+[VIMUSERS.org]: http://spacemacs.org/doc/VIMUSERS
+[dotfile]: http://spacemacs.org/doc/DOCUMENTATION#orgheadline45
+[osx layer]: http://spacemacs.org/layers/osx/README
 [Gitter Chat]: https://gitter.im/syl20bnr/spacemacs
 [Gitter Chat IRC server]: https://irc.gitter.im/
 [emacs-mac-port]: https://github.com/railwaycat/homebrew-emacsmacport
@@ -365,4 +393,5 @@ Thank you!
 [Stack Exchange]: http://emacs.stackexchange.com/questions/tagged/spacemacs
 [Reddit]: https://www.reddit.com/r/spacemacs
 [quote01]: https://gitter.im/syl20bnr/spacemacs?at=568e627a0cdaaa62045a7df6
+[build_source]: https://www.gnu.org/software/emacs/manual/html_node/efaq/Installing-Emacs.html
 [Bountysource]: https://salt.bountysource.com/teams/spacemacs

@@ -27,10 +27,10 @@
                                        ("fe"  "emacs(spacemacs)")
                                        ("fv"  "variables")
                                        ("g"   "git/versions-control")
-                                       ("h"   "help")
+                                       ("h"   "helm/help/highlight")
                                        ("hd"  "help-describe")
                                        ("i"   "insertion")
-                                       ("j"   "jump/join/split")
+                                       ("j"   "join/split")
                                        ("k"   "lisp")
                                        ("kd"  "delete")
                                        ("kD"  "delete-backward")
@@ -39,7 +39,7 @@
                                        ("p"   "projects")
                                        ("p$"  "projects/shell")
                                        ("q"   "quit")
-                                       ("r"   "registers/rings/resume")
+                                       ("r"   "registers/rings")
                                        ("Re"  "elisp")
                                        ("Rp"  "pcre")
                                        ("s"   "search/symbol")
@@ -189,6 +189,7 @@ It runs `tabulated-list-revert-hook', then calls `tabulated-list-print'."
     (perl-mode . perl-indent-level)
     (puppet-mode . puppet-indent-level)
     (ruby-mode . ruby-indent-level)
+    (rust-mode . rust-indent-offset)
     (scala-mode . scala-indent:step)
     (sgml-mode . sgml-basic-offset)
     (sh-mode . sh-basic-offset)
@@ -241,7 +242,11 @@ nil."
 ;; Emacs 24.4 new features
 (unless (version< emacs-version "24.4")
   (if dotspacemacs-fullscreen-at-startup
-      (spacemacs/toggle-frame-fullscreen)
+      ;; spacemacs/toggle-fullscreen-frame-on is NOT available during the startup,
+      ;; but IS available during the subsequent config reloads
+      (if (fboundp 'spacemacs/toggle-fullscreen-frame-on)
+          (spacemacs/toggle-fullscreen-frame-on)
+        (spacemacs/toggle-frame-fullscreen))
     (if dotspacemacs-maximized-at-startup
         (add-hook 'window-setup-hook 'toggle-frame-maximized))))
 
@@ -284,9 +289,7 @@ nil."
       eval-expression-print-level nil)
 
 ;; cache files
-(setq url-configuration-directory (concat spacemacs-cache-directory "url")
-      eshell-directory-name (concat spacemacs-cache-directory "eshell" )
-      tramp-persistency-file-name (concat spacemacs-cache-directory "tramp"))
+(setq tramp-persistency-file-name (concat spacemacs-cache-directory "tramp/"))
 
 ;; seems pointless to warn. There's always undo.
 (put 'narrow-to-region 'disabled nil)

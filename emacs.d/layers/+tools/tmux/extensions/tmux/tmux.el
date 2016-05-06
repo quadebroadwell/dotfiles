@@ -24,9 +24,6 @@
   :prefix "navigate-"
   :group 'evil)
 
-; Without unsetting C-h this is useless
-(global-unset-key (kbd "C-h"))
-
 ; This requires windmove commands
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
@@ -89,6 +86,30 @@
             (lambda ()
               (interactive)
               (tmux-navigate "right")))
+
+;; Modify `evil-evilified-state-map-original' because `evil-evilified-state-map'
+;; is reset to this value each time the evilify macro is run.
+(when (boundp 'evil-evilified-state-map-original)
+  (define-key evil-evilified-state-map-original
+    (kbd "C-h")
+    (lambda ()
+      (interactive)
+      (tmux-navigate "left")))
+  (define-key evil-evilified-state-map-original
+    (kbd "C-j")
+    (lambda ()
+      (interactive)
+      (tmux-navigate "down")))
+  (define-key evil-evilified-state-map-original
+    (kbd "C-k")
+    (lambda ()
+      (interactive)
+      (tmux-navigate "up")))
+  (define-key evil-evilified-state-map-original
+    (kbd "C-l")
+    (lambda ()
+      (interactive)
+      (tmux-navigate "right"))))
 
 (provide 'tmux)
 

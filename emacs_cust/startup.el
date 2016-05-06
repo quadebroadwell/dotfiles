@@ -1,4 +1,4 @@
-(load-file "~/dotfiles/emacs_cust/orgsetup.el")
+(load-file "~/Dropbox/dotfiles/emacs_cust/orgsetup.el")
 ;Dont forget to install ob-ipython!!
 ; Dont forget to start ipython notebook session
 

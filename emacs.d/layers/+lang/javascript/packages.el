@@ -82,7 +82,7 @@
     :init
     (progn
       (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-      ;; required to make `<SPC> s l' to work correctly
+      ;; Required to make imenu functions work correctly
       (add-hook 'js2-mode-hook 'js2-imenu-extras-mode))
     :config
     (progn
@@ -187,6 +187,7 @@
 (defun javascript/init-tern ()
   (use-package tern
     :defer t
+    :if (javascript//tern-detect)
     :init (add-hook 'js2-mode-hook 'tern-mode)
     :config
     (progn

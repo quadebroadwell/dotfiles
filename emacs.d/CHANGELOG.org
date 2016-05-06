@@ -1,4 +1,257 @@
 * Release 0.105.x
+** 0.105.19 (2016/04/20)
+*** Fixes
+- Fix =dired-x= autoload (thanks to darkfeline)
+- Fix ~SPC f y~ in =dired= buffers (thanks to dcluna)
+- Fix ~C-i~ key binding for =evil-jump-forward=.
+- Fix ~SPC q r~ to restart Emacs and restore Spacemacs layouts.
+- Fix go to next/previous error when a compilation buffer is opened
+  (thanks to dennishamester)
+- Fix error when opening =spacemacs-helm= with unknown org documentation
+  files (thanks to kuangdash)
+- Fix wrong states when exiting =evil-lisp-state= and =evil-iedit-state=
+  while using the =emacs= editing style.
+- Fix ASCII banners first line being overwritten by the version numbers
+- Use MELPA version of =persp-mode=, the package may need to be deleted
+  manually from the =elpa= directory and a restart of Emacs may be
+  required.
+- Discover layers before running dotfile tests when reloading the
+  configuration, prevents false negatives (thanks to TheBB)
+- Remove duplicated configuration for =eldoc= (thanks to zilongshanren)
+*** Layer changes
+**** Clojure
+- Fix usage of deprecated =cider-turn-on-eldoc-mode=, using =eldoc-mode=
+  instead (thanks to tekacs and sooheon)
+**** Elm
+- Fix text copy/paste
+- Fix auto-completion
+**** Javascript
+- Improve detection of =tern= binary, if =tern= is not found a message
+  is displayed in the =*Messages*= buffer (thanks to nixmaniack)
+**** Go
+- Fix execution of tests with function names containing underscores
+  (thanks to jaffee)
+**** Python
+- Use MELPA version of =py-yapf= package (thanks to cpaulik)
+- Fix =makefile= of =pylookup= (thanks to hemcsec)
+- Disable =semantic-idle-summary= which obfuscates =anaconda= information
+  in the minibuffer (thanks to cpaulik)
+**** Scala
+- Fix =ensime-typecheck-current-file=, rename it to
+  =ensime-typecheck-current-buffer=
+- Fix =scala-enable-eldoc-mode=, rename it to =scala-enable-eldoc=
+  (thanks to channingwalton)
+**** Shell
+- Fix error when attempting to delete the last shell window
+  (thanks to joelmccracken)
+**** Tmux
+- Fix loading of package (thanks to aaronjensen)
+**** Vinegar
+- Correct =dired= configuration (thanks to StreakyCobra)
+*** Improvements
+- Various documentation improvements (thanks to d12frosted, gilch, ksrb,
+  nixmaniack, StreakyCobra, TheBB, The-Compiler, xiaohanyu)
+** 0.105.18 (2016/04/10)
+- Revert hotfix for =Yasnippet=, the bug has been fixed upstream and is now
+  available in MELPA (thanks to TheBB)
+- Remove oboslete package =evil-jumper= which is now part of =evil=
+  (thanks to justbur)
+** 0.105.17 (2016/04/09)
+- Hotfix for Yasnippet, using stable version until resolution of
+ https://github.com/capitaomorte/yasnippet/issues/673
+** 0.105.16 (2016/04/01)
+- Add FAQ entry about HTTPS issues (thanks to TheBB)
+- Add startup list to Zemacs home buffer.
+** 0.105.15 (2016/04/01)
+*** Improvements
+- Emacs to THE MAX! Release of Zemacs!
+*** Layer changes
+**** Javascript
+- New layer variable =javascript-disable-tern-port-files=, when non nil
+  tern port files are not created. Default value is nil. (thanks to mijoharas)
+**** Swift
+- Fix all =swift= major-mode key bindings (thanks to xinranmsn)
+** 0.105.14 (2016/03/09)
+*** Fixes
+- Fix bad window index for =neotree= buffer (thanks to bmag)
+- Fix error when using ~SPC p l~ right after Emacs started (thanks to bixuanzju)
+*** Layer changes
+**** Go
+- Fix bug when there is no test suite when running tests
+  (thanks to bogdanteleaga)
+**** React
+- Fix broken =helm-imenu= (thanks to huaoguo)
+*** Improvements
+- Various documentation improvements (thanks to triklsbg)
+
+** 0.105.13 (2016/03/06)
+*** Fixes
+- Fix smooth-scroll toggling at startup (thanks to TheBB)
+- Fix auto-completion toggle ~SPC t a~ (thanks to TheBB)
+*** Layer changes
+**** Clojure
+- Fix function name =cider-pop-back= (thanks to mlachmih)
+**** Scala
+- Fix various function names:
+  - =ensime-refactor-diff-organize-imports=
+  - =ensime-refactor-diff-extract-method=
+  - =ensime-refactor-diff-rename=
+  - =ensime-refactor-diff-extract-local=
+  (thanks to TheBB)
+*** Improvements
+- Reformat =README.md= title section.
+- Add a GitHub pull request template (thanks to robbyoconnor)
+** 0.105.12 (2016/03/02)
+*** Fixes
+- Fix activation of package dependencies
+- Fix =smooth-scrolling= error due to recent changes in package repository
+*** Layer changes
+**** Distribution
+- New key binding ~SPC t v~ to toggle smooth scrolling.
+**** C-C++
+- Add notes on related layers (thanks to magthe)
+- Remove srefactor from static package list (thanks to magthe)
+- Set paths for C headers from clang (thanks to magthe)
+**** Evil-snipe
+- Disable =evil-snipe= in =ranger= (thanks to TheBB)
+**** Haskell
+- Fix bad indentation when pasting text (thanks to robbyoconnor)
+**** Markdown
+- Add support for =rust= code blocks (thanks to panicbit)
+**** Org
+- Fix custom Spacemacs layout when =org-agenda-files= isn't a list.
+  The org-agenda-files variable can be the name of a directory or a file.
+  (thanks to jmiven)
+**** Osx
+- Fix =osx-use-options-as-meta= for Emacs 25 (thanks to d12frosted)
+**** React
+- make =evil-matchit= jump between html/jsx tags (thanks to tko)
+**** Racket
+- Add command prefix names for =racket-mode= key bindings
+  (thanks to rodrigosetti)
+**** Scala
+- Rename =ensime-refactor-inline-local= to =ensime-refactor-diff-inline-local=
+  (thanks to chessman)
+**** Shell
+- Fix reverse key bindings for comint-previous/next (thanks to olejorgenb))
+- Scope the aliases under =eshell= so they are not defined globally
+  (thanks to bling)
+**** Themes megapack
+- Add =railscasts-theme= (thanks to olsonjeffery)
+*** Improvements
+- Improve =toggle-maximize-centered-buffer= (thanks to justbur)
+- Add =display-graphic-p= to ~SPC h d s~ (thanks to TheBB)
+- Various documentation improvements (thanks to d12frosted, davbo, marcopaga,
+  microamp, nixmaniack, NJBS, SShrike, TheBB, Tinche, triklsbg, xfq)
+** 0.105.11 (2016/02/18)
+Improve loading robustness:
+- When an ELPA repository is down Spacemacs will now be able to finish loading
+- Spacemacs will use the default theme (i.e. no theme) if there is any error
+  during the download of the starting theme.
+** 0.105.10 (2016/02/18)
+*** Fixes
+- Fix re-toggle of fullscreen when pressing ~SPC f e R~ (thanks to MadAnd)
+- Fix display of recent bookmarks without filename (thanks to lislon)
+- Fix =toggle-maximize-buffer= (thanks to justbur)
+- Remove files from rollback slot list (thanks to microamp)
+- Don't catch errors while loading if =--debug-init= is provided.
+- Don't change scratch major mode if buffer exists (thanks to TheBB)
+- Restore windows layout when qitting =ediff= (thanks to fbergroth)
+- Ensure that =pcache-directory= ends in a slash (thanks to rpglover64)
+- Ensure new Spacemacs layouts only shows home buffer (thanks to bmag)
+*** Improvements
+- Add a bug report template for GitHub issues on ~SPC h I~
+  (thanks to StreakyCobra)
+- Add files used by =eww= to =.gitignore= (thanks to ahyatt)
+- Various enhancements for themes handling (thanks to TheBB)
+- Allow =default= theme (no theme) to be defined in =dotspacemacs-themes=
+  (thanks to izahn)
+- Add support for missing =base16= themes (thanks to curtmack)
+- Update recent files list when a file is renamed (thanks to lislon)
+- Improve frame-fullscreen and maximize-frame toggles (thanks to MadAnd)
+- Diminish relative line numbers lighter in mode-line (thanks to peterhoeg)
+- Various documentation improvements (thanks to balajisivaraman, crododile,
+  darkfeline, ernestas, franciscoj, j4, kRITZCREEK, nixmaniack, numkem,
+  robbyoconnor, TheBB, tonylotts)
+*** Layer changes
+**** Auto-completion
+- Better choice of =company= front-ends (thanks to fbergroth)
+**** C-C++
+- Get =clang= args even if =flycheck= isn't installed (thanks to TheBB)
+**** Clojure
+- Fix renamed =cider-test-run-tests= function (thanks to AlejandroCatalina)
+- Substitute =align-cljlet= with =clojure-align=. =align-cljlet= was deprecated
+  in favour of the vertical alignment in the clojure-mode package (thanks to
+  vise890)
+**** Elm
+- Fix =flycheck= not working on sub-directories (thanks to AlejandroCatalina)
+**** ERC
+- Fix initialisation of =erc-terminal-notifier= (thanks to Andre0991)
+**** Gnus
+- Remove =gnus-fetch-old-headers= customization which was causing slowdown
+  while consulting some newsgroups (thanks to StreakyCobra)
+**** Haskell
+- Fix broken =hoogle-lookup-from-local= (thanks to jb55)
+**** Html
+- Remove =.jsx= from =web-mode= auto mode alist (thanks to lunaryorn)
+**** Org
+- Remove ~H~ and ~L~ key bindings from =evil-org= (thanks to choppsv1)
+**** Python
+- Add missing =py-yapf= configuration (thanks to TheBB)
+- Enable =anaconda-eldoc-mode= (thanks to TheBB)
+- Only load =pyenv= if it is installed (thanks to cpaulik)
+**** Racket
+- Disable =company-quickhelp-mode= only when it is already enabled
+  (thanks to syohex)
+**** React
+- Disable auto-quote of attributes (thanks to TheBB)
+- Fix react magic mode, it will now recognize =/** @jsx React.DOM */= in the
+  first line of a file (thanks to EMayej)
+**** Ruby
+- Use =popwin= for =rspec= compilations (thanks to joshcass)
+- Do not force =rspec-mode= on ruby files (thanks to morhekil)
+**** Rust
+- Fix indentation setting for =evil-shift-width= (thanks to Stebalien)
+**** Shell
+- Set the correct shell-pop size variable (thanks to TheBB)
+**** Themes-megapack
+- Add =dracula= theme (thanks to MarkRedeman)
+- Add =omtose-phellack= theme (thanks to duien)
+- Add =majapahit= theme (thanks to kostajh)
+**** Tmux
+- Fix key bindings ~C-h~, ~C-j~, ~C-k~ and ~C-l~ (thanks to justbur)
+**** Vagrant
+- New key binding ~SPC V R~ to reload to restart VMs (thanks to kostajh)
+**** Version control
+- Fix bugs due to wrong mode for =diff-hl= margin (thanks to abaw)
+- Fix =git-gutter= linum setup (thanks to person808)
+**** Wakatime
+- Fix wakatime-dashboard url (thanks to hallfox)
+** 0.105.9 (2016/01/17)
+*** Improvements
+- Fix error on Microsoft Windows 10 OS regarding missing =printf= command
+  (don't call =exec-path-from-shell= function on Microsoft Windows)
+  (thanks to syohex)
+- New key bindings ~C-e~ and ~C-y~ in evilified buffers to scroll lines
+  (thanks to CestDiego)
+- Remove key binding hack for =evil-jumper= since the issue has been fixed
+  upstream (thanks to justbur)
+- Remove unused =init-dired+= function (thanks to AlejandroCatalina)
+- Various documentation improvements (thanks to balajisivaraman, jcppython,
+  jmiven, jorisE)
+*** New conventions
+- =use-package= code guidelines
+- Key bindings documentation only need to mention ~SPC~ prefix
+*** Layer changes
+**** Markdown
+- Add syntax highlighting for =R= code blocks (thanks to rustyplanet)
+**** Org
+- Fix early creation of empty =org= directory (thanks to tboby)
+- Add default key binding ~C-c c~ for =org-capture=
+  (thanks to AlejandroCatalina)
+**** Spacemacs
+- Add =bracketed-paste= package to improve pasted text in terminals
+  (thanks to AlejandroCatalina)
 ** 0.105.8 (2016/01/12)
 *** Fixes
 - Fix the red mode-line when error occurs during loading
@@ -1172,7 +1425,7 @@
   (thanks to TheBB)
 **** Org
 + Install =org-plus-contrib= from org ELPA repository
-+ Add table related key bindins on =SPC m t= (thanks to JP-Ellis)
++ Add table related key bindins on `SPC m t` (thanks to JP-Ellis)
 + Add defer loading for =toc-org=.
 + Add =gnuplot= package to plot data from tables (thanks to JP-Ellis)
 + Add =org-mime= (moved from =gnus= layers)
@@ -1391,7 +1644,7 @@
 - Add support for Magit 2.1!
 - Helm now uses its header to display the input pattern.
 - Use Flycheck default configuration to check the current buffer in
-  "real time" (yes this is a hot new features :-)) 
+  "real time" (yes this is a hot new features :-))
 - New interactive function =spacemacs/switch-to-version=, it will ask
   for a version number and warn if the current branch is not =master=.
   Users on =develop= branch cannot use this function (it has no effect).
@@ -1674,7 +1927,7 @@
 - New variable =dotspacemacs-search-tools= which is a list of search tool
   executable names. Spacemacs uses the first installed tool of the list
   with search related key bindings (~SPC /~, ~SPC s ...~).
-  Supported tools are =ag=, =pt=, =ack= and =grep=.
+  Supported tools are `ag', `pt', `ack' and `grep'."
 - New variable =dotspacemacs-highlight-delimiters= which selects a scope
   to highlight delimiters. Possible value is =all=, =current= or =nil=.
   Default is =all=. (thanks to tuhdo)

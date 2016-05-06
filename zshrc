@@ -63,7 +63,7 @@ qfind () {
 # Custom exports
 ## Set EDITOR to /usr/bin/vim if Vim is installed
 
-export EDITOR='/usr/bin/emacsclient -c'
+export EDITOR='/usr/bin/emacsclient'
 # bind UP and DOWN arrow keys
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up

@@ -9,22 +9,19 @@
 ;;
 ;;; License: GPLv3
 (setq spacemacs-layouts-packages
-      '(;; temporary switch on a fork to fix
-        ;; https://github.com/syl20bnr/spacemacs/issues/4120
-        (persp-mode :location (recipe :fetcher github
-                                      :repo "syl20bnr/persp-mode.el"
-                                      :branch "fix-emacsclient-crash"))
+      '(
+        persp-mode
         spaceline
-        eyebrowse
-        helm
-        swiper))
+        eyebrowse))
 
 (defun spacemacs-layouts/init-persp-mode ()
   (use-package persp-mode
     :diminish persp-mode
     :init
     (progn
-      (setq persp-auto-resume-time (if dotspacemacs-auto-resume-layouts 1 -1)
+      (setq persp-auto-resume-time (if (or dotspacemacs-auto-resume-layouts
+                                           spacemacs-force-resume-layouts)
+                                       1 -1)
             persp-nil-name dotspacemacs-default-layout-name
             persp-reset-windows-on-nil-window-conf nil
             persp-set-last-persp-for-new-frames nil
@@ -78,27 +75,27 @@
       (defvar spacemacs--layouts-ms-documentation
         "
   [?]                  toggle this help
-  [0,9]                go to nth layout
-  [tab]                last layout
-  [a]                  add a buffer from another layout
+  [0,9]                switch to nth layout
+  [tab]                switch to the last
   [A]                  add all buffers from another layout
-  [b]                  select a buffer of the current layout
-  [c]                  close layout (buffers are not closed)
-  [C]                  close other layout(s) (buffers are not closed)
+  [a]                  add all the buffers from another layout in the current one
+  [b]                  select a buffer in the current layout
+  [c]                  close the current layout and keep its buffers
+  [C]                  close the other layouts and keep their buffers
   [h]                  go to default layout
-  [l]                  jump to a layout
-  [L]                  load saved layouts
-  [n] or [C-l]         next layout
-  [N] or [p] or [C-h]  previous layout
-  [o]                  custom layouts
+  [l]                  select/create a layout with helm
+  [L]                  load layouts from file
+  [n] or [C-l]         next layout in list
+  [N] or [p] or [C-h]  previous layout in list
+  [o]                  open a custom layout
   [r]                  remove current buffer from layout
-  [R]                  rename or create layout
+  [R]                  rename current layout
   [s]                  save all layouts
   [S]                  save layouts by names
   [t]                  show a buffer without adding it to current layout
-  [w]                  workspaces micro-state
-  [x]                  kill layout and its buffers
-  [X]                  kill other layout(s) and their buffers")
+  [w]                  workspaces micro-state (needs eyebrowse layer enabled)
+  [x]                  kill current layout with its buffers
+  [X]                  kill other layouts with their buffers")
 
       (defun spacemacs//layouts-ms-doc ()
         "Return the docstring for the layouts micro-state."
@@ -167,7 +164,7 @@
                            "Do you want to create one? "))
               (let ((persp-reset-windows-on-nil-window-conf t))
                 (persp-switch nil)
-                (spacemacs/home))))))
+                (spacemacs/home-delete-other-windows))))))
 
       ;; Define all `spacemacs/persp-switch-to-X' functions
       (dolist (i (number-sequence 9 0 -1))
@@ -256,7 +253,7 @@ Available PROPS:
              ;; Check for Clashes
              (if ,already-defined?
                  (unless (equal ,already-defined? ,name)
-                   (warn "Replacing existing binding \"%s\" for %s with %s"
+                   (spacemacs-buffer/warning "Replacing existing binding \"%s\" for %s with %s"
                          ,binding ,already-defined? ,name )
                    (push '(,binding . ,name) spacemacs--custom-layout-alist))
                (push '(,binding . ,name) spacemacs--custom-layout-alist)))))
@@ -279,7 +276,7 @@ Available PROPS:
                          (format "[%s] %s"
                                  (car custom-persp) (cdr custom-persp)))
                        spacemacs--custom-layout-alist " ")
-          (warn (format "`spacemacs--custom-layout-alist' variable is empty" ))))
+          (spacemacs-buffer/warning (format "`spacemacs--custom-layout-alist' variable is empty" ))))
 
       (defun spacemacs//update-custom-layouts ()
         "Ensure the custom-perspectives micro-state is updated.
@@ -314,11 +311,3 @@ format so they are supported by the
   (add-hook 'persp-before-switch-functions #'spacemacs/update-eyebrowse-for-perspective)
   (add-hook 'eyebrowse-post-window-switch-hook #'spacemacs/save-eyebrowse-for-perspective)
   (add-hook 'persp-activated-hook #'spacemacs/load-eyebrowse-for-perspective))
-
-(defun spacemacs-layouts/post-init-helm ()
-  (spacemacs/set-leader-keys
-    "pl" 'spacemacs/helm-persp-switch-project))
-
-(defun spacemacs-layouts/post-init-swiper ()
-  (spacemacs/set-leader-keys
-    "pl" 'spacemacs/ivy-persp-switch-project))
