@@ -3,7 +3,9 @@ PATH=/usr/local/git/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
+source <(kubectl completion zsh)
 
+source /etc/profile.d/apps-bin-path.sh
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
